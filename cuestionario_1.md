@@ -155,4 +155,14 @@ fun addKV( object: Object, key: String, value: Any) =
     2. include function
     3. lookup function
     4. Not Allowed <br/><br/>
-16. 
+16. What is the correct Syntax to add a customerID as a URI parameter in the HTTP listener's path attribute? <br/> ![pic_12](img/cues_1/pic_12.webp)
+    1. {customerID}
+    2. $[customerID]
+    3. #[customerID]
+    4. (customerID) <br/><br/>
+17. Refer to the exhibits. What expression correctly specifies input parameters to pass the city and state values to SQL query? <br/> ![pic_13](img/cues_1/pic_13.webp)
+    1. #[inputParams: { city: "San Fransisco", state: "CA"}]
+    2. #[inputParams: [ "San Fransisco", "CA"]]
+    3. #[{ city: "San Fransisco", state: "CA"}]
+    4. #[[ "San Fransisco", "CA"]] <br/><br/>
+18. 
