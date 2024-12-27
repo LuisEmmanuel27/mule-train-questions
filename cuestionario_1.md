@@ -2,6 +2,8 @@
 
 Cuestionario de prueba para el examen de certificación de Mulesoft con Explicaciones incluidas
 
+## [Respuestas y explicaciones](respuestas_1.md)
+
 ---
 
 1. This Mule application has an HTTP Request that is configured with hardcoded values. To change this, the Mule application is configured to use a properties file named config.yaml. <br/> What valid expression can the HTTP Request host value be set to so that it is no longer hardcoded? <br/> ![pic_1](img/cues_1/pic_1.webp)
