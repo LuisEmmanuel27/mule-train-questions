@@ -77,20 +77,20 @@ fun addKV( object: Object, key: String, value: Any) =
    1. In API Exchange
    2. In Runtime Manager
    3. In the Mule Application
-   4. In API Manager
+   4. In API Manager <br/><br/>
 8. Following Mulesoft's recommended API-led connectivity approach , an organization has created an application network. The organization now needs to create API's to transform , orchestrate & aggregate the data provided by the other API's in the application network.  This API should be flexible enough to handle the data from additional API's in future. <br/> According to Mulesoft's recommended API-led connectivity approach , what is the best layer for this new API?
    1. Experience Layer
    2. System Layer
    3. Data Layer
-   4. Process Layer
+   4. Process Layer <br/><br/>
 9. Refer to the exhibits. As a Mulesoft developer, what you would change in Database connector configuration to resolve this error? <br/> ![pic_5](img/cues_1/pic_5.webp) <br/> ![pic_6](img/cues_1/pic_6.jpg)
    1. Configure the correct JDBC Driver
    2. Configure the correct table name
    3. Configure the correct database name
-   4. Configure the correct host URL
+   4. Configure the correct host URL <br/><br/>
 10. Refer to the exhibits. The mule application is debugged in Anypoint Studio and stops at the breakpoint as shown in below exhibit. <br/> What is the value of the payload displayed in the debugger at this breakpoint? <br/> ![pic_7](img/cues_1/pic_7.webp)
     1. Finished
     2. Process
     3. Payload is always empty at the breakpoint
-    4. Start
+    4. Start <br/><br/>
 11. 
