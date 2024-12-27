@@ -1,0 +1,13 @@
+# Respuestas del primer cuestionario
+
+1. `iv.` - ${training.host}
+   1. **Explicación:** ![resp_1](img/resp_1/pic_1.webp) <br/><br/>
+2. `i.`
+   1. **Explicación**: Keyword to ad function in Dataweave transformation is fun. Hence option 2 and 4 are invalid. Also parameters needs to be passed exactly in same order as defined in function definition. Hence correct answer is `i.` [MuleSoft Documentation Reference](https://docs.mulesoft.com/mule-runtime/latest/logger-component-reference) <h3>DataWeave Function Definition Syntax</h3> To define a function in DataWeave use the following syntax: `fun myFunction(param1, param2, ...) = <code to execute>` The `fun` keyword starts the definition of a function. <br/> `myFunction` is the name you define for the function. <br/> Function names must be valid identifiers. <br/> `(param1, param2, …​ , paramn)` represents the parameters that your function accepts. <br/> You can specify from zero to any number of parameters, separated by commas (`,`) and enclosed in parentheses. <br/> The `=` sign marks the beginning of the code block to execute when the function is called. <br/> `<code to execute>` represents the actual code that you define for your function. <br/><br/>
+3. `iii.` - `The payload is: #[payload]`
+   1. **Explicación:** <h3>Logger Component</h3> This Core component helps you monitor & debug your Mule application by logging important information such as error messages, status notifications, payloads, and so on. You can add a Logger anywhere in a flow, and you can configure it to log a string that you specify, the output of a DataWeave expression you write, or any combination of strings and expressions. <br/> It is the only correct answer as it concatenates payload with String. <br/> Below option wont work. <br/> `#["The payload is " ++ payload]` <br/> Reason is concatenation function expects both arguments to be string. As the question says payload is json object , this will throw error while running it. You can try this in Anypoint Studio and you will get the same result which I mentioned. <br/> hence correct answer is <br/> `The payload is: #[payload]` <br/> [Reference](https://docs.mulesoft.com/mule-runtime/latest/logger-component-reference) <br/><br/>
+4. `iii.`
+   1. **Explicación:** As can be seen in error message , SOAP service findFlights expects the SOAP payload. <br/><br/>
+5. `ii.` - `The city is #[payload.City]`
+   1. **Explicación:** You may get confused with the option `#["The city is" ++ payload.City]` But note that this option will not print the space between is and city name. This will print The city isPune <br/><br/>
+6. 
