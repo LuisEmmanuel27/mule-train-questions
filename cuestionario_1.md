@@ -93,4 +93,66 @@ fun addKV( object: Object, key: String, value: Any) =
     2. Process
     3. Payload is always empty at the breakpoint
     4. Start <br/><br/>
-11. 
+11. What statement is a part of MuleSoft's description of an application network?
+    1. Leverages Central IT to deliver complete point-to-point solutions with master data management
+    2. Creates and manages a collection of JMS messaging services and infrastructure
+    3. Creates and manages high availability and fault tolerant services and infrastructure
+    4. Creates reusable APIs and assets designed to be consumed by other business units <br/><br/>
+12. Refer to the exhibits. Each route in the Scatter-Gather sets the payload to the number shown in the label. <br/> What response is returned to a web client request to the HTTP Listener? <br/> ![pic_8](img/cues_1/pic_8.webp) <br/> ![pic_9](img/cues_1/pic_9.webp)
+
+```ts
+// i.
+["100","200]
+```
+
+```json
+// ii.
+{	
+  "0" : "100",	
+  "1" : "200"
+}
+```
+
+```json
+// iii.
+[	{		
+    "attributes": ...,		
+    "payload": "100"	
+  },	
+  {		
+    "attributes": ...,		
+    "payload": "200"	
+  }
+]
+```
+
+```json
+// iv.
+{	
+  "0": {		
+    "attributes": ...,		
+    "payload": "100"	
+  },	
+  "1": {		
+    "attributes": ...,		
+    "payload": "200"	
+  }
+}
+```
+
+13. Refer to the exhibits. What payload and variable are logged at the end of the main flow? <br/> ![pic_10](img/cues_1/pic_10.webp) <br/> ![pic_11](img/cues_1/pic_11.webp)
+    1. [[5,10,15,20], 1]
+    2. [[5,10,15,20], 5]
+    3. [[Req5, Req10, Req15, Req20], 5]
+    4. [[Req5, Req10, Req15, Req20], 1] <br/><br/>
+14. A flow has a JMS Publish consume operation followed by a JMS Publish operation. Both of these operations have the default configurations. Which operation is asynchronous and which one is synchronous?
+    1. Publish consume: Asynchronous. <br/> Publish: Synchronous
+    2. Publish consume: Synchronous. <br/> Publish: Synchronous
+    3. Publish consume: Asynchronous. <br/> Publish: Asynchronous
+    4. Publish consume: Synchronous. <br/> Publish: Asynchronous <br/><br/>
+15. How can you call a flow from Dataweave?
+    1. tag function
+    2. include function
+    3. lookup function
+    4. Not Allowed <br/><br/>
+16. 
