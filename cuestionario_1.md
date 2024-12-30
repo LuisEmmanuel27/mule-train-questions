@@ -245,4 +245,14 @@ fun addKV( object: Object, key: String, value: Any) =
     2. LinkedHashMap
     3. Map
     4. Object <br/><br/>
-29. 
+29. Refer to the exhibits. Client sends the request to _ClientRequestFlow_ which calls _ShippingFlow_ using HTTP Request activity. <br/> During E2E testing it is found that that _HTTP:METHOD_NOT_ALLOWED_ error is thrown whenever client sends request to this flow. <br/> What attribute you would change in _ClientRequestFlow_ to make this implementation work successfully? <br/> ![pic_24](img/cues_1/pic_24.webp) <br/> ![pic_25](img/cues_1/pic_25.jpg) <br/> ![pic_26](img/cues_1/pic_26.webp)
+    1. Change the allowed method attributes value to "POST"
+    2. Change the protocol attribute value to "HTTPS"
+    3. Change the path attribute value to "/api/ship"
+    4. Change the method attribute value to "*"
+30. An organization is beginning to follow Mulesoft's recommended API led connectivity approach to use modern API to support the development and lifecycle of the integration solutions and to close the IT delivery gap. <br/> What distinguishes between how modern API's are organized in a MuleSoft recommended API-led connectivity approach as compared to other common enterprise integration solutions?
+    1. The APIO implementations are monitored with common tools, centralized monitoring and security systems
+    2. The API interfaces are specified as macroservices with one API representing all the business logic of an existing and proven end to end solution
+    3. The API interfaces are specified at a granularity intended for developers to consume specific aspect of integration processes
+    4. The API implementation are built with standards using common lifecycle and centralized configuration management tools
+31. 
