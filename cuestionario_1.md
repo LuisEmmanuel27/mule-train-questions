@@ -214,5 +214,35 @@ fun addKV( object: Object, key: String, value: Any) =
     1. `lookup("createCustomerObject", {first: "Alice, last: "Green"})`
     2. `lookup( "createCustomerObject", ("Alice", "Green"))`
     3. `createCustomerObject({first: "Alice", last' "Green"})`
-    4. `createCustomerObject("Alice", "Green")`
-23. 
+    4. `createCustomerObject("Alice", "Green")` <br/><br/>
+23. Refer to the exhibits. A web client submits the request to the HTTP Listener. What response message would be returned to web client? <br/> ![pic_19](img/cues_1/pic_19.webp)
+    1. String is not blank
+    2. No response would be sent back to client and request will get errored out in Mule
+    3. End
+    4. Start <br/><br/>
+24. What HTTP method in a RESTful web service is typically used to completely replace an existing resource?
+    1. PUT
+    2. GET
+    3. POST
+    4. PATCH <br/><br/>
+25. What is the main purpose of flow designer in Design Center?
+    1. To design and mock Mule application templates that must be implemented using Anypoint Studio
+    2. To design API RAML files in a graphical way
+    3. To define API lifecycle management in a graphical way
+    4. To design and develop fully functional Mule applications in a hosted development environment <br/><br/>
+26. In the execution of scatter gather, the "sleep 2 sec" Flow Reference takes about 2 sec to complete, and the "sleep 8 sec" Flow Reference takes about 8 sec to complete. <br/> About how many sec does it take from the Scatter-Gather is called until the Set Payload transformer is called? <br/> ![pic_20](img/cues_1/pic_20.webp)
+    1. 10
+    2. 2
+    3. 0
+    4. 8 <br/><br/>
+27. Refer to the exhibits. A web client sends a POST request to the HTTP Listener with the payload “Hello-“. <br/> What response is returned to the web client? <br/> ![pic_21](img/cues_1/pic_21.webp) <br/> ![pic_22](img/cues_1/pic_22.webp) <br/> ![pic_23](img/cues_1/pic_23.webp)
+    1. Hello-HTTP-Three
+    2. Hello-JMS1-HTTP-JMS2-Three
+    3. Hello-HTTP-JMS2-Three
+    4. HTTP-JMS2-Three <br/><br/>
+28. What is output of Dataweave flatten function?
+    1. Array
+    2. LinkedHashMap
+    3. Map
+    4. Object <br/><br/>
+29. 
