@@ -96,4 +96,19 @@
     1. **Explicación:** <br/> * RAML file contains lot of information that could be considered as "not API-describing". Sort of "economy-class" members. <br/> Equally important, but not necessarily part of the main RAML file. <br/> * Through !includes, RAML allows us to build file-distributed API definitions, which is not only useful to encourage code reuse but also improves readability. <br/> * We can create RAML fragments with such code and then include them in main RAML project using !include like: <br/> types: <br/> Book: !include bookDataType.raml <br/> and examples: <br/> input: !include bookExample.raml <br/><br/>
 45. `iii.` - `A dataweave syntax error`
     1. **Explicación:** To compare, DataWeave syntax is `#[payload == "FR"]`. In this case only one `=` is used so it will give syntax error. <br/><br/>
-46. 
+46. `i.` - `Array`
+    1. **Explicación:** <h3>typeOf</h3> Returns the type of a value. <h3>Parameters</h3> Name : value <br/>  Description : A string, object, array, number, or other supported type. <br/> **Example:** This example identifies the type of several input values. <br/> `%dw 2.0output application/json---[ typeOf("A b"), typeOf([1,2]), typeOf(34), typeOf(true), typeOf({ a : 5 }) ]` <br/> **Output:** `[ "String", "Array", "Number", "Boolean", "Object" ]` <br/> As DB select return array as payload. Hence logger will log typeOf(Payload) as array <br/><br/>
+47. `iv.` - `Not Needed`
+48. `ii.`
+    1. **Explicación:** You can apply one or more filters as attributes to any number of batch steps. <br/> Imagine a batch job whose first batch step checks if a Salesforce contact exists for a record, and a second batch step that updates each existing Salesforce contact with new information. You can apply a filter to the second batch step to ensure it only processes records that didn’t fail during the first batch step. <br/> By having batch steps accept only some records for processing, you streamline the batch job so the Mule runtime engine can focus only on the relevant data for a particular batch step. <br/> A batch step uses two attributes to filter records: <br/> **acceptExpression** <br/> **acceptPolicy** <br/> Each batch step can accept one acceptExpression and one acceptPolicy attributes to filter records. <br/> **Use the acceptExpression attribute to process only records that evaluate to true; if the record evaluates to false, the batch step skips the record and sends it to the next one**. In other words, the records with an accept expression that resolves to false are the ones that Mule filters out. <br/> The example below filters out all records where the age is less than 21; the batch step does not process those records.
+        ```xml
+        <batch:job jobName="batchJob">	
+                <batch:process-records >		
+                    <batch:step name="adultsOnlyStep" 
+                        acceptExpression="#[payload.age > 21]">			
+                            ...		
+                    </batch:step>	
+                </batch:process-records> </batch:job>
+        ```
+        As we are clear with above concepts , now lets understand this solution step by step. <br/> **1) Batch Step (Less than 50)** <br/> Accept expression for this batch step is less than 50. Hence elements which will go in this batch step are amount value 40 and 2. Hence output of logger in first batch step is <br/> {amount=140} <br/>{amount=102} <br/> **2) Batch Step (Greater than 20)** Accept condition for this batch step is greater than 20. Note that input amount values for this batch step are 100 , 140 and 102 (last two values have been updated in batch step less than 50) <br/> As all values satisfy this condition out put of second logger is <br/> {step2amount=100} <br/> {step2amount=140} <br/> {step2amount=102} <br/> Hence correct answer to this question is <br/> ![pic_10](img/resp_1/pic_10.webp) <br/><br/>
+49. 

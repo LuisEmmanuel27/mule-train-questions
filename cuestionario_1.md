@@ -412,4 +412,48 @@ types:
     2. "US"
     3. A dataweave syntax error
     4. "Domestic" <br/><br/>
-46. 
+46. Refer to the exhibits. The Database Select operation returns five rows from a database. <br/> What is logged by the Logger component? <br/> ![pic_39](img/cues_1/pic_39.webp) <br/> ![pic_40](img/cues_1/pic_40.webp)
+    1. Array
+    2. Object
+    3. LinkedHashMap
+    4. CaseInsensitiveHashMap <br/><br/>
+47. How to import Core (dw::Core) module into your DataWeave scripts?
+    1. import core
+    2. import dw::core
+    3. #include dw::core
+    4. Not Needed <br/><br/>
+48. Refer to the exhibits. The Batch Job scope contains two Batch Steps scopes with different accept expression. <br/> The input payload is passed to the Batch Job scope. <br/> After the entire payload is processed by the batch job scope , what messages have been logged by the Logger component? <br/> ![pic_41](img/cues_1/pic_41.webp) <br/> ![pic_42](img/cues_1/pic_42.webp) <br/> ![pic_43](img/cues_1/pic_43.webp)
+
+```js
+// i.
+{amount=140}
+{amount=102}
+{step2amount=100}
+```
+
+```js
+// ii.
+{amount=140}
+{amount=102}
+{step2amount=100}
+{step2amount=140}
+{step2amount=102}
+```
+
+```js
+// iii.
+{amount=140}
+{amount=102}
+{step2amount=100}
+{step2amount=140}
+```
+
+```js
+// iv.
+{amount=140}
+{amount=102}
+{step2amount=100}
+{step2amount=40}
+```
+
+49. 
