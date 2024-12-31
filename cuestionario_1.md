@@ -249,10 +249,35 @@ fun addKV( object: Object, key: String, value: Any) =
     1. Change the allowed method attributes value to "POST"
     2. Change the protocol attribute value to "HTTPS"
     3. Change the path attribute value to "/api/ship"
-    4. Change the method attribute value to "*"
+    4. Change the method attribute value to "*" <br/><br/>
 30. An organization is beginning to follow Mulesoft's recommended API led connectivity approach to use modern API to support the development and lifecycle of the integration solutions and to close the IT delivery gap. <br/> What distinguishes between how modern API's are organized in a MuleSoft recommended API-led connectivity approach as compared to other common enterprise integration solutions?
     1. The APIO implementations are monitored with common tools, centralized monitoring and security systems
     2. The API interfaces are specified as macroservices with one API representing all the business logic of an existing and proven end to end solution
     3. The API interfaces are specified at a granularity intended for developers to consume specific aspect of integration processes
-    4. The API implementation are built with standards using common lifecycle and centralized configuration management tools
-31. 
+    4. The API implementation are built with standards using common lifecycle and centralized configuration management tools <br/><br/>
+31. An organization's Center for enablement (C4E) has built foundational assets (API specifications and implementation templates, common frameworks, and best practices guides) and published them to _Anypoint Exchange_. <br/> What is a metric related to these foundational assets that helps the organization measure the success of it's C4E efforts?
+    1. Correlation of each foundational asset with the counts of developers that download such asset
+    2. Count how many Lines of Business (LoBs) onsumed each foundational asset
+    3. Correlation of key performance indicators (KPI) of production applications with foundational assets
+    4. Utilization counts of foundational assets in production applications <br/><br/>
+32. Refer to the exhibits. The Mule application configures and uses two HTTP Listener global configuration elements. <br/> Mule application is run in Anypoint Studio. <br/> If the mule application starts correctly, what URI and port numbers can receive web client requests? <br/> If the mule applications fails to start , what is the reason for the failure? <br/> ![pic_27](img/cues_1/pic_27.webp) <br/> ![pic_28](img/cues_1/pic_28.webp) <br/> ![pic_29](img/cues_1/pic_29.webp)
+    1. The mule application start successfully <br/> Web client requests can be only received at URI on port 2222 but not on port 3333
+    2. The mule application fails to start because of the port binding conflict as HTTP request also use same port i.e. 3333
+    3. The mule application start successfully <br/> Web client requests can be received at URI on port 2222 and on port 3333
+    4. The mule application fails to start <br/> There is URL path conflict because both HTTP Listeners are configured with same path <br/><br/>
+33. Refer to the exhibits. All three of the conditions for the Choice router are true. What messages are written in the application log? <br/> ![pic_30](img/cues_1/pic_30.webp)
+    1. Route 1, Route 2, Default
+    2. Route 2
+    3. Route 1, Route 2
+    4. Route 1 <br/><br/>
+34. The main flow contains an HTTP Request in the middle of the flow. The HTTP Listeners and HTTP Request use default configurations. <br/> A web client sends a GET request to the main flow’s HTTP Listener. The GET request includes query for the pedigree of a piano. <br/> What values are accessible to the Logger component at the end of the main flow? <br/> ![pic_31](img/cues_1/pic_31.webp) <br/> ![pic_32](img/cues_1/pic_32.webp)
+    1. All Mule Events
+    2. payload and all attributes
+    3. payload and all variable
+    4. payload <br/><br/>
+35. Refer to the exhibit. The default scope in choice router recursively calls the color flow. <br/> A web client sends a PUT request to the HTTP listener with payload Blue. <br/> What response is returned to the web client? <br/> ![pic_33](img/cues_1/pic_33.webp)
+    1. "Blk"
+    2. Timeout Error
+    3. ["Blue", "Red", "Blk"]
+    4. "Green" <br/><br/>
+36. 

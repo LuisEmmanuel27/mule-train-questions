@@ -66,4 +66,14 @@
     1. **Explicación:** It can be fixed in either of the two ways as below. <br/> 1. Changing method attribute to POST in ClientRequestFlow <br/> 2. Setting allowedMethods as PUT in ShippingFlow (but doesn't fit as question mentions about changing ClientRequestFlow) <br/><br/>
 30. `iii.` - `The API interfaces are specified at a granularity intended for developers to consume specific aspect of integration processes`
     1. **Explicación:** Remember the keyword _"Granularity"_. <br/> [Reference Doc](https://www.salesforce.com/blog/api-led-connectivity/).
-31. 
+31. `iii.` - `Correlation of key performance indicators (KPI) of production applications with foundational assets`
+    1. **Explicación:** Below are the Key performance indicators (KPIs), to measure and track the and success of the C4E and its activities, as well as the growth and health of the application network. Most of the metrics can be extracted automatically, through REST APIs, from Anypoint Platform. <br/> • # of assets published to Anypoint Exchange <br/> • # of interactions with Anypoint Exchange assets <br/> • # of APIs managed by Anypoint Platform <br/> • # of System APIs managed by Anypoint Platform <br/> • # of API clients registered for access to APIs <br/> • # of API implementations deployed to Anypoint Platform <br/> • # of API invocations <br/> • # or fraction of lines of code covered by automated tests in CI/CD pipeline <br/> • Ratio of info/warning/critical alerts to number of API invocations <br/><br/>
+32. `iii.` - `The mule application start successfully. Web client requests can be received at URI on port 2222 and on port 3333`
+    1. **Explicación:** In this case both the flows can start without any error and requests can be received on both ports. <br/><br/>
+33. `iv.` - `Route 1`
+    1. **Explicación:** Only one of the routes in the Choice router executes, meaning that the first expression that evaluates to true triggers that route’s execution and the others are not checked. If none of the expressions are true, then the default route executes. <br/> [Reference Doc](https://docs.mulesoft.com/mule-runtime/latest/choice-router-concept). <br/><br/>
+34. `iii.` - `payload and all variable`
+    1. **Explición:** Query parameters are replaced when external HTTP call is invoked. <br/><br/>
+35. `i.` - `"Blk"`
+    1. **Explicación:** First thing first, Payload will be "default as **blue**" as initial value of payload is null. <br/> _Once it goes into the Choice router it will be go first in the Default and will have the payload "Red" -> then it will go to color flow or "itself"_ <br/> The payload after the listener will be now "Red" and not "Blue" anymore since we have now a value of "Red" then first choice will be met in Choice Router, so payload will be "Blk" <br/> 1st Payload = Blue <br/> 2nd Payload = Red (In default) <br/> 3rd Payload = Red (After Listener) <br/> 4th Payload = "Blk" (Inside the First choice) <br/> 5th Payload = "Blk" <br/><br/>
+36. 
