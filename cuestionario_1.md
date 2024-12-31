@@ -280,4 +280,136 @@ fun addKV( object: Object, key: String, value: Any) =
     2. Timeout Error
     3. ["Blue", "Red", "Blk"]
     4. "Green" <br/><br/>
-36. 
+36. What of the below is not a feature of API Notebooks?
+    1. Creates a client for an API
+    2. Creates a mock service for an API
+    3. Perform authenticated live calls on a real server
+    4. API documentation <br/><br/>
+37. How would you debug Mule applications?
+    1. By Deploying apps on production
+    2. Checking RAML specifications
+    3. Using Debugger Component
+    4. Use third party debugger application <br/><br/>
+38. Refer to the exhibits. The main flow is configured with three error handlers. A web client submits the request to the HTTP Listener and the HTTP Request throws an HTTP:NOT_FOUND error. What response message is returned? <br/> ![pic_34](img/cues_1/pic_34.webp)
+    1. HTTP:NOT_FOUND
+    2. Other Error
+    3. Success - main flow
+    4. APP: API RESOURCE NOT FOUND <br/><br/>
+39. What should this endpoint return considering the API is build using standard practices? <br/> `http://dev.acme.com/api/patients?year=2022`
+    1. All patients
+    2. Patient with id 2022
+    3. Patients from year 2022
+    4. No patients <br/><br/>
+40. Which of the module is imported automatically in Dataweave scripts?
+    1. dw::Runetime
+    2. dw::System
+    3. dw::core
+    4. dw::Systemcore <br/><br/>
+41. What object type is returned by the File List operation?
+    1. Array of Mule Event Objects
+    2. Array of String File Names
+    3. Object of Mule Event Objects
+    4. Object of String of File of Names <br/><br/>
+42. Refer to the exhibits. What payload is logged at the end of the main flow? <br/> ![pic_35](img/cues_1/pic_35.webp)
+    1. order4
+    2. `[1,2,3,4]`
+    3. order1order2order3order4
+    4. `[order1, order2, order3, order4]` <br/><br/>
+43. Which out of below is not an asset?
+    1. Exchange
+    2. Connector
+    3. Example
+    4. Template <br/><br/>
+44. A company has defined two RAML fragments, Book Data Type and Book Example to be used in APIs. <br/> What would be valid RAML to use these fragments? <br/> ![pic_36](img/cues_1/pic_36.webp) <br/> ![pic_37](img/cues_1/pic_37.webp)
+
+```yaml
+# i.
+
+#%RAML 1.0title: 
+Bookstypes: 
+Book: bookDataType.raml
+/books: 
+ post:  
+   body:   
+     application/json:    
+        type: Book     
+          examples:        
+            input: !include bookDataType.raml
+   responses:      
+     201:           
+       body:          
+         application/json:           
+            example:              
+               message: Book added
+```
+
+```yaml
+# ii.
+
+#%RAML 1.0title: 
+Bookstypes: 
+Book: ABC/Examples/bookDataType.raml
+/books: 
+ post:  
+   body:   
+     application/json:    
+        type: Book     
+          examples:        
+            input: ABC/Examples/bookExample.raml  
+   responses:      
+     201:           
+       body:          
+         application/json:           
+            example:              
+               message: Book added
+```
+
+```yaml
+# iii.
+
+#%RAML 1.0title: 
+Bookstypes: 
+Book: !include bookDataType.raml
+/books: 
+ post:  
+   body:   
+     application/json:    
+        type: Book     
+          examples:        
+            input: !include bookDataType.raml
+   responses:      
+     201:           
+       body:          
+         application/json:           
+            example:              
+               message: Book added
+```
+
+```yaml
+# iv.
+
+#%RAML 1.0
+title: Books
+types:  
+    Book: !include bookDataType.raml
+/books:   
+    post:    
+      body:      
+         application/json:      
+         type: Book      
+         examples:        
+               input: !include bookExample.raml    
+      responses:      
+         201:        
+           body:           
+             application/json:           
+                example:             
+                    message: Book added
+```
+
+45. Refer to the exhibits. In the choice router, the When expression for the domestic shipping route is set to <br/> `"#[payload= "FR"]"` <br/> What is the output of logger after the execution of choice router is completed? <br/> ![pic_38](img/cues_1/pic_38.webp)
+    1. "International"
+    2. "US"
+    3. A dataweave syntax error
+    4. "Domestic" <br/><br/>
+46. 
