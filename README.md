@@ -3,8 +3,7 @@
 Preguntas de entrenamiento para pasar la certificación, por favor no rolarlas a nadie sin concentimiento previo jajajaja
 
 > [!IMPORTANT]
-> Para aprobar cada cuestionario considera un mínimo del 80%
-> De obtener menos se considera REPROBATORIO
+> Para aprobar cada cuestionario considera un mínimo del `80%`, de obtener menos se considera REPROBATORIO
 
 ---
 
