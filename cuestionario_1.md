@@ -456,4 +456,84 @@ types:
 {step2amount=40}
 ```
 
-49. 
+49. Mule application contains ActiveMQ JMS dependency. Mule application was compiled and run successfully in Anypoint Studio. <br/> The mule application must now be exported from Anypoint Studio and shared with other developer. <br/> What export options should be selected to create the smallest JAR file that can be imported into other developer's Anypoint Studio and run successfully?
+    1. Select both Attach Project Sources and Include project modules and dependencies option
+    2. Select only Attach Project Sources only
+    3. Select the Include project modules and dependencies option only
+    4. De-select both Attach Project Sources and Include project modules and dependencies option <br/><br/>
+50. Refer to the exhibits. What is valid text to set the user field in the Database connector configuration to the username value specified in the config.yaml file? <br/> ![pic_44](img/cues_1/pic_44.webp)
+    1. #[db:username]
+    2. #[db.username]
+    3. ${db.username}
+    4. ${db:username} <br/><br/>
+51. How are query parameters dynamically passed to an outbound REST request using an HTTP Request operation?
+    1. As flow variable
+    2. In the Mule event's Payload
+    3. As query parameters in the HTTP Request Operation
+    4. As URI parameters in the HTTP Request Operation <br/><br/>
+52. Refer to the exhibits. What can be added to the flow to persist data across different flow executions? <br/> ![pic_45](img/cues_1/pic_45.webp)
+    1. Key/value pair in Object store
+    2. Session variables
+    3. Properties of mule runtime app Object
+    4. Properties of Mule runtime flow Object <br/><br/>
+53. Refer to the exhibit. This RAML specification includes a resource and method to retrieve accounts by account_type and industry. <br/> What is the correct URI to get all retail finance accounts? <br/> ![pic_46](img/cues_1/pic_46.webp)
+    1. `/accounts?account_type:retail?industry:finance`
+    2. `/accounts/retail/finance`
+    3. `/accounts?account_type:retail&industry:finance`
+    4. `/accounts?account_type=retail&industry=finance` <br/><br/>
+54. Mule application contains two HTTP Listeners, each configured for different API endpoints: <br/> `http://trainingdemo.com/apis/orders` and `http://trainingdemo.com/apis/customers`. <br/> What base path value should be set in an HTTP Listener config element so that it can be used to receive requests for both the API endpoints mentioned above?
+    1. /apis/
+    2. /apis/orders|customers
+    3. /apis/?
+    4. /apis/* <br/><br/>
+55. Refer to the exhibits. What is written to the records.csv when the flow executes? <br/> ![pic_47](img/cues_1/pic_47.webp)
+    1. An error message
+    2. JSON payload
+    3. payload converted to csv
+    4. Nothing <br/><br/>
+56. Refer to the exhibits. In the color flow , both the variable named color and payload are set to "red". <br/> An HTTP POST request is then sent to the decideColor flow's HTTP Listener. <br/> What is the payload value at the Logger component after the HTTP request completes? <br/> ![pic_48](img/cues_1/pic_48.webp) <br/> ![pic_49](img/cues_1/pic_49.webp)
+    1. red
+    2. error message
+    3. white
+    4. blue <br/><br/>
+57. Refer to the exhibits. The web client sends a POST request to the ACME Order API with an XML payload. An error is returned. <br/> What should be changed in the request so that a success response code is returned to the web client? <br/> ![pic_50](img/cues_1/pic_50.webp)
+    1. Set a request header with the name Content-Type to a value of application/octet-stream
+    2. Set a request header with the name Content-Type to a value of application/xml
+    3. Set a response header with the name Content-Type to a value of application/xml
+    4. Set a response header with the name Content-Type to a value of application/octet-stream <br/><br/>
+58. Refer to the exhibits. APIKit router is used to generate the flow components for RAML specification. <br/> The Mule application must be available to REST clients using the two URL's <br/> `http://localhost:8081/internal` and `http://localhost:8081/external` <br/> How many APIKit Router components are generated to handle requests to every endpoint defined in RAML specification?
+    ```yaml
+    Library.raml
+    /books
+            get:      
+            post:
+    /order:
+            get:
+            patch:
+    /members
+            get:
+    ```
+    1. 3
+    2. 5
+    3. 2
+    4. 4
+59. Refer to the exhibit. A Mule event is composed of a hierarchy of objects. Where in the hierarchy are variables stored? <br/> ![pic_51](img/cues_1/pic_51.webp)
+    1. Mule message
+    2. Mule message attributes
+    3. Mule message payload
+    4. Mule event <br/><br/>
+60. What is the trait name you would use for specifying client credentials in RAML?
+    1. cannot be specified in RAML
+    2. client-id-required
+    3. client-id
+    4. headers <br/><br/>
+
+### Fin del cuestionario de prueba 1 😀
+
+---
+
+### [Respuestas y explicaciones](respuestas_1.md)
+
+### [Cuestionario de prueba 2](cuestionario_2.md)
+
+---

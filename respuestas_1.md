@@ -111,4 +111,44 @@
                 </batch:process-records> </batch:job>
         ```
         As we are clear with above concepts , now lets understand this solution step by step. <br/> **1) Batch Step (Less than 50)** <br/> Accept expression for this batch step is less than 50. Hence elements which will go in this batch step are amount value 40 and 2. Hence output of logger in first batch step is <br/> {amount=140} <br/>{amount=102} <br/> **2) Batch Step (Greater than 20)** Accept condition for this batch step is greater than 20. Note that input amount values for this batch step are 100 , 140 and 102 (last two values have been updated in batch step less than 50) <br/> As all values satisfy this condition out put of second logger is <br/> {step2amount=100} <br/> {step2amount=140} <br/> {step2amount=102} <br/> Hence correct answer to this question is <br/> ![pic_10](img/resp_1/pic_10.webp) <br/><br/>
-49. 
+49. `ii.` - `Select only Attach Project Sources only`
+    1. **Explicación:** You must keep the **Attach Project Sources** option selected to be able to import the packaged JAR file back into a Studio workspace. <br/> Deselect the **Include project modules and dependencies** option. <br/> This option skips bundling the actual modules and external dependencies required to run the Mule application in a Mule runtime engine, creating a lightweight JAR file package that does not include any dependencies specified in the Mule application’s pom.xml file. <br/> The generated JAR file is not a functional deployable archive and cannot be deployed to a Mule runtime engine, but instead offers a way to archive only the source files that make up the Mule application. This is the same as using the -lightWeightPackage flag when packaging using the Mule Maven Plugin and is useful if you want to distribute your project to other Studio installations because it only keeps a reference to all its dependencies. When you import a lightweight package into Studio, all your dependencies are automatically downloaded. <br/><br/>
+50. `iii.` - `${db.username}`
+    1. **Explicación:** <h3>Use the Properties in your Application</h3> Once you have configured your properties file and added it to your project, you can reference its attributes by using a syntax like this: ${propertyContainer.propertyName}. <br/> Based on the http request configuration, to use the path and port values the syntax is ${http.path} and ${http.port} respectively. <br/> For example, you can configure your Global HTTP Request configuration to use the values defined in the properties file. <br/> ![pic_11](img/resp_1/pic_11.png) <br/><br/>
+51. `iii.` - `As query parameters in the HTTP Request Operation`
+    1. **Explicación:** <h3>HTTP Request Connector</h3> The HTTP Request Connector provides the most practical way to consume an external HTTP service. When sending HTTP requests, you can choose what method to use (GET, POST, etc) and may include a body, headers, attachments, query parameters, form parameters and URI parameters. The response is then received by the connector and is passed on to the next element in your flow. <br/> [Reference Doc](https://docs.mulesoft.com/http-connector/1.6/). <br/> You can dynamically pass query parameters by following below steps <br/> In General > Request > Query Parameters, click the plus icon (+) to add a parameter to a request. Type a name and value for the parameter or use a DataWeave expression to define the name and value. <br/> ![pic_12](img/resp_1/pic_12.webp) <br/><br/>
+52. `i.` - `Key/value pair in Object store`
+    1. **Explicación:** An object store is a facility for storing objects in or across Mule applications. Mule runtime engine (Mule) uses object stores to persist data for eventual retrieval. Internally, Mule uses object stores in various filters, routers, and other message processors that need to store states between messages. <br/> Object stores are available in all deployment targets. If you deploy your application to CloudHub, you can also use Object Store V2.
+53. `iv.` - `/accounts?account_type=retail&industry=finance`
+    1. **Explicación:** Query parameters are a defined set of parameters attached to the end of a url. They are extensions of the URL that are used to help define specific content or actions based on the data being passed. To append query params to the end of a URL, a ‘?’ Is added followed immediately by a query parameter. <br/> To add multiple parameters, an ‘&’ is added in between each. <br/> ![pic_13](img/resp_1/pic_13.webp) <br/><br/>
+54. `iv.` - `/apis/*`
+    1. **Explicación:** The correct answer is /apis*/ . With this value we can configure both HTTP Listeners to expose below endpoints to "receive requests" below. <br/> 1) `http://trainingdemo.com/apis/orders` ---> Listener 1 <br/>2) `http://trainingdemo.com/apis/customers` -----> Listener 2 <br/> Please note wildcards wont work in HTTP Listener configurations. They will work only when you configure path in HTTP Listener <br/> Lets revisit about few things related to HTTP Listener path configurations. <h3>Paths</h3> Check answer `16.`
+55. `ii.` - `JSON payload`
+    1. **Explicación:** Transform Message Add _write_date_ is converting payload in JSON format and same JSON payload is available to file write processor. However, if the payload is a different format (for example, not CSV) , you can place the transformation inside the Write operation to generate content that will be written without producing a side effect on the message in transit. This is not done in this case. By default, the connector writes whatever is in the message payload. Hence JSON payload will be written to file.
+56. `iii.` - `white`
+    1. **Explicación:** Here's the flow: <br/> 1) Color variable is red <br/> 2) Payload is set to red <br/> 3) Child flow is called using HTTP request which means variables are not available in called flow <br/> 4) Hence set payload activity will set payload to white as color variable is null <br/> 5) Payload returned in main flow is white. <br/> 6) So lastly output of logger is white.
+57. `ii.` - `Set a request header with the name Content-Type to a value of application/xml`
+    1. **Explicación:** The **HTTP 415 Unsupported Media Type** client error response code indicates that the server refuses to accept the request because the payload format is in an **unsupported** format. The format problem might be due to the request's indicated **Content-Type** or **Content-Encoding** , or as a result of inspecting the data directly. As per RAML input is expected in application/xml. <br/> [More info](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/415). <br/><br/>
+58. `ii.` - `5`
+    1. **Explicación:** Correct answer is 5 as APIkit for REST generates a backend flow for each resource-action pairing in a RAML file. <h3>About Generating RAML-based Flows</h3> From a RAML specification, the APIkit scaffolding technique typically generates the following components in APIkit 4.x: <br/> ![pic_14](img/resp_1/pic_14.png) <br/> - An archetype <br/> Basic configuration files plus a Mule XML configuration (Mule code) <br/> - An implementation of the API <br/> - HTTP listener and APIkit router: For routing and binding to RAML resources. <br/> - An API Console : For simulating calls to the API using the mocking service. <br/> - Flows : A mock implementation. Later you need to add the business logic to the flows. <br/> In Studio, the APIkit project looks something like this: <br/> ![pic_15](img/resp_1/pic_15.png) <br/> **A flow is generated for each resource method:** <br/> ![pic_16](img/resp_1/pic_16.png) <br/> The generated, minimal flows meets the communication operations required by a REST contract. <br/><br/>
+59. `iv.` - `Mule event`
+    1. **Explicación:** Variables are stored under Mule event. Please refer to below image for the hierarchy. <br/> ![pic_17](img/resp_1/pic_17.png) <br/><br/>
+60. `ii.` - `client-id-required`
+    1. **Explicación:** Correct answer is client-id-required <br/> client-id-required enforces clients to add client_id and client_secret. <br/> Please refer to below steps. <br/> 1) Add a section called traits: at the root level to define query parameters:
+        ```yaml
+        traits:
+        - client-id-required:
+        queryParameters:
+        client_id:type: 
+        stringclient_secret:
+        type: string
+        ```
+       <br/> 2) Reference the trait in each of the methods to specify that each of the methods require these query parameters. After each method in the RAML file, add is: [client-id-required]. For example: <br/>
+        ```yaml
+        /users:
+        get:
+        is: [client-id-required]
+        description: 
+        
+        Gets a list of JSON Placeholder users
+        ```
