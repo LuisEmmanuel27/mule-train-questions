@@ -8,3 +8,7 @@ Preguntas de entrenamiento para pasar la certificación, por favor no rolarlas a
 ---
 
 # [Primer cuestionario](cuestionario_1.md)
+
+---
+
+# [Segundo cuestionario](cuestionario_2.md)
