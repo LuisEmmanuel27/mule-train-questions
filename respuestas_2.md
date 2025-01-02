@@ -40,4 +40,20 @@
     1. **Explicación:** * Watermark allows the poll scope to poll for new resources instead of getting the same resource over and over again. <br/> * The database table must be ordered so that the "watermark functionality" can move effectively in the ordered list. Watermark stores the current/last picked up "record id." <br/> * If the Mule application is shut down, it will store the last picked up "record id" in the Java Object Store and the data will continue to exist in the file. This watermark functionality is valuable and enables developers to have increased transparency. <br/> * Developers do not need to create code to handle caching; it is all configurable! * There are two columns and both are unique but user_id can't guaranty sequence whereas date_time will always be in increasing order and table content can easily be ordered on the basis of last processed date_time. <br/><br/>
 11. `iii.`
     1. **Explicación:** Attributes in the incoming xml payload are always accessed using `@`. Similarly `*item` is required as we have multiple items in the request. <br/><br/>
-12. 
+12. `iii.` - `3`
+    1. **Explicación:** <h3>HTTP Listener Configuration</h3> To use an HTTP listener, you need to declare a configuration with a corresponding connection. This declaration establishes the HTTP server that will listen to requests. <br/> Additionally, you can configure a base path that applies to all listeners using the configuration.
+        ```xml
+        <http:listener-config name="HTTP_Listener_config" basePath="api/v1">  
+        <http:listener-connection host="0.0.0.0" port="8081" />
+        </http:listener-config>
+        ```
+        In this case three configurations will be required each for port 8000, 6000 and 7000. <br/> There would be three global elements defined for HTTP connections. <br/> Each HTTP connection will have host and port. One example shown below with host as localhost and port 6000 <br/> ![pic_3](img/resp_2/pic_3.webp) <br/><br/>
+13. `iv.`
+    1. **Explicación:** [Reference Doc](https://docs.mulesoft.com/mule-runtime/latest/mule-app-properties-to-configure). <br/><br/>
+14. `ii.` - `At most one`
+    1. **Explicación:** One cloudhub worker can host one Mule application only. <br/><br/>
+15. `iii.` - `Changing worker size`
+    1. **Explicación:** Mule applications can be scaled vertically by changing worker size. Mule applications can be scaled horizontally by adding more workers. <h3>Horizontal Scaling</h3> Multiple workers of small vCore capacity helps to improve throughput of high frequency small payload type applications. For example your application is a http API Proxy, and you have a lot of clients sending frequent requests, but each request is small payload and utilizes only little cpu or memory. Horizontally scaling will allow you to have more capacity as well as redundancy. <h3>Vertical Scaling</h3> Large single vCore workers are useful for high CPU intensive integrations or APIs. Ones that are processing large payloads but small number of actual requests. If you want these single large payloads to be processed even quicker, increase the vCore size. <br/> [Reference Doc](https://docs.mulesoft.com/cloudhub/cloudhub-architecture). <br/><br/>
+16. `ii.` - `Select only below option` <br/> `2) Include project module and dependencies`
+    1. **Explicación:** You can choose **Attach Project Sources** to include metadata that Studio requires to reimport the deployable file as an open Mule project into your workspace. You must keep the **Attach Project Sources** option selected to be able to import the packaged JAR file back into a Studio workspace. But requirement here is to create smallest deployable archive that will successfully deploy to Cloudhub. Hence we can ignore this option. <br/> We need to select Include project module and dependencies <br/> As actual modules and external dependencies required to run the Mule application in a Mule runtime engine <br/> Hence correct answer is `ii.` <br/><br/>
+17. 

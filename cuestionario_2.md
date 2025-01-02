@@ -147,4 +147,57 @@ item: value.itemId
 } ) a
 ```
 
-12. 
+12. Refer to the exhibits. The two Mule configuration files belong to the same Mule project. Each HTTP Listener is configured with the same host string. Port number, path and operation values are shown in display names. What is the minimum number of global elements that must be defined to support all these HTTP Listeners? <br/> ![pic_8](img/cues_2/pic_8.webp)
+    1. 1
+    2. 2
+    3. 3
+    4. 4 <br/><br/>
+13. Refer to the below exhibit. A Mule application configures a property placeholder file named config.yaml to set some property placeholders for an HTTP connector. <br/> What is the valid properties placeholder file to set these values? <br/> ![pic_9](img/cues_2/pic_9.webp)
+
+```yaml
+# i.
+http.host = localhost 
+http.port = 8081
+```
+
+```yaml
+# ii.
+{  
+    http:   
+        basePath: "api",   
+        port: "8081",   
+        host: " localhost" 
+}
+```
+
+```yaml
+# iii.
+http:  
+    host = "localhost"  
+    port = "8081"
+```
+
+```yaml
+# iv.
+http:  
+    basepath: "api"  
+    host : "localhost"  
+    port : "8081"
+```
+
+14. How many Mule applications can run on a CloudHub worker?
+    1. Depends
+    2. At most one
+    3. At least one
+    4. None of these <br/><br/>
+15. How can we scale deployed Mule application vertically on Cloudhub?
+    1. Option 1 and 2 both can be used
+    2. Mule applications can be scaled only horizontally
+    3. Changing worker size
+    4. Adding multiple workers <br/><br/>
+16. A mule project contains MySQL database dependency . The project is exported from Anypoint Studio so that it can be deployed to Cloudhub.  What export options needs to be selected to create the smallest deployable archive that will successfully deploy to Cloudhub?
+    1. Select only below option <br/> 1) Attach project sources
+    2. Select only below option <br/> 2) Include project module and dependencies
+    3. Select both the options <br/> 1) Attach project sources <br/> 2) Include project module and dependencies
+    4. No need to select any of the below options: <br/> 1) Attach project sources <br/> 2) Include project module and dependencies
+17. 
