@@ -109,4 +109,10 @@
         toUpper("hello")
         ```
         The argument to a DataWeave function can be any DataWeave expression. This function also outputs "HELLO": <br/> In view of above explanation correct answer to this question is `​fun toUpper(userName) = upper(userName)` <br/><br/>
-28. 
+28. `iv.` - `Request access to the API in Anypoint Exchange`
+    1. **Explicación:** Correct answer is `iv`. This way we can get client ID and Client secret which we can use to access the API. <h3>Request Access</h3> To register a client application to an existing API instance or API Group instance, the client application requests access. When the owner of the instance approves the request, a contract is created between the client application and the instance, and the client application is registered. <br/> Instances that are protected by a client ID enforcement policy require client applications to provide a client ID and optional client secret. The client ID and client secret credentials are automatically created when the client application is registered. <br/><br/>
+29. `iv.` - `/customers/1234`
+    1. **Explicación:** URI parameter (Path Param) is basically used to identify a specific resource or resources . For eg : the URL to get employee details on the basis of employeeID will be GET /employees/{employeeID} where employees is resource and {employeeID} is URI parameter. Hence option 1 is the correct answer <br/><br/>
+30. `ii.` - `#["Content-Type: " ++ attributes.headers.'content-type']`
+    1. **Explicación:** It is the only correct choice due to two reasons. <br/> - Concatenation is always with ++ sign and not with + sign which makes other option wrong <br/> - Headers can be accessed with attributes.headers and not with only headers which makes remaining option wrong <br/><br/>
+31. 

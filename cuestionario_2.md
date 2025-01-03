@@ -286,4 +286,19 @@ get:
     2. fun toUpper(userName) -> upper(userName)
     3. var toUpper(userName) = upper(userName)
     4. ​fun toUpper(userName) = upper(userName) <br/><br/>
-28. 
+28. The new RAML spec has been published to Anypoint Exchange with client credentials. <br/> What is the next step to gain access to the API?
+    1. Create a new client application
+    2. No additional steps needed
+    3. Email the owners of the API
+    4. Request access to the API in Anypoint Exchange <br/><br/>
+29. A RAML specification is defined to manage customers with a unique identifier for each customer record. What URI does Mulesoft recommend to uniquely access the customer identified with the unique ID 1234?
+    1. /customers/custid=1234
+    2. /customers?custid=1234
+    3. /customers?operation=get&custid=1234
+    4. /customers/1234 <br/><br/>
+30. A flow contains an HTTP Listener as the event source. What is the DataWeave expression to log the Content-Type header using a Logger component?
+    1. #["Content-Type: " ++ headers.'content-type']
+    2. #["Content-Type: " ++ attributes.headers.'content-type']
+    3. #["Content-Type: " + attributes.headers.'content-type']
+    4. #["Content-Type: " + headers.'content-type'] <br/><br/>
+31. 
