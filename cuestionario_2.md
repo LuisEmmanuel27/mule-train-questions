@@ -199,5 +199,91 @@ http:
     1. Select only below option <br/> 1) Attach project sources
     2. Select only below option <br/> 2) Include project module and dependencies
     3. Select both the options <br/> 1) Attach project sources <br/> 2) Include project module and dependencies
-    4. No need to select any of the below options: <br/> 1) Attach project sources <br/> 2) Include project module and dependencies
-17. 
+    4. No need to select any of the below options: <br/> 1) Attach project sources <br/> 2) Include project module and dependencies <br/><br/>
+17. Refer to the exhibits. The Batch Job processes, filters, and aggregates records. What is the outcome from the Logger component when the flow is executed? <br/> ![pic_10](img/cues_2/pic_10.webp)
+    1. [10,20] [30,40] [50,60]
+    2. [10,20,30,40,50,60]
+    3. [20,40] [60]
+    4. [20,40,60] <br/><br/>
+18. A shopping API contains a method to look up store details by department. <br/> To get the information for a particular store, web clients will submit requests with a query parameter named department and uri parameter named storeId <br/> What is valid RAML snippet that supports requests from a web client to get a data for a specific storeId and department name?
+
+```yaml
+# i.
+get:	
+    uriParameter:		
+            {storeId}:	
+    queryParameter:		
+            department:
+```
+
+```yaml
+# ii.
+/department:   
+    get:     
+        uriParameter:       
+        storeId:
+```
+
+```yaml
+# iii.
+get:  
+    queryParameter:    
+            department:  
+    uriParameter:    
+            {storeId}:
+```
+
+```yaml
+# iv.
+/{storeId}:  
+        get:   
+            queryParameter:    
+              department:
+```
+
+19. A web client submits a request to http://localhost:8081?accountType=personal. <br/> The query parameter is captured using a Set Variable transformer and stored to a variable named accountType. What is the correct DataWeave expression to log accountType?
+    1. Account Type: #[message.inboundProperties.accountType]
+    2. Account Type: #[flowVars.accountType]
+    3. Account Type: #[vars.accountType]
+    4. Account Type: # [attributes.accountType] <br/><br/>
+20. In the Database On Table Row operation, what does the Watermark column enable the On Table Row operation to do?
+    1. To avoid duplicate processing of records in a database.
+    2. To enable duplicate processing of records in a database
+    3. To delete the most recent records retrieved from a database to enable database caching
+    4. To save the most recent records retrieved from a database to enable database caching <br/><br/>
+21. Refer to the exhibits. The mule application implements a REST API that accepts GET request from two URL's which are as follows <br/> 1) http://acme.com/order/status <br/> 2) http://acme.com/customer/status <br/> What path value should be set in HTTP listener configuration so that requests can be accepted for both these URL's using a single HTTP listener event source? <br/> ![pic_11](img/cues_2/pic_11.webp)
+    1. *[order,customer]/status
+    2. ?[order,customer]/status
+    3. */status
+    4. *status <br/><br/>
+22. Where would you create SLA Tiers for an API?
+    1. Anypoint Studio
+    2. Exchange
+    3. API Manager
+    4. RAML Specifications <br/><br/>
+23. What path setting is required for an HTTP Listener endpoint to route all requests to an APIKit router?
+    1. /
+    2. /*
+    3. /{}
+    4. /{*} <br/><br/>
+24. What is not true about application properties?
+    1. Application properties can be encrypted
+    2. Application properties can be overridden with system properties
+    3. Application properties can be defined in .yaml file only
+    4. Application properties provide easier way to manage configurable values <br/><br/>
+25. Which of the below is used by Mule application to manage dependencies which make sharing the projects lightweight and easier?
+    1. Global element
+    2. Cloudhub
+    3. POM.xml
+    4. Configuration file <br/><br/>
+26. What is the purpose of the api:router element in APIkit?
+    1. Creates native connectors using a 3rd party Java library
+    2. Validates requests against RAML API specifications and routes them to API implementations
+    3. Validates responses returned from API requests and routes them back to the caller
+    4. Serves as an API implementation <br/><br/>
+27. A function named toUpper needs to be defined that accepts a string named userName and returns the string in uppercase. <br/> What is the correct DW code to define the toUpper function?
+    1. var toUpper(userName) -> upper(userName)
+    2. fun toUpper(userName) -> upper(userName)
+    3. var toUpper(userName) = upper(userName)
+    4. ​fun toUpper(userName) = upper(userName) <br/><br/>
+28. 

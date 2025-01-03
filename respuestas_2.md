@@ -56,4 +56,57 @@
     1. **Explicación:** Mule applications can be scaled vertically by changing worker size. Mule applications can be scaled horizontally by adding more workers. <h3>Horizontal Scaling</h3> Multiple workers of small vCore capacity helps to improve throughput of high frequency small payload type applications. For example your application is a http API Proxy, and you have a lot of clients sending frequent requests, but each request is small payload and utilizes only little cpu or memory. Horizontally scaling will allow you to have more capacity as well as redundancy. <h3>Vertical Scaling</h3> Large single vCore workers are useful for high CPU intensive integrations or APIs. Ones that are processing large payloads but small number of actual requests. If you want these single large payloads to be processed even quicker, increase the vCore size. <br/> [Reference Doc](https://docs.mulesoft.com/cloudhub/cloudhub-architecture). <br/><br/>
 16. `ii.` - `Select only below option` <br/> `2) Include project module and dependencies`
     1. **Explicación:** You can choose **Attach Project Sources** to include metadata that Studio requires to reimport the deployable file as an open Mule project into your workspace. You must keep the **Attach Project Sources** option selected to be able to import the packaged JAR file back into a Studio workspace. But requirement here is to create smallest deployable archive that will successfully deploy to Cloudhub. Hence we can ignore this option. <br/> We need to select Include project module and dependencies <br/> As actual modules and external dependencies required to run the Mule application in a Mule runtime engine <br/> Hence correct answer is `ii.` <br/><br/>
-17. 
+17. `iii.` - `[20,40] [60]`
+    1. **Explicación:** Behavior with aggregator configured with fixed size <br/> In this scenario, the batch step sends the processed records to an aggregator, which starts processing the records and buffering them until the configured aggregator’s size is reached. After that, the aggregator sends the aggregated records to the stepping queue. <br/> ![pic_4](img/resp_2/pic_4.png) <br/> The batch job builds record blocks of the configured block size and sends them to their corresponding batch step for processing. Each batch step receives one or more record blocks and starts processing them in parallel. After the batch step processes a record, the batch step sends the record to the aggregator for further processing. The aggregator continues processing records until the number of aggregated records reaches the configured aggregator’s size. <br/> * Batch scope has filter criteria which says payload mod 2 = 0 which means only 2, 4 and 6 will be in batch scope. <br/> * So payload for each of these will be incremented by 10. <br/> * Aggregator has batch size defined as 2. So it will process in batch of two records. <br/> * Therefore, option 3 is correct answer. <br/> [Reference doc](https://docs.mulesoft.com/mule-runtime/latest/batch-processing-concept). <br/><br/>
+18. `iv.`
+    1. **Explicación** <h3>URI Parameters</h3> Look at below example.
+        ```yaml
+        /student:  
+            /{id}:  
+            /name/{name}:
+        ```
+        Here, the braces { } around property names define URI parameters. They represent placeholders in each URI and do not reference root-level RAML file properties as we saw above in the baseUri declaration. The added lines represent the resources /student/_{id}_ and /student/name/_{name}_. <h3>Query Parameters</h3> Now we'll define a way to query the foos collection using query parameters. Note that query parameters are defined using the same syntax that we used above for data types:
+        ```yaml
+        /student:  
+                get:    
+                    description: List all Foos matching query criteria, if provided;                             
+                                    otherwise list all students    
+                    queryParameters:      
+                            name?: string      
+                            ownerName?: string
+        ```
+        Based on the above information , below is the only option which defines storeid as uri parameter and department as query parameter.
+        ```yaml
+        /{storeId}:  
+                get:   
+                    queryParameter:    
+                      department:
+        ```
+        <br/>
+19. `iii.` - `Account Type: #[vars.accountType]`
+    1. **Explicación:** vars: Keyword for accessing a variable, for example, through a DataWeave expression in a Mule component, such as the Logger, or from an Input or Output parameter of an operation. If the name of your variable is myVar, you can access it like this: vars.myVar <br/><br/>
+20. `i.` - `To avoid duplicate processing of records in a database.`
+    1. **Explicación:** If a watermark column is provided, the values taken from that column are used to filter the contents of the next poll, so that only rows with a greater watermark value are returned. If an ID column is provided, this component automatically verifies that the same row is not picked twice by concurrent polls. <br/><br/>
+21. `iii.` - `*/status`
+    1. **Explicación:** The path of an HTTP listener can be static, which requires exact matches, or feature placeholders. Placeholders can be wildcards (`*`), which match against anything they are compared to, or parameters (`{param}`), which not only match against anything but also capture those values on a URI parameters map. <br/><br/>
+22. `iii.` - `API Manager`
+    1. **Explicación:** [Reference doc](https://docs.mulesoft.com/mule-gateway/policies-mule3-tutorial-manage-an-api#to-add-the-tier) <br/> Steps to create SLA Tier are as follows: <br/> 1) In API Manager, in API Administration, click a version. <br/> 2) Check that the API supports resource-level policies: On the API version details page, in Status, click Configure Endpoint, and check that Type is RAML. <br/> 3) Choose the SLA Tiers, and click Add SLA Tier. Set up limit on SLA tier <br/><br/>
+23. `ii.` - `/*`
+    1. **Explicación:** /* is correct syntax to configure HTTP Listener endpoint <br/><br/>
+24. `iii.` - `Application properties can be defined in .yaml file only`
+    1. **Explicación:** Application properties can be defined in .yaml or in .properties file. <br/><br/>
+25. `iii.` - `POM.xml`
+    1. **Explicación:** POM.xml contains info about the project and configuration details used by Maven to build the project. <h3>pom.xml File</h3> `<project root>/pom.xml` <br/> Project Object Model file that defines settings for a Maven project describing an application. It includes all settings necessary to build the application such as build plugin configurations. Note that the `pom.xml` exists on a per-project basis and is distributed along with a project. <br/><br/>
+26. `ii.` - `Validates requests against RAML API specifications and routes them to API implementations`
+    1. **Explicación:** The APIkit router is a key message processor that validates requests against the RAML definition, enriches messages, for example by adding default values to the messages, and routes requests to a flow. "Bad request" is returned if the request is invalid, for example, and "Not implemented" is returned if the RAML resource that you request is not associated with a flow. <br/><br/>
+27. `iv.` - `​fun toUpper(userName) = upper(userName)`
+    1. **Explicación:** <h3>Define DataWeave Functions</h3> You can define your own DataWeave functions using the fun declaration in the header of a DataWeave script. For example, this a simple DataWeave function accepts a single String argument that outputs `"HELLO"`: <br/>
+        ```js
+        %dw 2.0
+        output application/json
+        fun toUpper(aString) = upper(aString)
+        ---
+        toUpper("hello")
+        ```
+        The argument to a DataWeave function can be any DataWeave expression. This function also outputs "HELLO": <br/> In view of above explanation correct answer to this question is `​fun toUpper(userName) = upper(userName)` <br/><br/>
+28. 
