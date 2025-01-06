@@ -115,4 +115,26 @@
     1. **Explicación:** URI parameter (Path Param) is basically used to identify a specific resource or resources . For eg : the URL to get employee details on the basis of employeeID will be GET /employees/{employeeID} where employees is resource and {employeeID} is URI parameter. Hence option 1 is the correct answer <br/><br/>
 30. `ii.` - `#["Content-Type: " ++ attributes.headers.'content-type']`
     1. **Explicación:** It is the only correct choice due to two reasons. <br/> - Concatenation is always with ++ sign and not with + sign which makes other option wrong <br/> - Headers can be accessed with attributes.headers and not with only headers which makes remaining option wrong <br/><br/>
-31. 
+31. `ii.` - `application-types.xml`
+    1. **Explicación:** Metadata is stored in application-types.xml flle located under src/main/resources. <br/> Mule 4 applications contain an application-types.xml file, which is where metadata around your data types is stored. For example, if you create a new CSV type, that metadata will be added to this file. This new file is easy to share, commit, and merge when conflicts arise, which enables you to do more metadata-driven development. <br/> [Reference doc](https://docs.mulesoft.com/mule-runtime/latest/intro-studio#metadata-storage). <br/><br/>
+32. `iii.` - `4`
+    1. **Explicación:** <h3>Start APIkit Project and Generate Mule Flows</h3> When you start a new APIkit project in Studio, you have the option to import an API definition file. When you import the file, the APIkit scaffolding mechanism generates different flows for the API. <br/> The following graphics illustrate the APIkit scaffolding: <br/> ![pic_5](img/resp_2/pic_5.png) <br/> **APIKIt Creates a separate flow for each resource method**. Hence 4 private flows would be generated. <br/> [Reference doc](https://docs.mulesoft.com/mule-runtime/latest/build-application-from-api). <br/><br/>
+33. `iv` - `#[payload == 'US']`
+    1. **Explicación:** The Choice router dynamically routes messages through a flow according to a set of DataWeave expressions that evaluate message content. Each expression is associated with a different routing option. The effect is to add conditional processing to a flow, similar to an `if`/`then`/`else` code block in most programming languages. <br/> Only one of the routes in the Choice router executes, meaning that the first expression that evaluates to `true` triggers that route’s execution and the others are not checked. If none of the expressions are `true`, then the default route executes. <h3>Properties of `<when>`</h3> PropertyDescription <br/> Expression (expression) <br/> Expression in DataWeave language to evaluate input. <br/> If the expression evaluates to true, this routing option is used:
+        ```xml
+        <when expression="#[vars.language == 'Spanish']" >
+        ```
+        Option `iv.` is the correct syntax as others are incorrect because of below reasons <br/> * Single = is not the correct syntax to validate the condition. It should be == <br/> * If keyword is not required in when condition. <br/><br/>
+34. `i.` - `Centre for Enablement`
+    1. Centre for Enablement **(C4E)** is an IT operating model that enables an enterprise to build reusable assets, accumulate API’s, leverage best practices and knowledge to enable self service and efficient delivery in the organization and implement new solutions faster. <br/> [Reference doc](https://www.salesforce.com/blog/what-is-a-center-for-enablement/). <br/><br/>
+35. `iv.` - `6666`
+    1. **Explicación:** By default, Debugger listens for incoming TCP connections on localhost port 6666 You can change this in a project's run configuration. <br/> [Reference doc](https://docs.mulesoft.com/studio/latest/visual-debugger-concept#configure-studio-debugger). <br/><br/>
+36. `iv.` - `The HTTP Listener is listening on port 8081`
+    1. **Explicación:** Cloudhub expose services on port 8081 and override value in http.port with this one.
+        ```bash
+        21:15:53.148 08/08/2021 Worker-0 ArtifactDeployer.start.01 INFOListening for connections on 'http://0.0.0.0:8081'
+        ```
+        <br/>
+37. `i.` - `payload`
+    1. **Explicación:** Attributes never move to child flow when using a HTTP Request connector. Only in case of Flow reference
+38. 

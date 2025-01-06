@@ -301,4 +301,39 @@ get:
     2. #["Content-Type: " ++ attributes.headers.'content-type']
     3. #["Content-Type: " + attributes.headers.'content-type']
     4. #["Content-Type: " + headers.'content-type'] <br/><br/>
-31. 
+31. In which of the below files, metadata stored in a Mule project?
+    1. Config.yaml file
+    2. application-types.xml
+    3. POM.xml file
+    4. Global Element <br/><br/>
+32. Refer to the exhibits. How many private flows does APIKIt generate from RAML specification? <br/> ![pic_12](img/cues_2/pic_12.webp)
+    1. 2
+    2. 1
+    3. 4
+    4. 3 <br/><br/>
+33. Refer to the exhibits. What is valid expression for the Choice router's When expression to route the events to the domesticShipping flow? <br/> ![pic_13](img/cues_2/pic_13.webp)
+    1. #[payload = 'US']
+    2. #[ if(payload == 'US')]
+    3. #[ if(payload = 'US')]
+    4. #[payload == 'US'] <br/><br/>
+34. What does C4E stands for in MuleSoft recommended IT operating model?
+    1. Centre for Enablement
+    2. Centre for Excellence
+    3. Centre for Engagement
+    4. Centre for Empowerment <br/><br/>
+35. What is the default port used by Mule application debugger configuration in Anypoint Studio?
+    1. 8082
+    2. 8080
+    3. 7777
+    4. 6666 <br/><br/>
+36. A Mule application's HTTP Listener is configured with the HTTP protocol. The HTTP listeners port attribute is configured with a property placeholder named http.port. The mule application sets the http.port property placeholder's value to 9090 <br/> The Mule application is deployed to CloudHub without setting any properties in the Runtime manager Properties tab and a log message reports the status of the HTTP listener after the Mule application deployment completes. <br/> After the mule applications is deployed, what information is reported in the worker logs related to the port on which the Mule application's HTTP Listener listens?
+    1. The HTTP Listener is listening on port 80
+    2. The HTTP Listener failed to bind to the port and is not listening for connections
+    3. The HTTP Listener is listening on port 9090
+    4. The HTTP Listener is listening on port 8081
+37. The main flow contains an HTTP Request. The HTTP Listeners and HTTP Request use default configurations. <br/> A web client sends a GET request to the main flow's HTTP Listener that includes a modelName query parameter. <br/> What values are accessible in the child flow? <br/> ![pic_14](img/cues_2/pic_14.webp)
+    1. payload
+    2. All mule events
+    3. payload and all variables
+    4. payload and all attributes
+38. 
