@@ -341,4 +341,54 @@ get:
     2. Attributes
     3. Payload
     4. Inbound Properties <br/><br/>
-39. 
+39. A Mule project contains a DataWeave module like _WebStore.dwl_ that defines a function named loginUser which accepts login id (String) as an argument. The module file is located in the project's `src/main/resources/libs/etl` folder.  What is correct DataWeave code to import all of the _WebStore.dwl_ file's functions and then call the loginUser function for the purpose of login for the below user? <br/> `"Todd.Pal@mulesoft.com"`
+
+```js
+// i.
+import libs.etl.WebStore
+---
+loginUser("Todd.Pal@mulesoft.com"
+```
+
+```js
+// ii.
+import * from libs::etl
+---
+WebStore::loginUser("Todd.Pal@mulesoft.com")
+```
+
+```js
+// iii.
+import libs.etl
+---
+WebStore.loginUser("Todd.Pal@mulesoft.com")
+```
+
+```js
+// iv.
+import * from libs::etl::WebStore
+---
+loginUser("Todd.Pal@mulesoft.com")
+```
+
+40. What module and operation will throw an error if a Mule events payload is not number ?
+    1. Validation modules Is not Number operation
+    2. Validation modules Is Number operation
+    3. None of these
+    4. Filter modules Is Number operation <br/><br/>
+41. Refer to exhibits .In the execution of the Scatter-Gather , the flow route completes after 10 seconds and the flow2 route completes in 40 seconds. How many seconds does it take for the Scatter-Gather to complete? <br/> ![pic_15](img/cues_2/pic_15.webp)
+    1. 40
+    2. 20
+    3. 10
+    4. 50 <br/><br/>
+42. Refer to the exhibit. The main flow contains a Flow Reference for the child flow. What values are accessible in the child flow after a web client submits a request to http://localhost:8081/order?color=red? <br/> ![pic_16](img/cues_2/pic_16.webp)
+    1. All Mule Events
+    2. payload
+    3. payload and all variables
+    4. payload and all attributes <br/><br/>
+43. A web client sends a GET request to the HTTP Listener and the HTTP Request throws an error. <br/> What payload and status code are returned to the web client? <br/> ![pic_17](img/cues_2/pic_17.webp)
+    1. ​Response body: "ERROR1" Default response status code: 200
+    2. Response body: "START" Default response status code: 200
+    3. Error response body: error.description Default error response status code: 500
+    4. Response body: "END" Default response status code: 200 <br/><br/>
+44. 
