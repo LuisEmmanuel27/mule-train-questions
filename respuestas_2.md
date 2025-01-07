@@ -136,5 +136,7 @@
         ```
         <br/>
 37. `i.` - `payload`
-    1. **Explicación:** Attributes never move to child flow when using a HTTP Request connector. Only in case of Flow reference
-38. 
+    1. **Explicación:** Attributes never move to child flow when using a HTTP Request connector. Only in case of Flow reference <br/><br/>
+38. `ii.` - `Attributes`
+    1. **Explicación:** Query parameters , URI parameters and headers are some of examples which are part of attributes. <br/> ![pic_15](img/resp_2/pic_6.png) <br/><br/>
+39. 

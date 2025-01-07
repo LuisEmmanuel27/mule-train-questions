@@ -330,10 +330,15 @@ get:
     1. The HTTP Listener is listening on port 80
     2. The HTTP Listener failed to bind to the port and is not listening for connections
     3. The HTTP Listener is listening on port 9090
-    4. The HTTP Listener is listening on port 8081
+    4. The HTTP Listener is listening on port 8081 <br/><br/>
 37. The main flow contains an HTTP Request. The HTTP Listeners and HTTP Request use default configurations. <br/> A web client sends a GET request to the main flow's HTTP Listener that includes a modelName query parameter. <br/> What values are accessible in the child flow? <br/> ![pic_14](img/cues_2/pic_14.webp)
     1. payload
     2. All mule events
     3. payload and all variables
-    4. payload and all attributes
-38. 
+    4. payload and all attributes <br/><br/>
+38. Where are values of query parameters stored in the Mule event by the HTTP Listener?
+    1. Variables
+    2. Attributes
+    3. Payload
+    4. Inbound Properties <br/><br/>
+39. 
