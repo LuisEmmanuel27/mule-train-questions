@@ -187,5 +187,19 @@
         INFO 2021-06-09 19:15:02,486 [[MuleRuntime].uber.06: [validationtest].batch-job-validationtestBatch_Job-work-manager @6de10f3e] [processor: validationtestFlow/processors/1/route/0/route/0/aggregator/processors/0; event: bfb751e1-9939-11eb-9f69-02053763653a] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [“\”E\””]
         ```
         **Batch aggregator value is 3**. Hence in first time it will print [“A”, “C”, “D”] and in next iteration it will print [ “E” ]. <br/><br/>
-53. 
-
+53. `iv.` - `Patients with name as Tinker and surname as Bell`
+    1. **Explicación:** Query parameters are a defined set of parameters attached to the end of a url. They are extensions of the URL that are used to help define specific content or actions based on the data being passed. To append query params to the end of a URL, a ‘?’ Is added followed immediately by a query parameter. <br/> To add multiple parameters, an ‘&’ is added in between each. <br/> Hence coming back to question, endpoint would return Patients with name as Tinker and (and is very important here) surname as Bell. <br/><br/>
+54. `iii.` - `Error - main flow`
+    1. **Explicación:** Error in validation component will get processed by Processer level On Error Propagate block and then error will be rethrown which will get processed by flow level error handler which will set payload to "Error- main flow". <br/> Hence correct answer is Error - main flow <br/> 1) Request is received by HTTP listener <br/> 2) Try scope gets executed <br/> 3) The validator component in the Try scope creates an Error Object because the payload is not null. <br/> 4) The On Error Propagate handles the error. The payload is set to “Error – Try scope” <br/> 6) “Error – Try scope” is returned to the 'On Error Continue' block. Main flow execution stops. Payload is set to "Error - main flow" <br/> 7) “Error - main flow” is returned to the requestor in the body of the HTTP request. HTTP Status Code: 200 <br/> Reference Diagram though not exactly same, conditions are similar. They will help you answer any new question on error handling in real exam: <br/> ![pic_12](img/resp_2/pic_12.webp) <br/><br/>
+55. `iii.` - `An operation`
+    1. **Explicación:** For each method of the RAML specification , REST connect module provide an operation. <br/><br/>
+56. `iii.` - `WSDL file`
+    1. **Explicación:** Web Services Description Language · WSDL is used to describe SOAP based web services <br/><br/>
+57. `iv.`
+    1. **Explicación:** As can be seen in RAML, POST expects input in application/json format which eliminates two of the options as two options are in xml format. <br/> Now out of the two remaining options, one has id field in request which is only mentioned for get response and not for POST request. Hence id field is not expected in POST request. <br/><br/>
+58. `iii.` - `Allowed methods`
+    1. Allowed methods is an optional configuration. If nothing is specified then all HTTP methods are supported. <br/> Rest all are mandatory. <br/><br/>
+59. `iii.` - `API Manager`
+    1. **Explicación:** Organization Administrators can approve/revoke/delete SLA tier access requests via API Manager only. <h3>Approve or Reject Access Requests</h3> After users request access to your API instance from Anypoint Exchange, you can manually approve or reject requests from API Manager. <h3>Task Prerequisite</h3> To manually approve or reject requests, you must have: <br/> Configured the SLA tier for the application <br/> The Organization Administrator, API Manager Environment Administrator, or the Manage Contracts permission <h3>Manually Approve Requests</h3> To approve or reject requests to access your API: <br/> In API Manager, click **API Administration**. <br/> Click the name of the API instance to which you are requesting access. <br/> From the configuration page for the API instance, click **Contracts** from the left menu. <br/> The request appears: <br/> ![pic_13](img/resp_2/pic_13.png) <br/> Click either **Approve** or **Reject** to approve or reject the access request, respectively. <br/><br/>
+60. `ii.` - `vars."customer"."firstName"`
+    1. **Explicación:** Please note that you can also access firstName using this syntax vars.customer.firstName.

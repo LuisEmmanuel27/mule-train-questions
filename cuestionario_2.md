@@ -436,4 +436,96 @@ loginUser("Todd.Pal@mulesoft.com")
     2. [ “D”, “E” ]
     3. [ “A”, “C”, “D”, “E” ]
     4. [ [“A”, “C”, “D”], [“E”] ] <br/><br/>
-53. 
+53. What should this endpoint return? `http://dev.acme.com/api/patients?name=Tinker&surname=Bell`
+    1. Patients with either name as Tinker or surname as Bell
+    2. Patient with name as Tinker
+    3. Patient with surname as Bell
+    4. Patients with name as Tinker and surname as Bell <br/><br/>
+54. Refer to the exhibits. The validation component in the Try scope block throws an error. What response message is returned to a client request sent to the main flow's HTTP Listener? <br/> ![pic_22](img/cues_2/pic_22.webp)
+    1. Validation Error
+    2. Success - main flow
+    3. Error - main flow
+    4. Error - Try scope <br/><br/>
+55. A REST connect module is generated for a RAML specification. and then the rest connect module is imported in mule application in Anypoint Studio. For each method of the RAML specification , what does the REST connect module provide?
+    1. An event source
+    2. A flow
+    3. An operation
+    4. A scope <br/><br/>
+56. As a part of project requirement , you want to build an API for a legacy client. Legacy client can only consume SOAP webservices. Which type the interface documentation can be prepared to meet the requirement?
+    1. RAML file to define SOAP services
+    2. JSON file
+    3. WSDL file
+    4. plain text file documenting API's
+57. Refer to the exhibit. According to below RAML specification, which of the option represents the correct request data expected by the POST/accounts endpoint? <br/> ![pic_23](img/cues_2/pic_23.webp)
+
+```json
+// i.
+{ 
+    "id": "777744" 
+    "name": "GoerdiLa Forge", 
+    "address": "1 Westland CA", 
+    "customer_since": "2014-01-04", 
+    "balance": "1229.29"
+}
+```
+
+```xml
+<!--ii.-->
+<item>   
+    <id>777744</id>   
+    <address>1 Westland CA</address>   
+    <balance>1229.29</balance>   
+    <bank_agend_id>12556</bank_agend_id>   
+    <customer_since>2014-01-04</customer_since>
+</item>
+```
+
+```xml
+<!--iii.-->
+<item>   
+    <address>1 Westland CA</address>   
+    <balance>4829.29</balance>   
+    <bank_agend_id>12556</bank_agend_id>   
+    <customer_since>2014-01-04</customer_since>   
+    <name>GoerdiLa Forge</name>
+</item>
+```
+
+```json
+// iv.
+{ 
+    "name": "GoerdiLa Forge", 
+    "address": "1 Westland CA", 
+    "customer_since": "2014-01-04", 
+    "balance": "4829.29", 
+    "bank_agend_id": "12556"
+}
+```
+
+58. Which of the below is not the mandatory configurations for HTTP Listener?
+    1. Path
+    2. HTTP host in Connector Configuration
+    3. Allowed methods
+    4. HTTP port in Connector Configuration <br/><br/>
+59. From which application , Organization Administrators can approve/revoke/delete SLA tier access requests?
+    1. API Gateway
+    2. API Exchange
+    3. API Manager
+    4. API Portal <br/><br/>
+60. Refer to the exhibits. Set Variable transformer is set the firstName and lastName of the customer as shown in below images. <br/> What is the correct Dataweave expression which can be added in message attribute of a Logger activity to access firstName (which in this case is Madhav) from the incoming event? <br/> ![pic_24](img/cues_2/pic_24.webp) <br/> ![pic_25](img/cues_2/pic_25.webp)
+    1. firstName
+    2. vars."customer"."firstName"
+    3. customer.firstName
+    4. vars."customer.firstName"
+
+### Fin del cuestionario de prueba 2 😁
+
+---
+
+### [Respuestas y explicaciones](respuestas_2.md)
+
+### [Cuestionario de prueba 1](cuestionario_1.md)
+
+### [Cuestionario de prueba 3](cuestionario_3.md)
+
+---
