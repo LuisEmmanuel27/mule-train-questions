@@ -149,5 +149,43 @@
     1. **Explicación:** <h3>Flow Reference Component</h3> Flow Reference routes the Mule event to another flow or subflow, executes all processors in the referenced flow, and then routes the event back within the same Mule application. The following diagram shows the order of processing when one flow references another: <br/> ![pic_7](img/resp_2/pic_7.png) <br/> When the main flow is triggered, the Mule event travels through and executes the flow until the event reaches the Flow Reference. The event then travels through and executes the referenced flow from beginning to end, and then returns to the main flow. <br/> This process enables you to treat the entire referenced flow like a single component in your current flow. <br/> [Referece doc](https://docs.mulesoft.com/mule-runtime/latest/flowref-about). <br/><br/>
 43. `i.` - `​Response body: "ERROR1" Default response status code: 200`
     1. **Explicación:** This questions tests your knowledge on On Error- Continue scope. <br/> If the error is handled using On-Error Continue, it will not raise an error back to the calling flow and continue to the next processor after “flow-ref” and continues further process as it is. But it will not continue to other processors in the flow where the error is handled. <br/> Always remember, this point is very important. **On-Error Continue will continue only to the next processor of the calling flow but it will not continue within the same flow.** <br/> **On-Error Continue scope always returns a success response to the next level.** <br/> In Given scenario: <br/> 1. Set Payload activity will set payload to “START” <br/> 2. As mentioned in question HTTP request throws an error hence it will create an Error object and control will be passed to On-Error Continue scope <br/> 3. Set Payload activity will set payload to “ERROR1” <br/> 4. As explained above , On-Error Continue will always return success response which goes with status code as 200 and payload will be ERROR1 as set in above step. <br/> Correct answer is **Response body: "ERROR1" Default response status code: 200** <br/> As scope used here is On Error Continue , status code of 200 will be sent back to the client with the payload as ERROR1 <br/> ![pic_8](img/resp_2/pic_8.webp) <br/><br/>
-44. 
+44. `iii.` - `Event Processors`
+    1. **Explicación:** Process section is must to get code compiled successfully in Anypoint Studio. Process section must have one or more processors <br/> ![pic_9](img/resp_2/pic_9.webp) <br/><br/>
+45. `iii.` - `Gold`
+    1. **Explicación:** Gold is not valid category for connector types. <br/> [Reference doc](https://www.salesforce.com/content/dam/web/en_us/www/documents/legal/Agreements/versioning-back-support-policy.pdf#anypoint-connectors). <br/><br/>
+46. `i.` - `All processing of the batch job stops`
+    1. **Explicación:** In case of an error , batch job completes in flight steps and stops further processing. <br/><br/>
+47. `iv.` - `WHERE city = :city AND state = :state`
+    1. **Explicación:** This question validates knowledge on using dynamic queries in DB select operation. <h3>Configure Dynamic Queries in the Select Operation</h3> When you need to parameterize not only the `WHERE` clause but also parts of the query itself (for example, queries that compare tables that depend on a condition, or complex queries for which the project table columns need to vary), you can configure dynamic queries. <br/> In the following example, you configure a dynamic query by using a full expression with a string in which the table depends on a variable `$(vars.table)`. Although some of the query text is dynamic (`"SELECT * FROM $(vars.table)`), the `WHERE` clause still defines the `WHERE` condition using input parameters: in this case, `WHERE name = :name`. <br/> In your Studio flow, select the **Select** operation. <br/> In the operation configuration screen, set the **SQL Query Text** field to `SELECT * FROM $(vars.table) WHERE name = :name`. <br/> Set the **Input Parameters** field to `{'name' : payload}`. <br/> The following screenshot shows the configuration in Studio: <br/> ![pic_10](img/resp_2/pic_10.png) <br/> In the XML editor, the `<db:sql>` configuration looks like this:
+        ```xml
+        <set-variable variableName="table" value="PLANET"/>
+        <db:select config-ref="dbConfig">    
+        <db:sql>
+            #["SELECT * FROM $(vars.table) WHERE name = :name"]
+        </db:sql>    
+        
+        <db:input-parameters>        
+            #[{'name' : payload}]    
+        </db:input-parameters></db:select>
+        ```
+        You can apply input parameters only to parameters in a `WHERE` clause. To modify any other part of the query, use the DataWeave interpolation operator. <br/><br/>
+48. `ii.` - `Pick First`
+    1. **Explicación:** Pick First is not valid type. Rest all are valid type of event processor. <br/><br/>
+49. `iii.` - `First Successful Router`
+    1. **Explicación:** The First Successful router iterates through a list of configured processing routes until one of the routes executes successfully. This is sequential execution. In all other options mentioned in the question, we can achieve parallel execution. <br/><br/>
+50. `iii.` - `Specify throttling , security and other policies`
+    1. **Explicación:** API Gateway is responsible for below functions. <br/> 1) Determine which traffic is authorized <br/> 2) Meter the traffic <br/> 3) Logs transaction <br/> 4) Apply throttling and other policies (Not specifying. These are specified in API Manager) <br/> ![pic_11](img/resp_2/pic_11.webp) <br/><br/>
+51. `iii.` - `examples: !include examples/StudentExample.raml`
+    1. **Explicación:** To modularize the API definition, RAML provides several mechanisms, one of which is the `!include` property. To keep the API definition concise, you can include external content, such as documentation, schemas, and frequently used patterns outside the definition itself. The parser interprets `!include` as if the content of the externally-hosted file or a URL were declared in-line. <br/> To use the fragments in RAML you have to include the exact path(copy the path) of that fragment you want to use as shown below <br/> Correct as correct syntax is <br/> `examples: !include examples/StudentExample.raml` <br/><br/>
+52. `i.` - `[ “E” ]`
+    1. **Explicación:** This question validates your knowledge on Batch Processing when we use accept expression and aggregator activity. <h3>Refining Batch Steps Processing</h3> You can refine the work that a batch step performs upon the records it processes. <br/> You can set **filters** upon batch steps to only accept some records for processing. <br/> You can **aggregate** records in groups, sending them as bulk upserts to external sources or services. <h3>Batch Filters</h3> You can apply one or more filters as attributes to any number of batch steps. <br/> Imagine a batch job whose first batch step checks if a Salesforce contact exists for a record, and a second batch step that updates each existing Salesforce contact with new information. You can apply a filter to the second batch step to ensure it only processes records that didn’t fail during the first batch step. <h3>Batch Aggregator</h3> You can use the batch aggregator scope to accumulate a subset of records from a batch step, and bulk upsert them to an external source or service. <br/> For example, rather than upserting each lead (i.e., record) in a batch to Salesforce, you can configure a Batch Commit to accumulate, say, 200 records and then upsert all of them to Salesforce in one chunk. <br/> [Reference doc](https://docs.mulesoft.com/mule-runtime/latest/batch-filters-and-batch-aggregator). <br/> Based on above information <br/> Logs would look like:
+        ```bash
+        INFO 2021-06-09 19:14:56,039 [[MuleRuntime].uber.06: [validationtest].batch-job-validationtestBatch_Job-work-manager @6de10f3e] [processor: validationtestFlow/processors/1/route/0/route/0/aggregator/processors/0; event: bfb751e1-9939-11eb-9f69-02053763653a] org.mule.runtime.core.internal.processor.LoggerMessageProcessor:
+
+        [“\”A\””,“\”C\””,“\”D\””]
+        —-
+        INFO 2021-06-09 19:15:02,486 [[MuleRuntime].uber.06: [validationtest].batch-job-validationtestBatch_Job-work-manager @6de10f3e] [processor: validationtestFlow/processors/1/route/0/route/0/aggregator/processors/0; event: bfb751e1-9939-11eb-9f69-02053763653a] org.mule.runtime.core.internal.processor.LoggerMessageProcessor: [“\”E\””]
+        ```
+        **Batch aggregator value is 3**. Hence in first time it will print [“A”, “C”, “D”] and in next iteration it will print [ “E” ]. <br/><br/>
+53. 
 

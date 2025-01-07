@@ -391,4 +391,49 @@ loginUser("Todd.Pal@mulesoft.com")
     2. Response body: "START" Default response status code: 200
     3. Error response body: error.description Default error response status code: 500
     4. Response body: "END" Default response status code: 200 <br/><br/>
-44. 
+44. What is minimal requirement in a flow for a Mule application to compile?
+    1. Error handlers
+    2. Source and processors both
+    3. Event Processors
+    4. Event Source <br/><br/>
+45. Which of the below is not a valid category for connector type?
+    1. Community
+    2. Premium
+    3. Gold
+    4. Select <br/><br/>
+46. A Batch Job scope has five batch steps. An event processor throws an error in the second batch step because the input data is incomplete. What is the default behavior of the batch job after the error is thrown?
+    1. All processing of the batch job stops
+    2. Error is ignored
+    3. Event processing continues to the next batch step.
+    4. Batch is retried <br/><br/>
+47. Refer to the exhibit. How should be the where clause written for the configured input parameters in such a way that it achieves below SQL query? <br/> `SELECT * from accounts WHERE city=attributes.queryParams.city and state=attributes.queryParams.state` <br/> ![pic_18](img/cues_2/pic_18.webp) <br/> ![pic_19](img/cues_2/pic_19.webp)
+    1. `WHERE city = attributes.city AND state = attributes.state`
+    2. `WHERE city := ${city} AND state := ${state}`
+    3. `WHERE city := city AND state := state`
+    4. `WHERE city = :city AND state = :state` <br/><br/>
+48. Which of the following is invalid type of event processor which can be used as a router?
+    1. First Successful
+    2. Pick First
+    3. Round Robin
+    4. Choice <br/><br/>
+49. Which of the below activity doesn't support parallel execution?
+    1. Batch job
+    2. Parallel For Each
+    3. First Successful Router
+    4. Scatter-Gather Router <br/><br/>
+50. Which of the below is not the function of API Gateway?
+    1. Logs all transactions , collecting and tracking analytics data
+    2. Determine which traffic is authorized to pass through the API to backend services
+    3. Specify throttling , security and other policies
+    4. Meter the traffic flowing through <br/><br/>
+51. A RAML example fragment named StudentExample.raml is placed in the examples folder in an API specification project. What is the correct syntax to reference the fragment?
+    1. `examples: #import StudentExample.raml`
+    2. `examples: #import examples/StudentExample.raml`
+    3. `examples: !include examples/StudentExample.raml`
+    4. `examples: !include StudentExample.raml` <br/><br/>
+52. Refer to the exhibits. The input array of strings is processed by the batch job that processes, filters, and aggregates the values. What is the last message logged by the Logger component after the batch job completes processing? <br/> ![pic_20](img/cues_2/pic_20.webp) <br/> ![pic_21](img/cues_2/pic_21.webp)
+    1. [ “E” ]
+    2. [ “D”, “E” ]
+    3. [ “A”, “C”, “D”, “E” ]
+    4. [ [“A”, “C”, “D”], [“E”] ] <br/><br/>
+53. 
