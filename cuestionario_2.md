@@ -516,7 +516,7 @@ loginUser("Todd.Pal@mulesoft.com")
     1. firstName
     2. vars."customer"."firstName"
     3. customer.firstName
-    4. vars."customer.firstName"
+    4. vars."customer.firstName" <br/><br/>
 
 ### Fin del cuestionario de prueba 2 😁
 
