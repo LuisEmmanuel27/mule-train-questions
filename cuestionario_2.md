@@ -14,8 +14,7 @@ Segundo cuestionario de prueba para el examen de certificación de Mulesoft con 
 2. According to MuleSoft, what is the Center for Enablement’s role in the new IT operating model?
    1. Implements line of business projects to enforce common security requirements
    2. Creates and manages discoverable assets to be consumed by line of business developers
-   3. Implements line of business projects to enforce common security requirements
-   4. Centrally manages partners and consultants to implement line of business projects <br/><br/>
+   3. Centrally manages partners and consultants to implement line of business projects <br/><br/>
 3. As a part of requirement , application property defined below needs to be accessed as Dataweave expression. What is the correct expression to map it to port value?
    1. `{ port : p('db.port')}`
    2. `{ port : p['db.port']}`
