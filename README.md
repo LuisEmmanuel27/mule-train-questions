@@ -16,3 +16,9 @@ Preguntas de entrenamiento para pasar la certificación, por favor no rolarlas a
 ---
 
 # [Tercer cuestionario](cuestionario_3.md)
+
+---
+
+# [Cuarto cuestionario](cuestionario_4.md)
+
+---
