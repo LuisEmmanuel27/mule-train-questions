@@ -9,7 +9,8 @@
 7. `iv.`
 8. `iv.`
 9. `i.`
-10. `ii.`
+10. `ii.`:
+    1. **Explicación:** <br/> 1. El flujo de Mule está configurado para monitorear el directorio `/daily`. <br/> 2. El conector de archivo se activa con "On New or Updated File", lo que significa que detectará archivos nuevos o modificados. <br/> 3. Después de procesar el archivo, el flujo tiene un componente que establece el payload en "Finished". <br/> 4. El conector no especifica un procesamiento que modifique el contenido directamente en el archivo de entrada. Sin embargo, por defecto, Mule crea un archivo de respaldo con extensión `.bak` para los archivos que lee. <br/> Con base en esto, después de que el flujo se ejecuta por primera vez: <br/> - El archivo original `productUpdates.txt` (que contiene "START") se respalda como `productUpdates.txt.bak.` <br/> - El archivo de respaldo puede contener el texto "START" o "FINISHED", dependiendo de si Mule establece el contenido del backup explícitamente. <br/> Por tanto la respuesta es: **A file named productUpdates.txt.bak containing the text 'START** <br/><br/>
 11. `iii.`
 12. `i.`
 13. `iv.`
@@ -18,6 +19,7 @@
 16. `iv.`
 17. `i.`
 18. `iv.`
+    1. **Explicación:** <br/> El componente `is number` lanza un error de validación que, por diseño de Mule, se clasifica como un error de tipo **propagate**. <h3>Por que el cliente recibe `Validate - Payload is an integer`:</h3> El componente de validación lanza un error con este mensaje específico. <br/> Dado que el manejador de errores global no intercepta este tipo de error (porque es de tipo propagate), el mensaje del error pasa directamente al cliente. <br/> Ni el flujo `main` ni el manejador de errores global alteran este comportamiento, permitiendo que el mensaje del error sea la respuesta final. <br/><br/>
 19. `iii.`
 20. `i.`
 21. `iv.`
@@ -32,6 +34,7 @@
 30. `iii.`
 31. `ii.`
 32. `iii.`
+    1. *Explicación:* <h3>Explicación del Scope "For Each"</h3> El flujo de procesamiento en el scope "For Each" sigue los siguientes pasos: <br/> <ol><li>**Listener**: Recibe los datos de entrada</li> <li>**Set Payload**: Establece una lista con los valores _[2000, 200, 1000, 100]_.</li> <li>**For Each**: Itera sobre cada uno de los valores en la lista. Para cada iteración</li> <ul> <li>El valor actual se asigna como el nuevo payload.</li> <li>Se usa la función `Wait for "payload" milliseconds`, lo que hace que el procesamiento se detenga por el tiempo especificado en el payload antes de continuar.</li> <li>El valor se registra en el "Logger".</li></ul></ol> Dado que el "For Each" procesa secuencialmente cada valor en el orden en que aparecen en la lista, el registro de los valores ocurre en este orden: <br/> <ul> <li>2000</li> <li>200</li> <li>1000</li> <li>100</li></ul> Por lo tanto, la respuesta es **For Each scope: 2000, 200, 1000, 100**. <h3>Explicación del Scope "Batch Job"</h3> El flujo de procesamiento en el scope "Batch Job" sigue estos pasos: <br/> <ol><li>**Set Payload**: Se establece una nueva lista con los valores _[4000, 40, 3000, 300]_.</li> <li>**Batch Job**:<ul> <li>Está configurado con un `Batch Block Size` de `1`, lo que significa que cada registro se procesa individualmente en cada ciclo del batch.</li> <li>El orden de procesamiento en un "Batch Job" con `ORDERED_SEQUENTIAL` respeta el orden de la lista dada.</li> </ul></li> <li>Batch Step: Procesa cada uno de los valores en la lista</li> <ul> <li>Espera el número de milisegundos correspondiente al valor en el payload.</li> <li>Luego, registra el valor en el "Logger".</li> </ul> </ol> Dado que la lista en el Batch Job es `[4000, 40, 3000, 300]` y el procesamiento es secuencial, los valores son registrados en el siguiente orden: <br/> <ul> <li>40</li> <li>300</li> <li>3000</li> <li>4000</li></ul> Por lo tanto, la respuesta es **Batch Job scope: 40, 300, 3000, 4000**. <br/><br/>
 33. `i.`
 34. `iv.`
 35. `ii.`

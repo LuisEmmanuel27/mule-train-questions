@@ -145,10 +145,10 @@
     3. An exception
     4. false <br/><br/>
 32. ![pic_18](img/yt/pic_18.png)
-    1. For Each scope: 2000, 200, 1000, 100 <br/> For Each scope: 4000, 40, 3000, 300
-    2. For Each scope: 100, 200, 1000, 2000 <br/> For Each scope: 4000, 40, 3000, 300
-    3. For Each scope: 2000, 200, 1000, 100 <br/> For Each scope: 40, 300, 3000, 4000
-    4. For Each scope: 100, 200, 1000, 2000 <br/> For Each scope: 40, 300, 3000, 4000 <br/><br/>
+    1. For Each scope: 2000, 200, 1000, 100 <br/> Batch Job scope: 4000, 40, 3000, 300
+    2. For Each scope: 100, 200, 1000, 2000 <br/> Batch Job scope: 4000, 40, 3000, 300
+    3. For Each scope: 2000, 200, 1000, 100 <br/> Batch Job scope: 40, 300, 3000, 4000
+    4. For Each scope: 100, 200, 1000, 2000 <br/> Batch Job scope: 40, 300, 3000, 4000 <br/><br/>
 33. What is the output type of the DataWeave map function?
     1. Array
     2. String
