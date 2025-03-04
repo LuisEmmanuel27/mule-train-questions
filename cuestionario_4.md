@@ -158,7 +158,7 @@
     1. application/xml
     2. application/dw
     3. application/java
-    4. application/json
+    4. application/json <br/><br/>
 35. ![pic_20](img/yt/pic_20.png)
     1. Session variables
     2. Key-value pairs in the ObjectStore
