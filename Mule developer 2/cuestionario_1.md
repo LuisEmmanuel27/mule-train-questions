@@ -249,4 +249,41 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. "example-operation"
     4. "Exampleoperation"
 
-40. 
+40. A developer uses Anypoint Design Center to create multiple APIs with common customer definitions. The common data needs to be reused across an API and shared for use in future APIs. How can this be archived?
+    1. Create the data structure with appropriate versions within the API using RAML data types. <br/> Import the correct version into the API specification.
+    2. Create the data structure as an API fragment in API Designer and publish to Anypoint Exchange. <br/> Import the published version into the API specification and jkeep the old version of the API fragment in Anypoint Exchange.
+    3. Create an API library resource within the API. <br/> Create a common data structure to reuse across the different endpoints.
+    4. Delete the old version of the API fragment in Anypoint Exchange. <br/> Create the new data structure as an API fragment in API Designer and publish to Anypoint Exchange. <br/> Instruct users to use the new version.
+
+41. The process-api-flow calls the system-api-flow over HTTPS. Self-signed certificates are used to set up SSL/TLS connection. What is the minimum TLS configuration required to make the call work? <br/> ![img10](img/cues_1/img10.png)
+    1. system-api-flow's HTTPS Listener needs a keystore and process-api-flow's HTTPS Request needs a truststore.
+    2. process-api-flow's HTTPS Listener needs a keystore.
+    3. process-api-flow's HTTPS Listener needs a keystore and system-api-flow's HTTPS Listener needs a keystore.
+    4. system-api-flow's HTTPS Listener needs a keystore.
+
+42. A Mule application is configured to dynamically accept the package name it needs to log, as well as the package's log level, during application startup. Which two steps are required to make these actions happend? (choose two)
+    1. Set `<AsyncLogger name="${log package}" level="${log.level}" />` in the log4j2.xml file.
+    2. Set `<AsyncLogger name="${sys:log.package}" level="${sys:log.level}" />` in the log4j2.xml file.
+    3. Start Mule server by passing command-line arguments -Dsys:log.package=org.mule.runtime.logging and -Dsys:log:level=INFO
+    4. Set `<AsyncLogger name="${sys.log.package}" level="${sys.log.level}" />` in the log4j2.xml file.
+    5. Start Mule server by passing comand-line arguments -Dlog.package=org.mule.runtime.logging and -Dlog.level=INFO
+
+43. A Mule application uses API Autodiscovery to apply policies to an APIkit project running in a development enviroment. Which autodiscovery configuration must be changed to deploy this application to production using enviroment-specific credentials?
+    1. The client ID and client secret
+    2. The API ID only
+    3. No configuration change is required
+    4. the API ID and the client ID and client secret
+
+44. What is te correct code to use for an Munit test given the Spy scope must spy any HTTP request, and also confirm that the payload is null before the component is processed but not null after it is processed? <br/> ![img11](img/cues_1/img11_1.png)
+    1. ![img11](img/cues_1/img11_2.png)
+    2. ![img11](img/cues_1/img11_3.png)
+    3. ![img11](img/cues_1/img11_4.png)
+    4. ![img11](img/cues_1/img11_5.png)
+
+45. The command `mvn clean package` issued on a Mule application, which is a standalone Maven project, results in a build failure. Which two changes will result in a successful build? (choose two) <br/> ![img12](img/cues_1/img12_1.png)
+    1. Add to servers.xml <br/> (AP:Anypoint Platform) <br/> ![img12](img/cues_1/img12_2.png)
+    2. Add to settings.xml <br/> (AP:Anypoint Platform) <br/> ![img12](img/cues_1/img12_3.png)
+    3. Add to servers.xml <br/> ![img12](img/cues_1/img12_4.png)
+    4. Add to pom.xml <br/> ![img12](img/cues_1/img12_5.png)
+
+46. 

@@ -274,3 +274,41 @@ Other options like internal VM queues and JMS topics only work within the same r
 39. `iii.`
 
 When defining operations in an XML SDK component, the operation name becomes part of the XML tags used in the generated schema and in Mule configuration. Because of this, MuleSoft requires you to use a kebab-case naming convention (lowercase words separated by hyphens) for operation names so that the resulting XML elements are valid and unambiguous. Names like `example_operation` (underscore), `ExampleOperation` (camel case), or `Exampleoperation` (mixed case) can cause invalid XML tag names or unexpected schema generation errors. Therefore the correct convention to avoid XML tag generation problems is to use hyphenated kebab-case, e.g., `example-operation`.
+
+40. `ii.`
+
+When you need common data definitions reused now and across future APIs, the best practice in MuleSoft is to externalize those shared types into an API fragment and publish that fragment to Anypoint Exchange. API fragments can contain reusable components such as data types, traits, or libraries. Once published, other API specifications can import the fragment and reference the shared definitions using standard include or dependency mechanisms. This allows multiple APIs to reuse the same data structures without duplicating them, and you can manage versions of those fragments independently.
+
+41. `iv.`
+
+In this scenario, the process-api-flow is acting as the HTTPS client (using an HTTPS Request connector), and the system-api-flow is acting as the HTTPS server (using an HTTPS Listener).
+
+For an HTTPS connection to be established, the server must present a certificate during the TLS handshake. That certificate is stored in a keystore, which contains the server’s private key and corresponding certificate.
+
+Because self-signed certificates are being used, the minimum requirement to make the call work is:
+
+- The server side (system-api-flow’s HTTPS Listener) must have a keystore configured.
+- This keystore provides the certificate that will be presented to the client during the TLS handshake.
+
+42. `ii. & v.`
+
+To allow a Mule application’s log4j2.xml to accept the log package name and log level dynamically at startup, you must reference those values as Java system properties in the logging configuration and then actually provide them when Mule starts. This works because Log4j2 supports retrieving property values from the JVM’s system properties using the `sys:` prefix in the `${sys:...}` placeholder syntax.
+
+- Option 2 ensures that in the log4j2.xml file, the `<AsyncLogger>` elements use `${sys:log.package}` and `${sys:log.level}`, telling Log4j2 to look up those values from system properties at runtime.
+- Option 5 covers actually passing those system property values to Mule at startup with standard JVM `-D` arguments (`-Dlog.package=...` and `-Dlog.level=...`), so the variables referenced in the config are resolved.
+
+Together these two steps let you externalize the logger name and level so they’re provided at launch time rather than hard-coded in the XML.
+
+43. `iv.`
+
+To move a Mule application using API Autodiscovery from a development environment to production, you must update both the API ID (so it points to the correct API instance in API Manager for production) and the environment-specific Anypoint Platform credentials (client ID and client secret) that the Mule runtime uses to authenticate to API Manager.
+
+44. `i.`
+
+The official MuleSoft MUnit documentation shows how to use a Spy processor to monitor an http:request and assert conditions on the payload both before and after the request is executed. In the behavior section of the test you configure:
+
+- `<munit-tools:spy processor="http:request">` so that it spies every HTTP request in your flow.
+- Inside it, a `<munit-tools:before-call>` with an assert that checks `#[payload]` is `#[MunitTools::nullValue()]` before the component executes.
+- And a `<munit-tools:after-call>` with an assert that checks `#[payload]` is `#[MunitTools::notNullValue()]` after the component executes.
+
+45. 
