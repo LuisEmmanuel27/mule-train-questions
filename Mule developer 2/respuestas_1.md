@@ -311,4 +311,111 @@ The official MuleSoft MUnit documentation shows how to use a Spy processor to mo
 - Inside it, a `<munit-tools:before-call>` with an assert that checks `#[payload]` is `#[MunitTools::nullValue()]` before the component executes.
 - And a `<munit-tools:after-call>` with an assert that checks `#[payload]` is `#[MunitTools::notNullValue()]` after the component executes.
 
-45. 
+45. `ii. & iv.`
+
+To successfully build a Mule application that depends on assets hosted in Anypoint Exchange using Maven, you must:
+
+- Add the Anypoint Exchange repository and credentials to your settings.xml so Maven can authenticate and retrieve dependencies from the Exchange Maven Facade API. This is done by configuring a `<server>` entry with your Anypoint Platform username and password.
+- Add the Exchange Maven repository under `<repositories>` in your pom.xml so that Maven knows where to look for the artifacts that are published to Anypoint Exchange.
+
+46. `i.`
+
+To see the actual HTTP request and response traffic for a SOAP call made by the Web Service Consumer, you must enable wire logging on the underlying HTTP transport. MuleSoft’s official troubleshooting docs instruct you to add an async logger for the `org.mule.service.http.impl.service.HttpMessageLogger` package at DEBUG level in your `log4j2.xml`, which causes the HTTP request and response details, including SOAP messages, to be output in the logs.
+
+47. `ii.`
+
+To prevent property values from displaying in the Properties tab of Anypoint Runtime Manager for a CloudHub 2.0 deployment, MuleSoft provides a feature where you mark those properties as secure/hidden. You do this by specifying the property names under the `secureProperties` section in your deployment configuration (for CloudHub 2.0 this is typically in the Mule Maven Plugin configuration). At runtime, CloudHub encrypts and stores the hidden properties so that only the name shows and the value is masked in the UI.
+
+This hides the actual values in Runtime Manager while still resolving them at runtime.
+
+48. `ii.`
+
+The `<validation:is-empty-collection>` processor checks whether the payload is an empty collection. If the collection is not empty (and in this case the payload is `[""]`, which contains 1 element), the validation fails and throws a validation error with the configured message. There is no error handler shown in the flow to catch it, so the flow will end with that error and its message is reported.
+
+49. `iv.`
+
+When you need a **common error handler** that can be reused across multiple Mule applications, the recommended approach is to package that error handling logic inside a Mule plugin (**a library-style reusable component**). This plugin can then be added as a Maven dependency to any project that needs the shared error handler.
+
+50. `iii.`
+
+In MuleSoft, when a policy uses `<http-policy:execute-next/>`, it passes execution to the next policy or flow in the chain. If `<http-policy:execute-next/>` is absent or not reached, the chain stops there — the next policy and the flow are never invoked.
+Looking at Policy A (order 1):
+
+- It executes A1
+- Then hits a `<choice>` with the condition `#[true==false]` — this is always false
+- Since the condition is never met, `<http-policy:execute-next/>` inside the `<when>` block is never called
+- So execution stops after A2, which runs after the choice block
+
+Because execute-next is never triggered in Policy A, Policy B and the flow are never reached.
+The result is simply: A1 → A2
+
+51. `iv.`
+
+When you need to validate multiple fields with specific format rules (numeric ID, alphanumeric pattern, decimal precision), the most efficient approach is to use a JSON Schema validator.
+
+Here's why option 4 is best:
+
+- You transform the CSV to JSON (straightforward with DataWeave), then use the Validate Schema operation from the Mule Validation module against a JSON schema.
+- A JSON schema lets you declaratively define all field constraints at once — data types, patterns (regex for alphanumeric product number), minimum/maximum values, decimal precision, etc.
+- It validates all 100 records in a single, clean operation without needing loops or individual validation steps per field.
+
+52. `i.`
+
+The Web Service Consumer (WSC) connector in Mule handles SOAP calls. For two-way SSL (mutual TLS), both a keystore (client certificate) and truststore (server certificate validation) must be configured.
+The correct approach in MuleSoft is:
+
+- In the WSC global configuration, go to the Transport tab and set the transport to HTTP.
+- This transport points to an HTTP Request Configuration, which is where TLS settings live.
+- In that HTTP Request Configuration, you configure the TLS context with both the keystore (so the client can identify itself) and truststore (so the client can validate the server) — enabling full two-way SSL.
+
+53. `i.`
+
+The Scatter-Gather router executes all its routes in parallel and only returns control when every route has finished (either successfully or with an error). If one route fails, Mule throws a `MULE:COMPOSITE_ROUTING` error and does not automatically roll back any side effects from successful routes — it simply gathers results and errors for handling in your error handlers. To return all routes “to their original states” in the event of any failure, you must explicitly implement compensating logic in your flow or error handler: inspect the Scatter-Gather result, determine which route(s) succeeded, and implement your own undo/compensating actions for those successful routes.
+
+54. `iii.`
+
+55. `i. & iii.`
+
+To protect an API’s JSON request body from vulnerabilities, you must both:
+
+- Apply the JSON Threat Protection policy — This policy limits things like array size, object depth, string length, etc., so malformed or malicious JSON won’t overwhelm or harm the service. It helps prevent content-level attacks on the JSON request structure.
+
+- Define array data types as bounded — In your API specification (e.g., RAML), explicitly bounding arrays helps ensure clients can’t send unbounded (potentially huge) lists that could be abused or cause denial-of-service issues at runtime. This is a design-time protective measure.
+
+These two techniques help shield the API from excessive or dangerous input in the request body.
+
+56. `iv.`
+
+This question is about how error types propagate when a DataWeave expression error occurs inside a custom SDK module operation.
+The key concept: when an error occurs within the body of a custom operation, if that error is not one of the declared error types in the `<errors>` section, Mule does not wrap it under the module's namespace. Instead, the original Mule core error type is preserved and propagated as-is.
+
+Looking at the code:
+
+- The operation declares `<error type="CUSTOM_ERROR"/>` in its `<errors>` section
+- The body executes `#[1/0]`, which causes a DataWeave `EXPRESSION` error
+EXPRESSION is not listed as a handled/declared error in the operation's `<errors>` block
+- Since it's not mapped, the error bubbles up as the core Mule error: `MULE:EXPRESSION`
+
+57. `iii.`
+
+When a Cache scope uses an object store, by default it shares that store only with the Cache scope itself, not with other connectors. To prevent other components in the same application from accessing or manipulating that stored data, you should configure a private object store specifically inside the caching strategy (nested/inline) used by the Cache scope. This private store is local to that component instance and isn’t exposed as a global store that other modules could reference.
+
+58. `iii.`
+
+The scenario involves calling 3 independent backend systems (ERP, confirmation system, CRM) and then storing all results in a data warehouse. The key requirements are:
+
+- The 3 backend calls are independent of each other — no output from one is needed as input for another
+- All results must be collected together before saving to the data warehouse
+- Efficiency matters since this is an automated process replacing manual work
+
+Scatter-Gather is the right tool because it calls all routes in parallel, collects all results into a single aggregated payload, and only continues after all routes complete — making it natural to then save everything to the data warehouse in one step.
+
+59. `iv.`
+
+In Maven, a **Bill of Materials** (*BOM*) is a special type of POM used to centrally define and control the versions of a set of dependencies so that multiple projects can share the same consistent versions without each one declaring them manually. When a BOM is imported into a project’s `dependencyManagement` section, the listed versions are applied automatically to dependencies in that project without specifying versions there. This avoids duplication and ensures version consistency across many projects that inherit the BOM.
+
+By placing the Database module version in the BOM’s `<dependencyManagement>`, all projects that choose to include that dependency will automatically use the same version defined by the BOM, and you don’t need to declare the version in every child POM.
+
+60. `iv.`
+
+To understand customer experience in terms of latency, the chart that shows response times is most relevant. In Anypoint Monitoring’s API dashboards, the “Requests by Performance” chart visualizes how long requests take to complete (average response time grouped by path), which directly reflects latency and end-user experience as users connect through different CloudHub proxy regions. Monitoring this lets the customer compare performance across geographic regions and see where latency might be higher.

@@ -285,5 +285,101 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     2. Add to settings.xml <br/> (AP:Anypoint Platform) <br/> ![img12](img/cues_1/img12_3.png)
     3. Add to servers.xml <br/> ![img12](img/cues_1/img12_4.png)
     4. Add to pom.xml <br/> ![img12](img/cues_1/img12_5.png)
+    5. Add to pom.xml <br/> ![img12](img/cues_1/img12_6.png)
 
-46. 
+46. A Mule application uses web Service Consumer module´s Consume operation to invoke an external SOAP request. During development, what should the developer do to view the request and response traffic to and from the SOAP service?
+    1. Set an async logger for org.mule.service.http.impl.service.HttpMessageLogger to log at DEBUG level in the log4j2.xml file.
+    2. Set an async logger for org.mule.runtime.core.internal.processor.LoggerMessageProcessor to log at DEBUG level in the log4j2.xml file.
+    3. Set an async logger for org.mule.connector.webservice.consumer to log at DEBUG level in the log4j2.xml file.
+    4. Set an async logger for org.apache.soap.wire to log at DEBUG level in the log4j2.xml file.
+
+47. The values of some properties used by a Mule application deployed in CloudHub 2.0 display as text under the Properties tab in Runtime Manager's settings. How can the value of these properties be hidden?
+    1. Define a global property with same set to Property and value set to Hidden.
+    2. In the Mule Maven Plugin configuration, under the secureProperties element, list the property names to safely hide as a individual elements.
+    3. Define a configuration properties tag and put the values in the properties file.
+    4. Restrict access to the Properties tab in Runtime Manager to Administrator only.
+
+48. What is the final result of the "validation-test" flow? <br/> ![img13](img/cues_1/img13.png)
+    1. Flow succeeds, invalid message is silently dropped whit payload [""]
+    2. Error with message "The input collection is not empty"
+    3. Flow succeeds with payload "complete"
+    4. Flow succeeds with payload true
+
+49. A common error handler needs to be reused across multiple Mule projects. Which component is best suited for this task?
+    1. A custom module created using the XML SDK
+    2. A custom module creates using the Java SDK
+    3. A custom outbound policy
+    4. A library-style Mule plugin
+
+50. A Mule application contains two policies: Policy A and Policy B. Policy A has order 1, and Policy B has order 2. Policy A, Policy B and a flow are defined by the configurations below. When an HTTP request arrives at the Mule application's endpoint, what will be the execution order? <br/> ![img14](img/cues_1/img14.png)
+    1. A1, A2, F1, B1, B2
+    2. A1, F1, A2
+    3. A1, A2
+    4. A1, A2, B1, B2, F1
+
+51. An application reads data in from CSV file containing up to 100 orders. Each order must have a numeric ID, a customer ID string, an alphanumeric product number with a specific format, and a quantity with a two-digit decimal place. What can be done to efficiently ensure the data is correct before saving it to a database?
+    1. Use For Each scope with a Validate.Any scope and include a validation for each field in the CSV file.
+    2. Use DataWeave to transform the CSV file, using functions to test each field in the CSV file and rasing an exception whenever one fails.
+    3. Use a parallel For Each scope with a Validate.All scope and include a validation for each field in the CSV file.
+    4. Transform the CSV file into a JSON message and validate it against a JSON schema.
+
+52. A Mule developer needs to call a SOAP web service to post energy sport prices. API architecture standards require two-way SSL authentication. What should the developer do to archive two-way SSL authentication?
+    1. Click the Transport tab on the WSC configuration and specify an HTTP transport. <br/> Create an HTTP Request Configuration. <br/> Configure the keystore and truststore.
+    2. Click the Advanced tab on the WSC configuration and specify SOAP transport. <br/> Create the SOAP connector. <br/> Add the keystore and trsutstore configuration.
+    3. In the flow, click the WSC Consume operation. <br/> Specify the transport configuration inline to add a keystore and truststore configuration.
+    4. Configure an HTTP Request Connector with a keystore and truststore configuration. <br/> Move the WSC configuration inside the HTTP configuration.
+
+53. A Mule flow uses the Scatter-Gather router to execute requests in parallel to two external web APIs using HTTP. If one route fails, all routes must be returned to their original states. Which implementation will return the routes to their original states?
+    1. Extract the successful route from the Scatter-Gather result, and execute logic required to undo the succesful route.
+    2. Wrap the Scatter-Gather router in a Try scope with a transactional action, all routes will automatically roll back
+    3. Set the Scatter-Gather concurrency to a value of "1" so that only one route is executed at a time, and stop processing before executing any subsequent routes.
+    4. Extract the failed route from the Scatter-Gather result, and execute logic required to undo the failed route.
+
+54. Why is the expanded error handler area empty? <br/> ![img15](img/cues_1/img15.png)
+    1. main.xml is missing a reference to Error Handler module XML schema.
+    2. The error handler reference is not configured properly.
+    3. The error handler references a pre-defined error handler named "api-error-handler".
+    4. error.xml is not included as part of the project's build path.
+
+55. An Experience API takes the JSON input and returns a JSON output as the response. What are two ways to shield the current API request body from vulnerabilities? (choose two)
+    1. Apply the JSON Threat Protection policy.
+    2. Apply an SLA-based routing policy.
+    3. Define array data types as bounded.
+    4. Apply the OAuth 2.0 policy.
+    5. Apply Client ID Enforcement policy.
+
+56. A custom SDK module with an operation to preform math calculations executes a DataWeave expression that results in an expression error in the "random-number" operation. What is the resulting error type that any Mule appliucation using the module's operation can expect? <br/> ![img16](img/cues_1/img16.png)
+    1. MATH-MODULE:EXPRESSION
+    2. MATH-MODULE:CUSTOM_ERROR
+    3. MULE:CUSTOM_ERROR
+    4. MULE:EXPRESSION
+
+57. A call to an external API is wrapped within a Cache scope that uses an Object Store to store response data. This Object Store data must not be accessible or manipulated by other connectors within the same application. Which Object Store configuration supports this requirement?
+    1. Hash the data before strong it in an Object Store
+    2. Use an in-memory Object Store
+    3. Define a nested provate Object Store within the Cache scope
+    4. Create a global Object Store configuration and mark it as private
+
+58. An energy trading organization has a legacy system that captures commodity trades. A project is initiated to capture these trades and automatically initiate manual backend processes. Previous API-led initiatives have left system APIs. <br/> The backend systems include the ERP for invoicing, a confirmation system for confirming the trade, and a CRM system for updating the sales dashboard. If successful, the results should be retained in a data warehouse where each system has reporting table. <br/> Which approach should the developer use to deliver this API?
+    1. Use a Scatter-Gather reouter and in each route call a backend API. <br/> Save the individual result sets to the data werehouse.
+    2. Call the first backend API, and use a variable to capture each payload. <br/> Combine the results and save them to the data warehouse.
+    3. Use a Scater-Gather router and in each route call a backend API. <br/> after the Scatter-Gather routes complete, save the resulting payload in the data warehouse.
+    4. Call the first backend API in sequence. <br/> Save the results to the data warehouse before calling the next backend API.
+
+59. Multiple individual Mule applications inherit a parent pom file, which in turn inherits Bill of Material (BOM) parent pom file. Some applications use the Database module version: *1.0.0*, whereas other applications do not need the dependency at all. Where should this dependency be configured so that all projects that want to inherit the database dependency inherit the same version of it?
+    1. In dependencyManagement in the parent pom file.
+    2. In dependencies in the parent pom file.
+    3. In dependencies in the BOM parent pom file.
+    4. In dependencyManagement in the BOM parent pom file.
+
+60. A Platinum customer hosts API applications in data center in Europe and has mobile-device users all over the world. In order to monitor latency between the clients and the API, they have deployed API proxies into CloudHub regions in each continent and configured the mobile application to use their nearest proxy. Which chart should the customer use in their dashboard to understand their customer's experience?
+    1. Request Volume
+    2. Requests by Location
+    3. Slow Requests
+    4. Requests by Performance
+
+---
+
+# FIN DEL EXAMEN DE PRUEBA 1 PARA MULE DEVELOPER 2
+
+## [Respuestas y explicaciones](respuestas_1.md)
