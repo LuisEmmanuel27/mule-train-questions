@@ -55,7 +55,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
    4. testKey
 
 9. A developer has created a custom policy with version 1.0.0-SNAPSHOT. The developer attempts to publish the policy to Exchange using the Exchange Maven Facade API version 3 and the apply in API Manager. What will happen?
-   1. The policu will deploy successfully and will be avaible to be applied in API Manager.
+   1. The policy will deploy successfully and will be avaible to be applied in API Manager.
    2. The policy will deploy succesfully but will not be avaible to be applied in API Manager.
    3. The policy will not successfully deploy to Exchange.
    4. The policy will deploy successfully, but the Mule API implementation will fail to apply the policy.
@@ -84,7 +84,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Set the VM queue to transient. <br/> Configure a retry policy on the Anypoint MQ Publish operation. <br/> Add an error handler that catches errors of type RETRY-EXHAUSTED and sends messages to a dead-letter queue.
     4. Set the VM queue to persistent. <br/> Configure a redelivery policy on the VM Listener. <br/> Add an error handler that catcher error of type REDELIVERY-EXHAUSTED and sends messages to a dead-letter queue.
 
-14. Which security scheme us not supported by HTTP Connector?
+14. Which security scheme is not supported by HTTP Connector?
     1. OAuth 2.0 implicit flow
     2. OAuth 2.0 Client Credentials
     3. Digest Authentication
@@ -111,7 +111,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 18. Some Mule application property values can be displayed in clear text (e.g. DB driver, JMS Queue, HTTP Port, etc.), while some must be encrypted (e.g. DB Password, SSL/TLS Keystore Password, etc.). Which statement is true about clear text and encrypted properties?
     1. Files containing ancrypted property values must end with "-secure.yaml" or "-secure.properties"
     2. Clear text and encrypted property values can be defined in the same property file and clear text properties do not require the secure prefix.
-    3. Clear text and ancrypted property values muest be defined in sepárate files.
+    3. Clear text and ancrypted property values muest be defined in separate files.
     4. Clear text and encrypted property values can be defined in the same property file and clear text properties require the secure prefix.
 
 19. An Munit text case defines an assert expression. Which assert expression makes the Munit test case pass?
@@ -164,7 +164,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. A TLS context with a keystore.
     4. A TLS context with a truststore.
 
-26. A customer is building APIs for a digital transformation program and wants to monitor the health of their APIs. Which two methods or tools can be used to cjeck the health of these APIs? (choose two)
+26. A customer is building APIs for a digital transformation program and wants to monitor the health of their APIs. Which two methods or tools can be used to check the health of these APIs? (choose two)
     1. API Manager policies.
     2. Dedicated health check endpoints.
     3. API Functional Monitoring.
@@ -183,9 +183,9 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Configure Object Store to use partitions.
     4. Maintain the default TTL setting and access the data at least once a week.
 
-29. A company has deployed an Orders System API to a CloudHub 2.0 shared space and made it accessible via the default ingress. Which action (if any) is required to implement HTTP mTLS autehntication for this API?
+29. A company has deployed an Orders System API to a CloudHub 2.0 shared space and made it accessible via the default ingress. Which action (if any) is required to implement HTTP mTLS authentication for this API?
     1. Configure a CA-signed certificate in the API's HTTP Listener and a self-signed certificate in the client's HTTP Requester.
-    2. COnfigure a CA-signed certificate in the API's HTTP Listener and in the client's HTTP requester.
+    2. Configure a CA-signed certificate in the API's HTTP Listener and in the client's HTTP requester.
     3. No action is required; mTLS authentication is enabled by default for this API.
     4. No action is required; a CloudHub shared does not support mTLS authentication.
 
@@ -225,7 +225,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. `<parameter name="payload" role="REQUIRED" />`
     4. `<parameter name="payload" role="PRIMARY" />`
 
-36. A customer experience API (customer-eapi) is calling a system API (oracle-sapi) to create and update customers in a database via HTTP if the customer data sent via customereapi does not exist in the database, then oracle-sapi raises an exception with a 404 status code. This error code should not stop flow processing, but any other HTTP error codes must stop flow processing. Which configuration is needed in customer-eapi on an HTTP Request processor to accept only the 404 status code and standard success status codes as a successful response?
+36. A customer experience API (customer-eapi) is calling a system API (oracle-sapi) to create and update customers in a database via HTTP if the customer data sent via customer-eapi does not exist in the database, then oracle-sapi raises an exception with a 404 status code. This error code should not stop flow processing, but any other HTTP error codes must stop flow processing. Which configuration is needed in customer-eapi on an HTTP Request processor to accept only the 404 status code and standard success status codes as a successful response?
     1. `<http:failure-status-code-validator values="404" />`
     2. `<http:failure-status-code-validator values="200..299, 404" />`
     3. `<http:failure-status-code-validator values="200..500" />`
@@ -251,7 +251,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 
 40. A developer uses Anypoint Design Center to create multiple APIs with common customer definitions. The common data needs to be reused across an API and shared for use in future APIs. How can this be archived?
     1. Create the data structure with appropriate versions within the API using RAML data types. <br/> Import the correct version into the API specification.
-    2. Create the data structure as an API fragment in API Designer and publish to Anypoint Exchange. <br/> Import the published version into the API specification and jkeep the old version of the API fragment in Anypoint Exchange.
+    2. Create the data structure as an API fragment in API Designer and publish to Anypoint Exchange. <br/> Import the published version into the API specification and keep the old version of the API fragment in Anypoint Exchange.
     3. Create an API library resource within the API. <br/> Create a common data structure to reuse across the different endpoints.
     4. Delete the old version of the API fragment in Anypoint Exchange. <br/> Create the new data structure as an API fragment in API Designer and publish to Anypoint Exchange. <br/> Instruct users to use the new version.
 
@@ -357,7 +357,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 57. A call to an external API is wrapped within a Cache scope that uses an Object Store to store response data. This Object Store data must not be accessible or manipulated by other connectors within the same application. Which Object Store configuration supports this requirement?
     1. Hash the data before strong it in an Object Store
     2. Use an in-memory Object Store
-    3. Define a nested provate Object Store within the Cache scope
+    3. Define a nested private Object Store within the Cache scope
     4. Create a global Object Store configuration and mark it as private
 
 58. An energy trading organization has a legacy system that captures commodity trades. A project is initiated to capture these trades and automatically initiate manual backend processes. Previous API-led initiatives have left system APIs. <br/> The backend systems include the ERP for invoicing, a confirmation system for confirming the trade, and a CRM system for updating the sales dashboard. If successful, the results should be retained in a data warehouse where each system has reporting table. <br/> Which approach should the developer use to deliver this API?
