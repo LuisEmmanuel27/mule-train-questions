@@ -28,3 +28,7 @@ Preguntas de entrenamiento para pasar la certificación
 ---
 
 ## [Primer cuestionario](Mule%20developer%202/cuestionario_1.md)
+
+---
+
+## [Segundo cuestionario](Mule%20developer%202/cuestionario_2.md)

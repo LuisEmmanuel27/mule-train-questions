@@ -11,13 +11,13 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
    3. An HTTPS context with a keystore
    4. An HTTPS context with a truststore
 
-2. Loggers in a Mule application have been set to DEBUG level with details of the flow name and correlation ID. When deployed locally in Studio, the DEBUG level logs are displayed, but when the application is deployed to CloudHub, the DEBUG level logs do not appear. What action will allo the DEBUG level logs appear in Runtime Manager Logs?
+2. Loggers in a Mule application have been set to DEBUG level with details of the flow name and correlation ID. When deployed locally in Studio, the DEBUG level logs are displayed, but when the application is deployed to CloudHub, the DEBUG level logs do not appear. What action will allow the DEBUG level logs appear in Runtime Manager Logs?
    1. In Anypoint Studio, change the loggin level to ALL in the log4j2.xml file, Redeploy to CloudHub and the DEBUG logs will appear on Runtime Manager.
    2. In Runtime Manager > Application > Settings > Logging, change the logging level to DEBUG with the name package.name=org.mule, Apply changes and the DEBUG level (and higher) logs will appear on Runtime Manager.
    3. In Runtime Manager > Application > Settings > Logging, change the logging level to DEBUG with the package.name=log4j2.xml, Apply changes and the DEBUG level (and higher) logs will appear on Runtime Manager.
    4. In Anypoint Studio, change the logging level to TRACE in the log4j2.xml file, Redeploy to CloudHub and the DEBUG logs will appear on Runtime Manager.
 
-3. When the HTTP Requester recives th eerror type Remotely CLosed, which HTTP methods are retried three times by default?
+3. When the HTTP Requester recives the error type Remotely Closed, which HTTP methods are retried three times by default?
    1. GET, DELETE
    2. PUT, PATCH
    3. GET, POST
