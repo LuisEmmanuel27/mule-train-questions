@@ -27,8 +27,11 @@ En CloudHub, los logs de DEBUG se controlan mediante la configuración de regist
 
 3. `i.`
 
-Ante el error Remotely Closed, el HTTP Requester reintenta automáticamente solo métodos idempotent (indepotentes).
-Por defecto, esos métodos son GET y DELETE; POST, PUT y PATCH no se reintentan porque pueden provocar efectos secundarios.
+Ante el error `MULE:REMOTELY_CLOSED`, el HTTP Requester reintenta automáticamente por defecto solo ciertos métodos idempotentes que no suelen llevar un cuerpo de mensaje complejo.
+
+Estos métodos son GET, DELETE, HEAD, OPTIONS y TRACE.
+
+Los métodos POST, PATCH y PUT no se reintentan por defecto. Aunque PUT es teóricamente idempotente, MuleSoft lo excluye de la estrategia automática para evitar re-enviar payloads (cuerpos de mensaje) que podrían causar inconsistencias o sobrecarga si la conexión es inestable."
 
 4. `i.`
 
@@ -121,9 +124,9 @@ According to the official Mule documentation on secure configuration properties,
 
 In MUnit 2.x, the `<munit-tools:assert-that>` processor is used to compare an expression against an expected value using a matcher from the `MunitTools` library. To check that a boolean expression is true, you must use a matcher function like `MunitTools::equalTo(value)`, where the expected value is a boolean (`true` in this case). Simply putting `true` without a matcher (like in option 2) isn’t valid matcher syntax. The matcher must come from `MunitTools`, and `MunitTools::equalTo(true)` is the correct way to assert the value is true.
 
-20. `iv.`
+20. `i`
 
-API Autodiscovery in Mule is the mechanism that pairs a deployed Mule application with the API instance defined in API Manager. By configuring Autodiscovery with the API’s ID, the Mule runtime registers itself with API Manager so that policies defined in API Manager (like rate-limiting, security, SLA, etc.) are retrieved and enforced by the running application. This makes API Manager aware of the implementation and allows real-time governance and analytics for that API.
+In the Mule 4 architecture, API Autodiscovery acts as the runtime link between a deployed Mule application and its corresponding API Instance configured in API Manager. When the Mule runtime starts, the Autodiscovery element uses the specific API ID (retrieved from the API Manager instance) to register the application with the Anypoint Platform control plane. Once this connection is established, the runtime can successfully download, cache, and enforce the governance policies (e.g., Security, Rate Limiting, SLAs) defined for that specific instance. This mechanism ensures that the implementation is actively managed and that tracking/analytics data is correctly routed back to the API Manager dashboards.
 
 21. `ii.`
 
@@ -142,18 +145,9 @@ The Scatter-Gather router executes its routes in parallel by default. That means
 
 Since both routes write 2 back to the same variable concurrently, the final value after the scatter-gather completes is 2, and that is what the Logger prints. Even though there are two increments, they happen in parallel without coordination, so the counter isn’t incremented twice cumulatively.
 
-23. `iii.`
+23. `ii.`
 
-For mutual TLS (mTLS) the client must present its own identity to the server during the TLS handshake. To do that, the client keystore must contain a private key and a corresponding certificate — this certificate can be self-signed or CA-signed, but it must match the private key. Without both the private key and its associated certificate in the keystore, the client cannot authenticate itself to the server in an mTLS exchange.
-
-**Bonus data**
-
-Mutual TLS (mTLS) is an extension of the standard Transport Layer Security (TLS) protocol in which both the client and the server authenticate each other using digital certificates before establishing a secure connection. In traditional TLS (such as HTTPS), only the server presents its certificate to the client so the client can verify the server’s identity. With mTLS, the server also requires the client to present a certificate, and verifies it — creating a two-way (mutual) authentication.
-
-Difference between TLS and mTLS:
-
-- `TLS (standard)`: Only the server proves its identity to the client using a certificate, which ensures the client is communicating with the correct server.
-- `mTLS`: Adds an extra step where the client also presents and proves its own certificate to the server, so both ends verify each other’s identities. This provides stronger authentication and security, especially in service-to-service communications or zero-trust environments.
+In a Mutual TLS (mTLS) configuration, the Keystore is the repository used by the client to store its identity. The fundamental cryptographic requirement to enable this identity exchange is the Private Key. During the TLS handshake, the server sends a `CertificateRequest`. The client must then respond by signing a piece of data with its private key to prove ownership of the associated public certificate. While the public certificate is also transmitted, the actual capability to perform mutual authentication is derived from the presence and use of the Private Key within the Keystore.
 
 24. `iii.`
 

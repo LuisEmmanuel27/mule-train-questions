@@ -69,7 +69,7 @@ This plugin enables invoking and validating XML SDK operations within MUnit test
 
 When a property is defined inside the `<secureProperties>` section in the Mule Maven Plugin for CloudHub 2.0, it is treated as a secure property.
 
-In CloudHub 2.0, secure properties are **masked in Runtime Manager**, meaning their values are hidden (e.g., shown as ****) in the UI and logs to prevent exposure.
+In CloudHub 2.0, secure properties are **masked in Runtime Manager**, meaning their values are hidden (e.g., shown as `****`) in the UI and logs to prevent exposure.
 
 11. `iii.`
 
@@ -91,7 +91,7 @@ The logic is simple: you cannot Install or Deploy an artifact until it has been 
 
 In Mule 4, when using asynchronous messaging protocols like Anypoint MQ, the `correlationId` is not automatically propagated across different applications. To maintain distributed tracing and observability, the Tracing Module provides the **With CorrelationID** scope. This component allows a developer to explicitly override or set the `correlationId` for all operations executed within that scope (such as the `Publish` operation). This ensures that the specific Order ID is attached to the outgoing message's metadata, allowing Anypoint Monitoring and logs to track the entire transaction lifecycle across multiple Mule applications.
 
-13. `iv.`
+13. `iii.`
 
 14. `iii.`
 
@@ -292,9 +292,9 @@ If the MySQL database is down, the System API cannot fulfill its contract. There
 
 In MuleSoft's "API-Led Connectivity" model, versioning should be explicitly defined in the API specification. By modifying the `baseUri` in Design Center to include a version variable (e.g., `https://api.example.com/v1`), you ensure that the versioning is part of the API's contract. This allows for:
 
-1. Side-by-side deployment: Multiple major versions can coexist because their base paths are distinct.
-2. Consumer Clarity: Partners can choose which version to target by simply changing the URL prefix.
-3. Scaffolding Accuracy: When generating the backend implementation, the HTTP Listener will automatically inherit the correct path structure from the RAML, reducing manual configuration errors in Studio.
+- Side-by-side deployment: Multiple major versions can coexist because their base paths are distinct.
+- Consumer Clarity: Partners can choose which version to target by simply changing the URL prefix.
+- Scaffolding Accuracy: When generating the backend implementation, the HTTP Listener will automatically inherit the correct path structure from the RAML, reducing manual configuration errors in Studio.
 
 56. `iii.`
 

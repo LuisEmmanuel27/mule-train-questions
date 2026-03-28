@@ -13,9 +13,9 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 
 2. A Flight Management System publishes gate change notification events whenever a flight's arrival gate changes. Other systems, including Baggage Handler System. Inflight Catering System and Passenger Notifications System, must each asynchronously receive the same gate change notification to process the event according. Which configuration is required in Anypoint MQ to achive this publish/subscribe model?
    1. Publish each client subscribe directly to the exchange. <br/> Have each client subscribe directly to the queue.
-   2. Publish the gate change notification to an Anypoint MC queue. <br/> Have each client subscirbe directly to the queue.
-   3. Publish the gate change notification to an Anypoint MQ queue. <br/> Create different anypoint MQ eschange meant for each of the other subscribing systems. <br/> Bind the queue with each exchanges.
-   4. Publish the gate chnage notification to an Anypoint MQ exchnage. <br/> Create different Anypoint MQ queues meant for each of the other subscribing systems. <br/> Bind the exchange with each of the queues.
+   2. Publish the gate change notification to an Anypoint MQ queue. <br/> Have each client subscribe directly to the queue.
+   3. Publish the gate change notification to an Anypoint MQ queue. <br/> Create different anypoint MQ exchange meant for each of the other subscribing systems. <br/> Bind the queue with each exchanges.
+   4. Publish the gate change notification to an Anypoint MQ exchange. <br/> Create different Anypoint MQ queues meant for each of the other subscribing systems. <br/> Bind the exchange with each of the queues.
 
 3. Which configurations are required for HTTP Listener to enable mTLS authentication?
    1. Set an appropiate reconnection strategy and use persistent connections for the listener.
@@ -29,7 +29,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
    3. Object Store Connector
    4. CloudHub REST API
 
-5. What is the result if "Insecure" selected as part of the HTTP Listener configuration? <br/> ![img1](img/cues_2/img1.png)
+5. What is the result if "Insecure" is selected as part of the HTTP Listener configuration? <br/> ![img1](img/cues_2/img1.png)
    1. The HTTP Listener will trust any certificate presented by the HTTP client.
    2. The HTTP Listener will accept any unauthenticated request.
    3. The HTTP Listener will only accept HTTP requests.
@@ -57,7 +57,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     1. The Mule flow will execute successfully with status code 200, and the response will be the JSON sent in request.
     2. The Mule flow will execute successfully with status code 204.
     3. The Mule flow will throw the exception 'JSON:SCHEMA_NOT_HONOURED'.
-    4. The Mule flow will execute successfully with status code 200m and a response will display the message "Age in years which must equal to or greater than zero".
+    4. The Mule flow will execute successfully with status code 200 and a response will display the message "Age in years which must equal to or greater than zero".
 
 10. What is the result of the Mule Maven Plugin configuration of the value of property tls.keyStore.password in CloudHub 2.0?
     ```xml
@@ -70,7 +70,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Anypoint Studio secures the value.
     4. Runtime Manager masks the value.
 
-11. A company has been using CI/CD. Its developers use Maven to handlw build and deployment activities. What is the correct sequence of activities that takes place during the Maven uild and deployment?
+11. A company has been using CI/CD. Its developers use Maven to handle build and deployment activities. What is the correct sequence of activities that takes place during the Maven build and deployment?
     1. Initialize, validate, compute, test, package, verify, install, deploy.
     2. Validate, initialize, compile, package, test, install, verify, verify, deploy.
     3. Validate, initialize, compile, test, package, verify, install, deploy.
@@ -79,19 +79,19 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 12. An order processing system is composed of multiple Mule application responsible for warehouse, sales and shipping. Each application communication using Anypoint MQ. Each message must be correlated against the original order ID for observability and tracing. How should a developer propagate the order ID as the correlation ID across the message?
     1. Using the underdiying HTTP request of Anypoint to set the 'X-Correlation-ID' header to the order ID.
     2. Set a custom Anypoint MQ user property to propagate the order ID and set the correlation ID in the reciving applications.
-    3. Use the default Correlation ID, Abypoint MQ will automatically propagate it.
-    4. Wrap all Anypoint MQ Publish operations within a Whith CorrelationID scope from the Tracing module, setting the correlation ID to the order ID.
+    3. Use the default Correlation ID, Anypoint MQ will automatically propagate it.
+    4. Wrap all Anypoint MQ Publish operations within a With CorrelationID scope from the Tracing module, setting the correlation ID to the order ID.
 
 13. The Center for Enablement team published a common application as a reusable module to the central Nexus repository. How can the common application be included in all API implementations?
     1. Download the common application from Naxus and copy it to the src/main/resources folder in the API.
     2. Copy the common application's source XML file and out it in a new flow in the src/main/mule folder.
-    3. Add a Maven dependency in the PCM file with multiple-plugin as `<classifier>`.
+    3. Add a Maven dependency in the POM file with multiple-plugin as `<classifier>`.
     4. Add a Maven dependency in the POM file with jar as `<classifier>`.
 
 14. Which pattern should be used to invoke multiple HTTP APIs in parallel and roll back failed requests in sequence?
     1. A database as transactional outbox and an Until Successful router to retry any requests.
     2. A Parallel for Each scope with each HTTP request wrapped in a Try scope.
-    3. Scatter-Gather as central Saga orchestator for all API request with compensating actions fro falling routes.
+    3. Scatter-Gather as central Saga orchestator for all API request with compensating actions for falling routes.
     4. VM queues as a reliability pattern with error handlers to roll back any requests.
 
 15. Which statement is true when using XML SDK for creating custom message processors?
@@ -119,7 +119,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 18. An organization uses CloudHub to deploy all of its applications. How can a common-global-handler flow be configured so that it can be reused across all of the organization's deployed applications?
     1. A Create Mule plugin project <br/> Create a common-global-error-handler flow inside the plugin project. <br/> Use this plugin as a dependency in all Mule applications. <br/> Import that configuration file in Mule applications.
     2. Create a common-global-error-handler flow in all Mule Applications Refer to it flow-ref wherever needed.
-    3. Create a Mule Plugin project <br/> Create a common-global-error-handler flow inside the plugin project. <br/> Use thos plugin as a dependency in all Mule applications.
+    3. Create a Mule Plugin project <br/> Create a common-global-error-handler flow inside the plugin project. <br/> Use this plugin as a dependency in all Mule applications.
     4. Create a Mule domain project. <br/> Create a common-global-error-handler flow inside the domain project. <br/> Use this domain project as a dependency.
 
 19. Which statement is true working with correlation IDs?
@@ -182,11 +182,11 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. add Flow reference components inside a Try scope <br/> Set the payload to a default value '' inside the error handler using the On Error Propagate scope.
     4. Add a Scatter-gather component inside a Try scope. <br/> Set the payload to a default value 'Error' inside the error handler using the On Error Continue scope.
 
-29. A developer deploys an API to CloudHub and applies an OAuth policy on API Manager. During testing, the API response is slow, so the developer reconfigures the API so that the out-of-the-box HTTP Caching policy is applied first, and the OAuth API polocy is applied second. What will happend when an HTTP request is received?
+29. A developer deploys an API to CloudHub and applies an OAuth policy on API Manager. During testing, the API response is slow, so the developer reconfigures the API so that the out-of-the-box HTTP Caching policy is applied first, and the OAuth API policy is applied second. What will happend when an HTTP request is received?
     1. In case of a cache hit, both the OAuth and HTTP Caching policies are evaluated, then the cached response is returned to the caller.
     2. In case of a cache it, only the HTTP Caching policy is evaluating; then the cached response is returned to the caller.
     3. In case of a cache miss, only the HTTP Caching policy is evaluated; then the API recives the data from the API implementation, and the policy stores the data to be cached in Object Store.
-    4. In case of a cache miss, both the PAuth and HTTP Caching policies are evluated; then the API reciver the data from the API implementation, and the policy does not store the data in Object Store.
+    4. In case of a cache miss, both the OAuth and HTTP Caching policies are evluated; then the API reciver the data from the API implementation, and the policy does not store the data in Object Store.
 
 30. A mule application exposes an API for creating payments. An Operations team wants to ensure that the Payment API is up  and running at all times in production. Which approach should be used to test that payment API is working in production?
     1. Create a health check endpoint that listens on a separate port and uses separate HTTP Listener configuration from the API.
@@ -207,12 +207,12 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     4. testPayload
 
 33. When configuring the API Autodiscovery element in a Mule application to enable API Gateway capabilities, what must the flowRef attribute specifically reference?
-    1. Northing because flowRef is an optional attribute which can be passed runtime.
+    1. Nothing because flowRef is an optional attribute which can be passed runtime.
     2. The name of the flow that has APIKit Console to recive all incoming RESTful operation requests.
     3. Any of the APIkit generate implement flows.
     4. The name of the flow that has HTTP Listener to recive all incoming RESTful operation requests.
 
-34. Which command is udes to convert a JKS keystore to PKCS12?
+34. Which command is used to convert a JKS keystore to PKCS12?
     1. Keytool-importkeystore -srckeystore keystore p12-srcstoretype PKC12 -destkeystore keystore.jks -deststoretype JKS
     2. Keytool-importkeystore -srckeystore keystore p12-srcstoretype JKS -destkeystore keystore.p12 -deststoretype PKCS12
     3. Keytool-importkeystore -srckeystore keystore jks-srcstoretype JKS -destkeystore keystore.p13 -deststoretype PKCS12
@@ -242,7 +242,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Put the HTTP Request inside a try scope in Until Successful. <br/> In the error handler, use On Error Continue to catch permanent errors like HTTP:UNAUTHORIZED.
     4. Put the HTTP Request inside a try scope in Until Successful. <br/> In the error handler, use On Error Propagate to catch permanent errors like HTTP:UNAUTHORIZED.
 
-39. Multiple individual Mule application need to use the Mule Maven plugin to deploy to CloudHub. The plugin configuration shouldbe reused where necessary and anything project, specific should be property-based. Where should the Mule Maven details be configured?
+39. Multiple individual Mule application need to use the Mule Maven plugin to deploy to CloudHub. The plugin configuration should be reused where necessary and anything project, specific should be property-based. Where should the Mule Maven details be configured?
     1. A parent pom.xml.
     2. Settings.xml.
     3. pom.xml.
@@ -288,7 +288,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 46. a Scatter-Gather router is configured with four routes: Route A, B, C and D. Route C is false.
     1. Error, errorMessage.payload.results['2']
     2. Payload failures['2']
-    3. Error, errorMessage.payload.failures['2']
+    3. error.errorMessage.payload.failures['2']
     4. Payload ['2']
 
 47. A custom policy needs to be developed to intercept all outbound HTTP requests made by Mule applications. Which XML element must be used to intercept outbound HTTP requests?
@@ -315,7 +315,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Configure `<Logger level='Error' />` inside the VM connector configuration.
     4. Nothing, as error-level events are automatically logged.
 
-51. ![img12](img/cues_2/img12_1.png) <br/> ![img12](img/cues_2/img12_2.png) <br/> A Mule application pom.xml configures the Maven Resources plugin to exclude parsing binary files in the project's src/main/resources/certs directory. Which cnfiguration of this plugin archives a successful build?
+51. ![img12](img/cues_2/img12_1.png) <br/> ![img12](img/cues_2/img12_2.png) <br/> A Mule application pom.xml configures the Maven Resources plugin to exclude parsing binary files in the project's src/main/resources/certs directory. Which configuration of this plugin archives a successful build?
     1. ![img12](img/cues_2/img12_3.png)
     2. ![img12](img/cues_2/img12_4.png)
     3. ![img12](img/cues_2/img12_5.png)
@@ -323,7 +323,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 52. Two APIs are deployed to a two-node on-perm cluster. Due to a requeriments change, the two APIs must communicate to exchange data asynchronously.
     1. If the two APIs use the same domain, the VM Connector can be leveraged.
     2. The VM Connector is used to inter-application communication, so it is not possible to use the VM Connector.
-    3. Instead of using the VM Connector use <flow-ref> directly.
+    3. Instead of using the VM Connector use `<flow-ref>` directly.
     4. It is not possible to use the VM Connector since the APIs are running in a cluster mode and each mode has it own set of VM Queues.
 
 53. An API has been developed and deployed to CloudHub Among the policies applied to this API is an allowlist of IP addresses. A developer wants to run a test in Anypoint Studio and does not want any policies applied because their workstation is not included in the allowlist. What must the developer do in order to run this test locally without the policies applied?
@@ -362,7 +362,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     3. Download RAML from Design Center.
     4. Import RAML from local file.
 
-59. A Mule application contain two policies Policy A and Policy B. Policy A has order, and Policy B has order 2. Policy A, Policy B and a flow are defined by the configuration below. <br/> ![img14](img/cues_2/img14.png) <br/> When a HTTP request arrives at the Mule application's endpoint, what will be the execution order?
+59. A Mule application contain two policies Policy A and Policy B. Policy A has order 1, and Policy B has order 2. Policy A, Policy B and a flow are defined by the configuration below. <br/> ![img14](img/cues_2/img14.png) <br/> When a HTTP request arrives at the Mule application's endpoint, what will be the execution order?
     1. A1, B1, F1, B2, A2.
     2. B1, A1, F1, A2, B2.
     3. F1, A1, B1, B2, A2.

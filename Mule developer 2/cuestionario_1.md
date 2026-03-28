@@ -111,7 +111,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 18. Some Mule application property values can be displayed in clear text (e.g. DB driver, JMS Queue, HTTP Port, etc.), while some must be encrypted (e.g. DB Password, SSL/TLS Keystore Password, etc.). Which statement is true about clear text and encrypted properties?
     1. Files containing ancrypted property values must end with "-secure.yaml" or "-secure.properties"
     2. Clear text and encrypted property values can be defined in the same property file and clear text properties do not require the secure prefix.
-    3. Clear text and ancrypted property values muest be defined in separate files.
+    3. Clear text and ancrypted property values must be defined in separate files.
     4. Clear text and encrypted property values can be defined in the same property file and clear text properties require the secure prefix.
 
 19. An Munit text case defines an assert expression. Which assert expression makes the Munit test case pass?
@@ -171,7 +171,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     4. API mocking service.
     5. Existing resource endpoints.
 
-27. What is the correct ordering of the log4j levels from most verbose to least verbose?
+27. What is the correct ordering of the log4j2 levels from most verbose to least verbose?
     1. DEBUG, INFO, WARN, ERROR, FATAL, OFF
     2. WARN, ERROR, INFO, OFF, DEBUG, FATAL
     3. ERROR, INFO, DEBUG, WARN, OFF, FATAL
@@ -227,8 +227,8 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 
 36. A customer experience API (customer-eapi) is calling a system API (oracle-sapi) to create and update customers in a database via HTTP if the customer data sent via customer-eapi does not exist in the database, then oracle-sapi raises an exception with a 404 status code. This error code should not stop flow processing, but any other HTTP error codes must stop flow processing. Which configuration is needed in customer-eapi on an HTTP Request processor to accept only the 404 status code and standard success status codes as a successful response?
     1. `<http:failure-status-code-validator values="404" />`
-    2. `<http:failure-status-code-validator values="200..299, 404" />`
-    3. `<http:failure-status-code-validator values="200..500" />`
+    2. `<http:success-status-code-validator values="200..299, 404" />`
+    3. `<http:success-status-code-validator values="200..500" />`
     4. `<http:failure-status-code-validator values="200..404" />`
 
 37. What is the purpose of the server configuration element of the cloudhubDeployment config in the Mule Maven plugin?
@@ -361,7 +361,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     4. Create a global Object Store configuration and mark it as private
 
 58. An energy trading organization has a legacy system that captures commodity trades. A project is initiated to capture these trades and automatically initiate manual backend processes. Previous API-led initiatives have left system APIs. <br/> The backend systems include the ERP for invoicing, a confirmation system for confirming the trade, and a CRM system for updating the sales dashboard. If successful, the results should be retained in a data warehouse where each system has reporting table. <br/> Which approach should the developer use to deliver this API?
-    1. Use a Scatter-Gather reouter and in each route call a backend API. <br/> Save the individual result sets to the data werehouse.
+    1. Use a Scatter-Gather router and in each route call a backend API. <br/> Save the individual result sets to the data werehouse.
     2. Call the first backend API, and use a variable to capture each payload. <br/> Combine the results and save them to the data warehouse.
     3. Use a Scater-Gather router and in each route call a backend API. <br/> after the Scatter-Gather routes complete, save the resulting payload in the data warehouse.
     4. Call the first backend API in sequence. <br/> Save the results to the data warehouse before calling the next backend API.
