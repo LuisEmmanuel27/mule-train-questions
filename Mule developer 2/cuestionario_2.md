@@ -328,7 +328,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
 
 53. An API has been developed and deployed to CloudHub Among the policies applied to this API is an allowlist of IP addresses. A developer wants to run a test in Anypoint Studio and does not want any policies applied because their workstation is not included in the allowlist. What must the developer do in order to run this test locally without the policies applied?
     1. Create a properties file specifically for local development and set the API instance ID to a value that is not used in API Manager.
-    2. Pass in the runtime parameter "-M-Danypoint.platform.gatekeeper=disabled".
+    2. Pass in the runtime parameter "-Danypoint.platform.gatekeeper=disabled".
     3. Deactivate the API in API Manager so the Autodiscovery element will not find the application when it runs in Studio.
     4. Run the test as-s, with no changes because the Studio runtime will not attempt to connect to API Manager.
 
@@ -369,7 +369,7 @@ Cuestionario de prueba para el examen de certificación de Mulesoft Developer 2
     4. F1, B1, A1, A2, B2.
 
 60. A company with MuleSoft Titanium develops a Salesforce System API using MuleSoft out-of-the-box Salesforce Connector and deploys the API to CloudHub. Which steps provide the average number of requests and average response time of the Salesorce Connector?
-    1. Access Anypoint Monitoring's built-in dashboard. Select a resource. <br/> Locate the information under the Connectors tab.
+    1. Access Anypoint Monitoring's built-in dashboard. <br/> Select a resource. <br/> Locate the information under the Connectors tab.
     2. Acces Anypoint Monitoring's built-in dashboard. <br/> Select a resource. <br/> Create a custom dashboard to retrive the information.
     3. Access Anypoint Monitoring built-in dashboard. <br/> Select a resource. <br/> Locate the information under Log Manager < Raw Data.
     4. Change the API implementation to capture the information in the log. <br/> Retrive the information from the log file.

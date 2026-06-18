@@ -2,7 +2,6 @@
 
 Preguntas de entrenamiento para pasar la certificación
 
-
 # Mule Developer 1
 
 ---
@@ -32,3 +31,9 @@ Preguntas de entrenamiento para pasar la certificación
 ---
 
 ## [Segundo cuestionario](Mule%20developer%202/cuestionario_2.md)
+
+---
+
+# MuleSoft Platform Integration Architect
+
+## [Guia de estudio](./Mule%20Platform%20Int%20Architect/guia_estudio.md)
