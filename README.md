@@ -6,19 +6,19 @@ Preguntas de entrenamiento para pasar la certificación
 
 ---
 
-## [Primer cuestionario](Mule%20developer%201/cuestionario_1.md)
+## [Primer cuestionario](<Mule%20developer%201/cuestionario_1.md>)
 
 ---
 
-## [Segundo cuestionario](Mule%20developer%201/cuestionario_2.md)
+## [Segundo cuestionario](<Mule%20developer%201/cuestionario_2.md>)
 
 ---
 
-## [Tercer cuestionario](Mule%20developer%201/cuestionario_3.md)
+## [Tercer cuestionario](<Mule%20developer%201/cuestionario_3.md>)
 
 ---
 
-## [Cuarto cuestionario](Mule%20developer%201/cuestionario_4.md)
+## [Cuarto cuestionario](<Mule%20developer%201/cuestionario_4.md>)
 
 ---
 
@@ -26,14 +26,14 @@ Preguntas de entrenamiento para pasar la certificación
 
 ---
 
-## [Primer cuestionario](Mule%20developer%202/cuestionario_1.md)
+## [Primer cuestionario](<Mule%20developer%202/cuestionario_1.md>)
 
 ---
 
-## [Segundo cuestionario](Mule%20developer%202/cuestionario_2.md)
+## [Segundo cuestionario](<Mule%20developer%202/cuestionario_2.md>)
 
 ---
 
 # MuleSoft Platform Integration Architect
 
-## [Guia de estudio](./Mule%20Platform%20Int%20Architect/guia_estudio.md)
+## [Guia de estudio](<./Mule%20Platform%20Int%20Architect/guia_estudio.md>)
