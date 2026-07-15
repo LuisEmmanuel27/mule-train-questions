@@ -70,7 +70,6 @@ A web API (Application Programming Interface) is a contract that exposes busines
 * **GraphQL:** A query-based style allowing consumers to request exactly the data they need in a single call. Related to DataGraph (see 4.4), which is MuleSoft's implementation of a unified data-query layer.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question describes an API as  **stateless** ,  **resource-oriented** , or  **technology-independent** , or asks about the **role of a web API** in an application network, it is testing basic web API characteristics—these are the foundation on which System, Process, and Experience API layers (see Part II, section 3) are built.
 >
 > Statelessness is particularly important: if a question implies that an API implementation stores client session data in memory between requests, this is generally presented as an  **anti-pattern** , since it prevents effective horizontal scaling and violates the stateless nature expected of web APIs.
@@ -380,7 +379,6 @@ Different types of data are handled differently:
 There are exceptions where payload data does interact with MuleSoft-hosted infrastructure even though it is conceptually "runtime" data, such as when using **Anypoint MQ** (queued messages are stored by the managed messaging service), **Object Store** (persisted key-value data is stored by the managed service), or  **DataGraph** . These services are hosted by MuleSoft and therefore introduce additional data residency considerations beyond the basic Control Plane/Runtime Plane split.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question mentions where data resides, regulatory/compliance requirements, or data sovereignty, remember the general rule:
 >
 > * **Control Plane → metadata, metrics, logs, specifications** (region-dependent, hosted by MuleSoft).
@@ -488,7 +486,6 @@ There are two general approaches:
 The choice is a trade-off between **implementation speed and simplicity** versus  **long-term stability and reuse** , and should be driven by how likely the backend is to change and how many consumers the System API is expected to serve.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question describes a System API whose data model is  **identical to the backend's native structure** , and asks about the implication, the correct answer usually points to **tighter coupling and higher risk of breaking changes** if the backend changes.
 >
 > When a question asks how to **protect consumers from backend volatility** or  **support multiple consumers with different needs** , the correct answer favors  **abstracting the data model away from the backend's native structure** , consistent with the isolation role of System APIs (3.2).
@@ -576,7 +573,6 @@ When designing and sharing APIs, it is important to distinguish between four rel
 * A breaking change to the specification (see 4.3, Semantic Versioning) breaks the dependency clients have on the contract, which is why it requires a new major version and a new API instance/implementation lifecycle, rather than modifying the existing one in place.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question distinguishes between "the API," "the specification," "the implementation," and "the client" (or asks what can change without affecting another), remember:
 >
 > * **API Specification → the contract** (design-time, can exist before implementation).
@@ -886,7 +882,6 @@ Key characteristics:
 | Anypoint Service Mesh | Sidecar proxy at the infrastructure level | No                                | Yes                          | Kubernetes-based deployments (Runtime Fabric) |
 
 > [!NOTE]
->
 > **Key exam clue:** When a question mentions policy enforcement in a  **containerized or Kubernetes environment** ,  **sidecar proxies** , or governing a  **mix of Mule and non-Mule services without a standalone gateway application** , the concept being tested is  **Anypoint Service Mesh** .
 >
 > Remember the distinction:
@@ -956,7 +951,6 @@ The key distinction is between policies that only affect **runtime behavior** an
 The general principle is that if a policy changes what a consumer must **send** (credentials, headers, tokens) or what a consumer might **receive** (new status codes, rate-limit headers), the specification should be updated to reflect it, since the specification is the contract consumers rely on to build their integrations. Purely internal or observability-focused policies do not change the contract and therefore do not require specification changes.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question describes applying a security-related policy (Client ID Enforcement, OAuth 2.0, JWT Validation) and asks what else must be done, the answer usually includes  **updating the API specification to declare the security scheme** , not just applying the policy in API Manager.
 >
 > When a question describes a purely observability or monitoring-oriented policy (logging, SLA alerts), the correct answer is typically that  **no specification change is required** .
@@ -993,7 +987,7 @@ Clients can be managed manually through API Manager or automatically through sel
 > [!NOTE]
 > **Key exam clue:** When a question mentions API consumers, client credentials, access control, or API contracts, the concept being tested is **client management**. It is the mechanism for controlling who can access APIs and tracking their usage.
 
-### 5.11 API Client Applications and Contracts
+### 5.10 API Client Applications and Contracts
 
 One of the most frequently misunderstood concepts in API Manager is the distinction between an API implementation, an API instance, and an API client application.
 
@@ -1035,7 +1029,7 @@ This mechanism allows API providers to control who can consume an API, revoke ac
 >
 > These are **not** where Client ID/Secret credentials are obtained for Client ID Enforcement.
 
-### 5.12 Client ID Enforcement vs OAuth 2.0
+### 5.11 Client ID Enforcement vs OAuth 2.0
 
 Although both Client ID Enforcement and OAuth 2.0 protect APIs, they solve different problems.
 
@@ -1192,7 +1186,6 @@ Anypoint Platform distinguishes between two related but distinct concerns: **Ide
 The two are not mutually exclusive: a single API can require both. For example, an Experience API for a mobile banking app might use **OAuth 2.0** to authenticate the end user (Identity Management, confirming which customer is logged in) while also enforcing **Client ID Enforcement** to ensure only the officially registered mobile app (Client Management, not some arbitrary third-party client) is making the call.
 
 > [!NOTE]
->
 > **Key exam clue:** When a question asks about verifying  **who a person is** , integrating with an  **external IdP** , or  **platform login/SSO** , the concept is  **Identity Management** .
 >
 > When a question asks about **which application** can call an API, obtaining a  **Client ID/Secret** , or **API contracts** in Exchange, the concept is  **Client Management** .
@@ -1594,7 +1587,6 @@ A single point of failure (SPOF) is any component in a deployment whose failure 
 * **Ensure idempotent operations** , so that failover or retries after a worker failure do not produce inconsistent results (see 9.2, Resilience Patterns).
 
 > [!NOTE]
->
 > **Key exam clue:** When a question describes an application deployed with **a single worker** or  **all workers in a single availability zone** , and asks about the risk, the correct answer points to a **single point of failure** and reduced availability.
 >
 > The correct mitigation is generally  **multiple workers distributed across availability zones** , combined with  **stateless, idempotent application design** —not simply increasing the size (vertical scaling) of a single worker, which does not address availability, only capacity.
@@ -1625,7 +1617,6 @@ When an application is deployed to the  **CloudHub Shared Worker Cloud** , its r
 * Suitable for applications with the strictest availability requirements (e.g., mission-critical APIs with near-zero downtime tolerance).
 
 > [!NOTE]
->
 > **Key exam clue:** When a question describes an application deployed with **one worker in one region** and asks to predict its reliability/performance, the correct answer highlights  **low reliability (SPOF) and limited throughput** .
 >
 > When a question describes  **multiple workers in one region** , the correct answer highlights that CloudHub  **automatically distributes workers across availability zones** , improving reliability and throughput, but the application  **remains exposed to a region-wide outage** .
