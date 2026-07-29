@@ -246,3 +246,14 @@ Confirmado, tu respuesta es correcta.
     - **Opción 4** (deben asegurar que TODOS los datos estén encriptados en tránsito y en reposo): aunque el cifrado es una buena práctica de seguridad (sección 11.3), **no resuelve el requisito de jurisdicción/residencia de datos** — datos cifrados que salen de la jurisdicción siguen siendo un incumplimiento regulatorio si la ley exige que el procesamiento ocurra *dentro* de esa jurisdicción, independientemente de si están cifrados o no.
 
     Este tema está bien cubierto por la guía (secciones 2.7/2.8); aunque se podría reforzar añadiendo explícitamente que el cumplimiento de jurisdicción de datos requiere alinear **ambos planos** (Control y Runtime) a la misma región/jurisdicción.
+46. ii. - **Tema de la guía:** Sección **8.4 (CloudHub Networking)** y **8.6 (Choosing the Correct CloudHub Networking Component)**
+
+    La guía indica que un **Anypoint VPC** "provee aislamiento de red para las aplicaciones Mule" y "permite conectividad privada a sistemas on-premises vía VPN o AWS Direct Connect", y en la tabla de la sección 8.6 asocia explícitamente "conectividad segura a sistemas on-premises" y "aislamiento de red" con **Anypoint VPC**.
+
+    El requisito clave de la opción 2 es que la API debe ser **accesible dentro de una subred de una red customer-hosted restringida que NO permite acceso público**. Esto solo se puede lograr estableciendo una **conexión privada** (vía VPN o Direct Connect) entre un **Anypoint VPC** y esa red privada del cliente — es decir, es un caso de conectividad **privada/aislada** que requiere sí o sí un VPC.
+
+    En contraste, la opción 1 describe invocar servicios que están **"publicly exposed"** (públicamente expuestos) — si esos servicios ya son de acceso público, CloudHub puede alcanzarlos normalmente por internet sin necesidad de un VPC ni de conectividad privada; por eso, aunque suene similar (involucra una instancia AWS gestionada por el cliente), **no exige** un Anypoint VPC.
+
+    Esto se confirmó con múltiples fuentes de bancos de preguntas oficiales de práctica ampliamente citados del examen MCPA (ExamTopics, vceguide.com, Quizlet — ver también referencia a help.mulesoft.com citada en la discusión de ExamTopics), que coinciden en que la respuesta correcta es la opción **B** (equivalente a la opción **2** de tu numeración): "When the API implementation must be accessible within a subnet of a restricted customer-hosted network that does not allow public access."
+
+    Se recomienda reforzar la sección **8.4** de la guía aclarando esta distinción específica: un Anypoint VPC es necesario cuando se requiere alcanzar (o ser alcanzado por) recursos que **no tienen exposición pública** — no simplemente por interactuar con infraestructura AWS gestionada por el cliente, si esos endpoints ya son públicamente accesibles.

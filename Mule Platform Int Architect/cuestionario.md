@@ -24,15 +24,15 @@
    4. API Design and Development
 4. Select the correct Owner-Layer combinations from below options
 
-   1. A .
+   1. A.
       1. App Developers owns and focuses on Experience Layer APIs
       2. Central IT owns and focuses on Process Layer APIs
       3. LOB IT owns and focuses on System Layer APIs
-   2. B
+   2. B.
       1. Central IT owns and focuses on Experience Layer APIs
       2. LOB IT owns and focuses on Process Layer APIs
       3. App Developers owns and focuses on System Layer APIs
-   3. C
+   3. C.
       1. App Developers owns and focuses on Experience Layer APIs
       2. LOB IT owns and focuses on Process Layer APIs
       3. Central IT owns and focuses on System Layer APIs
@@ -295,3 +295,9 @@
     2. They must use a Jurisdiction-local external messaging system such as Active MQ rather than Anypoint MQ.
     3. They must te deployed to Anypoint Platform runtime planes that are managed by Anypoint Platform control\nplanes, with both planes in the same Jurisdiction.
     4. They must ensure ALL data is encrypted both in transit and at rest.
+
+46. When must an API implementation be deployed to an Anypoint VPC?
+    1. When the API Implementation must invoke publicly exposed services that are deployed outside of CloudHub in a customer-managed AWS instance.
+    2. When the API implementation must be accessible within a subnet of a restricted customer-hosted network that does not allow public access.
+    3. When the API implementation must be deployed to a production AWS VPC using the Mule Maven plugin.
+    4. When the API Implementation must write to a persistent Object Store.
