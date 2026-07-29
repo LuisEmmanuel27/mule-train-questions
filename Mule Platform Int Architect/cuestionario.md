@@ -284,123 +284,14 @@
     3. Add an additional endpoint to each API for partner-enablement consumption
     4. Duplicate the APIs as Mule applications, then deploy them to the Mule runtimes
 
-44. An organization uses various cloud-based SaaS systems and multiple on-premises systems. The on-premises systems are an important part of the organization's application network and can only be accessed from within the organization's intranet. What is the best way to configure and use Anypoint Platform to support integrations with both the cloud-based SaaS systems and on-premises systems?
+44. An API has been updated in Anypoint Exchange by its API producer from version 3.1.1 to 3.2.0 following accepted semantic versioning practices and the changes have been communicated via the API's public portal. <br/> The API endpoint does NOT change in the new version.\nHow should the developer of an API client respond to this change?
+    1. The update should be identified as a project risk and full regression testing of the functionality that uses this API should be run.
+    2. The API producer should be contacted to understand the change to existing functionality.
+    3. The API producer should be requested to run the old version in parallel with the new one.
+    4. The API client code ONLY needs to be changed if it needs to take advantage of new features.
 
-    1. Use CloudHub-deployed Mule runtimes in an Anypoint VPC managed by Private Cloud Edition
-    2. Use CloudHub-deployed Mule runtimes in the shared worker cloud managed by the MuleSoft-hosted control plane
-    3. Use only on-premises Mule runtimes managed by Private Cloud Edition
-    4. Use a combination of CloudHub-deployed and manually provisioned on-premises Mule runtimes managed by the MuleSoft-hosted control plane
-10. A downstream API has a slower response time than the SLA required by an upstream API. What is the best timeout strategy?
-
-    1. Set a very small timeout and retry aggressively
-    2. Set the timeout equal to the downstream API median response time
-    3. Negotiate a different SLA or use an alternative API if the SLA cannot be met
-    4. Never configure a timeout because the invocation is mandatory
-11. An organization has implemented a Customer Address API that enforces Client ID in multiple environments. A developer wants to consume this API from a new client application. What step of gaining access to the API can be performed automatically by Anypoint Platform?
-
-    1. Approve the client application request for the chosen SLA tier
-    2. Request access to the appropriate API instances
-    3. Modify the client application to use the client credentials
-    4. Create a new application in Anypoint Exchange
-12. An organization makes a strategic decision to move towards an IT operating model that emphasizes reusable IT assets using modern APIs. What best describes each modern API?
-
-    1. Each API has its own SDLC, reducing documentation and automation needs
-    2. Each API must be treated like a product and designed for a particular target audience
-    3. Each API should avoid complex authentication mechanisms
-    4. Each API must be REST and HTTP based
-13. How are an API implementation, API client, and API consumer combined to invoke and process an API?
-
-    1. The API consumer creates an API implementation
-    2. The API client creates an API consumer
-    3. The API consumer creates an API client, which sends API invocations that are processed by an API implementation
-    4. The API client creates an API consumer, which sends API invocations processed by an API implementation
-14. An API implementation is being designed that must invoke an Order API, which is known to repeatedly experience downtime. A fallback API is to be called when the Order API is unavailable. What approach provides the best resilience?
-
-    1. Search Anypoint Exchange for a suitable existing fallback API and invoke it when needed
-    2. Create another API Manager entry for the Order API
-    3. Redirect clients with HTTP 307 Temporary Redirect
-    4. Implement the fallback directly inside the client application
-15. What is the primary benefit of publishing APIs and related assets to Anypoint Exchange?
-
-    1. Reduce runtime resource consumption
-    2. Improve discoverability and reuse of assets across the organization
-    3. Automatically version all API implementations
-    4. Eliminate the need for API governance
-16. An organization is deploying its new implementation of the OrderStatus System API to multiple workers in CloudHub. This API fronts the organization's on-premises Order Management System, which is accessed by the API implementation over an IPsec tunnel.
-
-    What type of error typically does NOT result in a service outage of the OrderStatus System API?
-
-    1. A CloudHub worker fails with an out-of-memory exception
-    2. API Manager has an extended outage during the initial deployment of the API implementation
-    3. The AWS region goes offline with a major network failure to the relevant AWS data centers
-    4. The Order Management System is inaccessible due to a network outage in the organization's on-premises data center
-17. What correctly characterizes unit tests of Mule applications?
-
-    1. They test the validity of input and output of source and target systems
-    2. They must be run in a unit testing environment with dedicated Mule runtimes for the environment
-    3. They must be triggered by an external client tool or event source
-    4. They are typically written using MUnit to run in an embedded Mule runtime that does not require external connectivity
-18. What is a typical result of using a fine-grained rather than a coarse-grained API deployment model to implement a given business process?
-
-    1. A decrease in the number of connections within the application network supporting the business process
-    2. A higher number of discoverable API-related assets in the application network
-    3. A better response time for the end user as a result of the APIs being smaller in scope and complexity
-    4. An overall lower usage of resources because each fine-grained API consumes fewer resources
-19. An organization has implemented a Customer Address API to retrieve customer address information. This API has been deployed to multiple environments and has been configured to enforce client IDs everywhere. A developer is writing a client application to allow a user to update their address. The developer has found the Customer Address API in Anypoint Exchange and wants to use it in their client application.
-
-    What step of gaining access to the API can be performed automatically by the Anypoint Platform?
-
-    1. Approve the client application request for the chosen SLA tier
-    2. Request access to the appropriate API instances deployed to multiple environments using the client application's credentials
-    3. Modify the client application to call the API using the client application's credentials
-    4. Create a new application in Anypoint Exchange for requesting access to the API
-20. What is typically NOT a function of the APIs created within the framework called API-led connectivity?
-
-    1. They provide an additional layer of resilience on top of the underlying backend system, thereby insulating clients from extended failure of these systems.
-    2. They allow for innovation at the user interface level by consuming the underlying assets without being aware of how data is being extracted from backend systems.
-    3. They reduce the dependency on the underlying backend systems by helping unlock data from backend systems in a reusable and consumable way.
-    4. They can compose data from various sources and combine them with orchestration logic to create higher level value.
-21. What Mule application deployment scenario requires using Anypoint Platform Private Cloud Edition or Anypoint Platform for Pivotal Cloud Foundry?
-
-    1. When it is required to make ALL applications highly available across multiple data centers
-    2. When it is required that ALL APIs are private and NOT exposed to the public cloud
-    3. When regulatory requirements mandate on-premises processing of EVERY data item, including metadata
-    4. When ALL backend systems in the application network are deployed in the organization's intranet
-
-22. What is true about automating interactions with Anypoint Platform using tools such as Anypoint Platform REST APIs, Anypoint CLI, or the Mule Maven plugin?
-
-    1. Access to Anypoint Platform APIs and Anypoint CLI can be controlled separately through the roles and permissions in Anypoint Platform, so that specific users can get access to Anypoint CLI while others get access to the platform APIs.
-    2. Anypoint Platform APIs can ONLY automate interactions with CloudHub, while the Mule Maven plugin is required for deployment to customer-hosted Mule runtimes.
-    3. By default, the Anypoint CLI and Mule Maven plugin are NOT included in the Mule runtime, so they are NOT available to be used by deployed Mule applications.
-    4. API policies can be applied to the Anypoint Platform APIs so that ONLY certain LOBs have access to specific functions.
-
-58. A new upstream API is being designed to offer an SLA of 500 ms median and 800 ms maximum (99th percentile) response time. The corresponding API implementation needs to sequentially invoke three downstream APIs of very similar complexity.
-
-    The first of these downstream APIs offers the following SLA for its response time: median: 100 ms, 80th percentile: 500 ms, 95th percentile: 1000 ms. If possible, how can a timeout be set in the upstream API for the invocation of the first downstream API to meet the new upstream API's desired SLA?
-
-    1. Set a timeout of 50 ms; this times out more invocations of that API but gives additional room for retries.
-    2. Set a timeout of 100 ms; that leaves 400 ms for the other two downstream APIs to complete.
-    3. No timeout is possible to meet the upstream API's desired SLA; a different SLA must be negotiated with the first downstream API or invoke an alternative API.
-    4. Do not set a timeout; the invocation of this API is mandatory and so we must wait until it responds.
-
-59. What API policy would be LEAST LIKELY used when designing an Experience API that is intended to work with a consumer mobile phone or tablet application?
-
-    1. OAuth 2.0 access token enforcement
-    2. Client ID enforcement
-    3. JSON threat protection
-    4. IP whitelist
-
-60. An organization makes a strategic decision to move towards an IT operating model that emphasizes the consumption of reusable IT assets using modern APIs (as defined by MuleSoft).
-
-    What best describes each modern API in relation to this new IT operating model?
-
-    1. Each modern API has its own software development lifecycle, which reduces the need for documentation and automation.
-    2. Each modern API must be treated like a product and designed for a particular target audience (for instance, mobile app developers).
-    3. Each modern API must be easy to consume, so it should avoid complex authentication mechanisms such as SAML or JWT.
-    4. Each modern API must be REST and HTTP based.
-
-61. What CANNOT be effectively enforced using an API policy in Anypoint Platform?
-    1. Guarding against Denial of Service attacks
-    2. Maintaining tamper-proof credentials between APIs
-    3. Logging HTTP requests and responses
-    4. Backend system overloading
+45. What is true about API implementations when dealing with legal regulations that require all data processing to be performed within a certain jurisdiction (such as in the USA or the EU)?
+    1. They must avoid using the Object Store as it depends on services deployed ONLY to the US East region.
+    2. They must use a Jurisdiction-local external messaging system such as Active MQ rather than Anypoint MQ.
+    3. They must te deployed to Anypoint Platform runtime planes that are managed by Anypoint Platform control\nplanes, with both planes in the same Jurisdiction.
+    4. They must ensure ALL data is encrypted both in transit and at rest.
