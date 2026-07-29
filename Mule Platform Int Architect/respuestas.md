@@ -114,3 +114,84 @@
     Se confirmó con material de referencia oficial de MuleSoft (arquitectura de Runtime Fabric, incluyendo despliegues sobre Azure Kubernetes Service/AKS), donde se documenta explícitamente que Runtime Fabric on Self-Managed Kubernetes permite desplegar aplicaciones Mule y proxies de API en un clúster de Kubernetes que el cliente crea, configura y administra, ejecutándose como un servicio sobre un entorno existente de Amazon EKS, Azure Kubernetes Service (AKS), o Google Kubernetes Engine (GKE),  entregando así balanceo de carga HTTP, despliegues sin downtime ("rolling deployments") y escalado horizontal/vertical con el menor esfuerzo operativo posible al aprovechar componentes ya automatizados por MuleSoft dentro del clúster gestionado.
 
     Se recomienda reforzar la sección **2.7/8.2** de la guía agregando explícitamente que **Runtime Fabric puede desplegarse sobre AWS EKS, Azure AKS o Google GKE**, ya que el examen suele probar escenarios "quiero características tipo CloudHub pero en mi nube/infraestructura propia", cuya respuesta es consistentemente Runtime Fabric.
+34. iii. - **Tema de la guía:** Secciones **2.1 (Center for Enablement - C4E)** y **2.4 (Modern IT Operating Model)**
+
+    La guía indica que el C4E "balancea la consistencia a nivel empresarial con la autonomía de los equipos" y que en el **modelo federado**, "los equipos de entrega toman muchas decisiones arquitectónicas e implementación pequeñas de forma independiente", mientras el C4E provee gobernanza, estándares y guía arquitectónica en lugar de actuar como equipo de implementación.
+
+    Un factor clave que decanta hacia un modelo **federado** (en contraposición al centralizado) es precisamente cuando la organización **ya tiene múltiples iniciativas o grupos de desarrollo independientes/descentralizados** operando (opción 3): en ese contexto, imponer un C4E centralizado que controle todo el desarrollo generaría fricción, iría en contra de la estructura organizacional existente y crearía el cuello de botella que la guía advierte explícitamente en la sección 2.4 ("as organizations grow, this centralized approach becomes a bottleneck"). Un modelo federado, en cambio, se adapta naturalmente a equipos ya distribuidos, dándoles autonomía dentro de guardrails comunes.
+
+    Se descartan las demás opciones:
+    - **Opción 1** (muchos activos comunes compartidos) no es un factor decisivo entre federado vs. centralizado; de hecho, activos compartidos son valiosos en ambos modelos.
+    - **Opción 2** (equipos nuevos en integración, necesitan entrenamiento extensivo) apunta más bien hacia un modelo **centralizado** o al menos un rol más fuerte del C4E como entrenador/entregador directo al inicio (esto es más el enfoque de MuleSoft Catalyst en etapas tempranas, sección 2.2), no hacia federación inmediata.
+    - **Opción 4** (aplicaciones basadas en la nube) es un dato de despliegue/infraestructura irrelevante para decidir el modelo organizacional de gobernanza del C4E.
+
+    Este es un tema cubierto de forma sólida por la guía.
+35. iv. - **Tema de la guía:** Secciones **8.3 (Worker Sizing and Scaling)** y **9.3 (Horizontal Scaling)**
+
+    La guía indica en 8.3 que el **escalado horizontal** consiste en agregar más workers para manejar picos de tráfico, mientras que el **escalado vertical** implica aumentar el tamaño de los workers existentes; y en 9.3 que el escalado horizontal es la estrategia preferida para mejorar disponibilidad y throughput, especialmente cuando la aplicación está diseñada de forma stateless.
+
+    El requisito clave de la pregunta es **"la forma más eficiente en recursos"** ("MOST resource-efficient"), lo cual apunta directamente a **escalado automático (autoscaling)** en lugar de un aumento **permanente** de capacidad:
+    - Las opciones **1** y **3** proponen incrementos **permanentes** de tamaño/cantidad de workers (4x), lo cual desperdicia recursos (y costo) durante la mayor parte del año, ya que la carga normal se maneja bien con la configuración actual (CPU < 70% con 2 workers de 0.2 vCore). Esto es ineficiente porque el pico ocurre solo "varias veces al año".
+    - La opción **2** (autoscaling **vertical**) no es una capacidad estándar/nativa de CloudHub de la misma manera; el autoscaling de CloudHub está diseñado en torno a agregar/quitar **workers** (horizontal), no cambiar dinámicamente el tamaño (vCores) de un worker en caliente.
+    - La opción **4** (autoscaling **horizontal** disparado por utilización de CPU > 70%) es la respuesta correcta: agrega workers automáticamente solo durante los picos de tráfico (cuando el CPU supera el umbral) y los reduce cuando la carga vuelve a la normalidad, optimizando el uso de recursos. Esto es coherente con que el cuello de botella es de **CPU/capacidad de procesamiento** en el propio worker (no el backend, que responde a tiempo), por lo que agregar más instancias que compartan la carga (horizontal) resuelve directamente el problema sin sobreaprovisionar de forma permanente.
+
+    Se recomienda reforzar la sección **8.3** de la guía agregando explícitamente el concepto de **CloudHub Autoscaling** (política nativa que agrega/remueve workers dinámicamente según CPU/memoria), ya que actualmente la guía solo menciona el escalado horizontal/vertical de forma manual/conceptual, sin cubrir la característica específica de autoscaling automático de CloudHub que este tipo de preguntas evalúa.
+36. ii. - **Tema de la guía:** Sección **4.1 (API, API Specification, Implementation, and Clients: Key Dependencies)** y **1.1 (The Role and Characteristics of Web APIs)**
+
+    La guía indica en 4.1 que la **API Specification** es "el documento formal y legible por máquina (escrito en **RAML u OAS**) que describe el contrato de la API", y en 1.1 que RAML y OAS/Swagger son los lenguajes estándar de definición de interfaz para APIs REST, mientras que WSDL se asocia a SOAP.
+
+    Se descartan las demás opciones:
+    - **WSDL (1)** es el lenguaje de definición de contrato para servicios **SOAP**, no para APIs REST.
+    - **YAML (3)** es simplemente un **formato de serialización de datos** (como JSON), no un lenguaje de definición de interfaz de API en sí mismo; de hecho, tanto OAS como RAML *pueden escribirse* en formato YAML, pero YAML por sí solo no es un "lenguaje estándar de definición de interfaz para REST".
+    - **AsyncAPI Specification (4)** es un estándar para describir APIs **basadas en eventos/mensajería asíncrona** (colas, topics, streams), no para APIs REST síncronas.
+
+    La opción correcta y más directa entre las presentadas es **OpenAPI Specification (OAS)** (nótese que RAML, aunque es el otro estándar mencionado explícitamente en la guía y ampliamente usado en el ecosistema MuleSoft/Anypoint Exchange, no aparece como opción en esta pregunta).
+
+    Este tema está bien cubierto por la guía.
+37. i. - **Tema de la guía:** No cubierto explícitamente en la guía. Se reforzó con documentación oficial de MuleSoft.
+
+    La guía no aborda en detalle qué conectores específicos soportan transacciones (este es un tema muy puntual de implementación en Mule Runtime, más cercano al dominio de un desarrollador que al de un arquitecto, aunque puede aparecer en el examen).
+
+    Se confirmó con la documentación oficial de MuleSoft ("Transaction Management" y "XA Transactions", docs.mulesoft.com/mule-runtime/latest/transaction-management y .../xa-transactions), donde se indica explícitamente que los únicos componentes que pueden definir el tipo de transacción son las fuentes de eventos (por ejemplo, `jms:listener` y `vm:listener`) y el scope Try,  y en un ejemplo oficial de transacciones XA se muestra el uso conjunto de `vm:publish`, `jms:consume` y `db:insert` dentro de una misma transacción.
+
+    Esto confirma que los conectores que soportan transacciones de forma nativa en Mule son: **Database (JDBC), JMS y VM** — coincidiendo exactamente con la opción **1**.
+
+    Se descartan las demás opciones:
+    - **HTTP (2)** no es un recurso transaccional (no implementa `TransactionalConnection`); las peticiones HTTP no pueden participar en un commit/rollback de transacción Mule.
+    - **SFTP (3)** tampoco es un conector transaccional soportado en el mecanismo de transacciones de Mule.
+    - **File (4)** tampoco soporta transacciones de la misma manera que Database/JMS/VM.
+
+    Se recomienda agregar a la guía una nueva subsección (por ejemplo, dentro de la sección **9.2 Resilience Patterns** o como una nueva **9.x Transaction Management**) que cubra: tipos de transacción (Single Resource/Local vs. XA), qué conectores las soportan de forma nativa (Database, JMS, VM), y el uso del scope **Try** con `transactionalAction`, ya que este es un tema recurrente en el dominio "Meeting API Quality Goals" del temario oficial y actualmente no está documentado en la guía.
+38. i. - **Tema de la guía:** Sección **5.6 (API Policies)** y **5.1 (API Manager Overview)**
+
+    La guía no lo indica de forma tan explícita, pero se confirma con la documentación oficial de MuleSoft (docs.mulesoft.com — Mule Runtime overview), donde se establece de forma directa que las políticas sobre APIs basadas en HTTP pueden aplicar seguridad, regular el tráfico a través de las aplicaciones Mule, y adaptar las APIs a las necesidades de negocio, dejando claro que el mecanismo de políticas de API Manager está diseñado en torno al protocolo **HTTP** (request/response con headers y status codes estándar).
+
+    Esto se corrobora además con bancos de preguntas de práctica ampliamente citados del examen oficial MCPA (Actual4test, ExamTopics), que confirman **Opción A (HTTP/1.x)** como la respuesta correcta a esta pregunta específica.
+
+    Se descartan las demás opciones porque no son endpoints HTTP de request/response estándar sobre los cuales el motor de políticas de API Manager pueda aplicarse de forma nativa:
+    - **JSON sobre TCP sin respuesta requerida (2):** no es HTTP; es un socket TCP crudo sin el modelo petición/respuesta que las políticas (rate limiting, autenticación, etc.) requieren.
+    - **JSON sobre WebSocket (3):** WebSocket es un protocolo de comunicación full-duplex distinto de HTTP request/response; las políticas de API Manager no están diseñadas para interceptar mensajes WebSocket de la misma forma.
+    - **gRPC sobre HTTP/2 (4):** aunque usa HTTP/2 como transporte, gRPC utiliza un formato binario (Protocol Buffers) y un modelo de streaming que no es compatible con el modelo estándar de políticas HTTP de API Manager.
+
+    Se recomienda reforzar la sección **5.6** de la guía agregando una nota explícita indicando que **las políticas de API Manager están diseñadas para APIs HTTP/HTTP(S) estándar (request/response)**, y no aplican de forma nativa a protocolos como WebSocket, gRPC, o TCP crudo, ya que este es un matiz que el examen evalúa directamente.
+39. i. - **Tema de la guía:** Sección **4.1 (API, API Specification, Implementation, and Clients: Key Dependencies)**
+
+    La guía es muy clara en este punto: en 4.1 se establece que la **API Specification** (RAML/OAS) es "el contrato" del cual dependen los clientes, y que "cambiar la **implementación** sin cambiar la **especificación** no afecta a los clientes", mientras que "cambiar la **especificación** de forma disruptiva siempre afecta a los clientes, sin importar cuántos existan".
+
+    El principio clave de **loose coupling** (sección 1.1 y 3.2) es que la especificación/contrato es independiente de los detalles internos de implementación. Por lo tanto, la especificación RAML **solo** necesita actualizarse cuando cambia algo que forma parte del **contrato observable por el consumidor** — es decir, la estructura de los mensajes de request/response, nuevos recursos, nuevos parámetros requeridos, nuevos códigos de estado, etc. (opción 1).
+
+    Se descartan las demás opciones porque son cambios puramente internos de la **implementación**, que no afectan el contrato:
+    - **Opción 2** (cambio de backend on-premises a SaaS): es exactamente el escenario que ilustra el propósito de un System API (secciones 3.1-3.3) — el System API existe precisamente para **abstraer/aislar** este tipo de cambios de backend, de modo que el contrato (RAML) permanezca estable aunque el sistema de origen cambie por completo.
+    - **Opción 3** (migración de versión de Mule runtime): es un cambio puramente de infraestructura/tecnología de implementación, sin ningún impacto en el contrato expuesto a los consumidores.
+    - **Opción 4** (optimización de tiempo de respuesta): es una mejora de rendimiento interna; mientras el contrato (estructura de request/response, códigos de estado) no cambie, no se requiere actualizar la especificación (esto es coherente además con la sección 5.7, donde se aclara que cambios puramente de comportamiento en tiempo de ejecución, sin afectar lo que el consumidor envía o recibe, no requieren actualizar la especificación).
+
+    Este tema está bien cubierto por la guía; no fue necesario buscar información adicional fuera de ella.
+40. ii. - **Tema de la guía:** Sección **7.5 (Types of Tests — Integration Tests)** y **7.4 (MUnit Testing)**
+
+    La guía indica en 7.5 que los **Integration Tests** "verifican que múltiples componentes de la aplicación funcionen juntos correctamente... y **pueden comunicarse con sistemas externos reales o entornos de prueba dedicados**", lo cual respalda que las opciones 1 (necesita sistemas fuente/destino configurados y accesibles), 3 (activado por una solicitud HTTP externa) y 4 (prepara un payload conocido y valida la respuesta) son todas características plausibles y esperadas de un integration test contra una API REST real desplegada en un entorno de staging.
+
+    Se confirma con fuente de banco de preguntas oficial de práctica del examen MCPA (vceguide.com, con explicación asociada): "los integration tests requieren desplegar la aplicación en un entorno de staging con todas las dependencias disponibles tal como en producción, por lo que no se permite el uso de mocks."  Bajo esta lógica, un integration test real necesita que la aplicación **ya esté desplegada y en ejecución** en un entorno con todas sus dependencias (backend, bases de datos, etc.) para poder recibir una solicitud HTTP externa y validar la respuesta contra sistemas reales.
+
+    Por el contrario, la opción **2** ("el test se ejecuta inmediatamente después de que la aplicación Mule ha sido compilada y empaquetada") describe más bien la etapa de un **test unitario (MUnit)**, que se ejecuta como parte del proceso de build/compilación (ver sección 7.4: "MUnit tests pueden ejecutarse automáticamente como parte de los pipelines de CI/CD" inmediatamente tras compilar), sin necesidad de un despliegue completo a un entorno con sistemas reales. Un integration test, en cambio, requiere un paso adicional posterior: el **despliegue real de la aplicación** a un entorno con acceso a los sistemas de origen/destino, lo cual ocurre **después** (no "inmediatamente después") de la compilación/empaquetado.
+
+    Se recomienda reforzar la sección **7.5** de la guía añadiendo esta distinción explícita: los integration tests requieren que la aplicación esté **desplegada y en ejecución** (no solo compilada) para poder invocarse mediante una solicitud HTTP real contra sistemas reales, a diferencia de los unit tests, que sí pueden ejecutarse inmediatamente tras el build/empaquetado sin despliegue.
