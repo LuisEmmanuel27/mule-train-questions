@@ -210,15 +210,11 @@
     2. The credentials provided by the IdP for client management
     3. An OAuth 2.0 token generated using the credentials provided by the IdP for client management
     4. An OAuth 2.0 token generated using the credentials provided by the IdP for identity management
-32. Say, there is a legacy CRM system called CRM-Z which is offering below functions:
+32. Say, there is a legacy CRM system called CRM-Z which is offering below functions: <br/> 1. Customer creation <br/> 2. Amend details of an existing customer <br/> 3. Retrieve details of a customer <br/> 4. Suspend a customer.
+    1. Implement a system API named customerManagement which has all the functionalities wrapped in it as various operations/resources.
+    2. Implement different system APIs named createCustomer, amendCustomer, retrieveCustomer and suspendCustomer as they are modular and has seperation of concerns.
+    3. Implement different system APIs named createCustomerInCRMZ, amendCustomerInCRMZ, retrieveCustomerFromCRMZ and suspendCustomerInCRMZ as they are modular and has seperation of concerns
 
-    1. Customer creation
-    2. Amend details of an existing customer
-    3. Retrieve details of a customer
-    4. Suspend a customer
-    5. Implement a system API named customerManagement which has all the functionalities wrapped in it as various operations/resources
-    6. Implement different system APIs named createCustomer, amendCustomer, retrieveCustomer and suspendCustomer as they are modular and has separation of concerns
-    7. Implement different system APIs named createCustomerInCRMZ, amendCustomerInCRMZ, retrieveCustomerFromCRMZ and suspendCustomerInCRMZ as they are modular and has separation of concerns
 33. An organization wants MuleSoft-hosted runtime plane features (such as HTTP load balancing, zero downtime, and horizontal and vertical scaling) in its Azure environment. What runtime plane minimizes the organization's effort to achieve these features?
 
     1. Anypoint Runtime Fabric
