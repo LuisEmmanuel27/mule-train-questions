@@ -257,3 +257,45 @@ Confirmado, tu respuesta es correcta.
     Esto se confirmó con múltiples fuentes de bancos de preguntas oficiales de práctica ampliamente citados del examen MCPA (ExamTopics, vceguide.com, Quizlet — ver también referencia a help.mulesoft.com citada en la discusión de ExamTopics), que coinciden en que la respuesta correcta es la opción **B** (equivalente a la opción **2** de tu numeración): "When the API implementation must be accessible within a subnet of a restricted customer-hosted network that does not allow public access."
 
     Se recomienda reforzar la sección **8.4** de la guía aclarando esta distinción específica: un Anypoint VPC es necesario cuando se requiere alcanzar (o ser alcanzado por) recursos que **no tienen exposición pública** — no simplemente por interactuar con infraestructura AWS gestionada por el cliente, si esos endpoints ya son públicamente accesibles.
+47. iv. - **Tema de la guía:** Secciones **2.7 (Control Plane and Runtime Plane — Runtime Plane Hosting Options)** y **8.2 (CloudHub Deployment Models)**
+
+    La guía indica en 2.7 que el Runtime Plane puede ser alojado por MuleSoft (CloudHub) o gestionado por el cliente (Runtime Fabric o Mule runtimes customer-hosted), y que "independientemente de la opción de Runtime Plane seleccionada, las organizaciones pueden continuar usando las mismas capacidades del Control Plane provistas por Anypoint Platform" — es decir, un **único Control Plane MuleSoft-hosted puede gestionar múltiples Runtime Planes híbridos simultáneamente**.
+
+    El requisito clave del escenario es que la organización necesita integrar **tanto sistemas SaaS en la nube COMO sistemas on-premises accesibles solo desde la intranet**. Ninguna opción por sí sola (solo CloudHub, o solo on-premises aislado) cubre ambos casos:
+    - **CloudHub** es ideal para conectarse a sistemas SaaS (accesibles públicamente por internet).
+    - Los **sistemas on-premises accesibles solo desde la intranet** requieren runtimes desplegados dentro de esa misma intranet (customer-hosted), ya que ni siquiera un Anypoint VPC con CloudHub podría alcanzar sistemas que **explícitamente solo permiten acceso desde la intranet** sin una configuración de conectividad privada adicional.
+
+    Por eso, la solución óptima es una arquitectura **híbrida**: usar CloudHub para las integraciones con SaaS, y runtimes Mule **on-premises aprovisionados manualmente** (dentro de la intranet) para los sistemas restringidos — ambos gestionados de forma centralizada por el **mismo Control Plane MuleSoft-hosted** de Anypoint Platform, tal como confirma la explicación oficial del banco de preguntas de práctica MCPA (exam4training.com, pass4success.com): "La mejor manera de configurar y usar Anypoint Platform para estas integraciones mixtas/híbridas es usar una combinación de runtimes Mule desplegados en CloudHub y aprovisionados manualmente on-premises."
+
+    Se descartan las demás opciones:
+    - **Opción 1** (CloudHub en VPC gestionado por **Private Cloud Edition**): es **técnicamente inválida** — los runtimes desplegados en CloudHub **solo** pueden ser gestionados por el Control Plane MuleSoft-hosted, nunca por Private Cloud Edition.
+    - **Opción 2** (CloudHub shared worker cloud, gestionado por el Control Plane MuleSoft-hosted): aunque técnicamente válida para SaaS, **ignora por completo el requisito de los sistemas on-premises** accesibles solo desde la intranet — es una solución incompleta para el escenario planteado.
+    - **Opción 3** (on-premises completamente aislado, sin acceso externo, gestionado por PCE): resolvería el acceso on-premises, pero al no tener **ningún acceso a red externa**, sería imposible integrar con los sistemas SaaS en la nube.
+
+    Se recomienda reforzar la sección **2.7** de la guía agregando explícitamente este patrón de **despliegue híbrido** (CloudHub + runtimes on-premises, ambos bajo un único Control Plane MuleSoft-hosted) como la solución estándar recomendada quando coexisten sistemas SaaS y sistemas on-premises con restricciones de red.
+48. iii. - **Tema de la guía:** Sección **4.1 (API, API Specification, Implementation, and Clients: Key Dependencies)** y **5.10 (API Client Applications and Contracts)**
+
+    La guía define en 4.1 al **API Client** como "una aplicación consumidora (o, más precisamente, una Client Application registrada) que invoca la implementación de la API según la especificación publicada", y a la **API Implementation** como "el software real en ejecución que cumple el contrato definido por la especificación".
+
+    La secuencia lógica correcta, consistente con lo visto en la pregunta 25 (API Consumer solicita acceso → API Client implementa la lógica de invocación → la API enruta la solicitud → API Implementation la procesa), es:
+
+    **API Consumer** (la persona/organización/equipo consumidor) → **crea** el **API Client** (la aplicación registrada que efectivamente invoca la API) → el API Client **envía las invocaciones** a la **API** (el contrato/endpoint) → las cuales son **procesadas por** la **API Implementation** (el software backend real).
+
+    Esto corresponde exactamente a la opción **3**.
+
+    Se descartan las demás opciones:
+    - **Opciones 1 y 2** invierten la relación de creación (el consumidor no "crea una implementación", ni el cliente "crea un consumidor" — es al revés: el consumidor crea/registra el cliente) y además invierten el flujo de invocación (dicen que el cliente "recibe" invocaciones en lugar de "enviarlas").
+    - **Opción 4** invierte la relación de creación: dice que "el API Client crea un API Consumer", cuando en realidad es el **Consumer** (la entidad/organización) quien crea y registra el **Client** (la aplicación), no al revés — un Client Application no "crea" a su consumidor, es una entidad técnica registrada por (y en nombre de) el consumidor.
+49. i. - **Tema de la guía:** Sección **9.2 (Resilience Patterns — Fallback Mechanisms)** y **1.4 (Composability and Reuse)**
+
+    La guía indica en 9.2 que los **Fallback Mechanisms** "proveen respuestas o comportamientos alternativos cuando los sistemas backend no están disponibles. Ejemplos incluyen retornar datos en caché, valores por defecto, o mensajes de error" — y en 1.4 refuerza el principio de **reutilización**: antes de construir algo nuevo, se debe **descubrir y reutilizar activos existentes** (en este caso, una API de fallback ya publicada en Anypoint Exchange), en lugar de crear soluciones ad-hoc.
+
+    La opción **1** es la más resiliente y arquitectónicamente correcta porque implementa el patrón de fallback como **lógica explícita dentro de la implementación** (por ejemplo, usando un scope Try/On Error o un Circuit Breaker que invoque la API de fallback cuando la Order API falle), reutilizando un activo ya existente y descubrible en Exchange, en lugar de depender de mecanismos frágiles o inapropiados a nivel de infraestructura/protocolo.
+
+    Se descartan las demás opciones porque representan enfoques técnicamente incorrectos o poco resilientes:
+    - **Opción 2** (crear una segunda entrada en API Manager para la misma Order API): API Manager es una capa de **gobernanza** (políticas, analíticas), no un mecanismo de **fallback funcional**; registrar una segunda instancia de la misma API en API Manager no resuelve el problema de que el backend real siga caído — de hecho, si el Order API en sí está caído, cualquier "entrada" adicional que apunte a la misma implementación fallida no ofrece ninguna resiliencia real.
+    - **Opción 3** (HTTP 307 Temporary Redirect): esto requeriría que la propia **Order API caída** responda con un 307 para redirigir al cliente — lo cual es contradictorio, ya que si el servicio está caído, no puede emitir ninguna respuesta HTTP en absoluto (ni siquiera un 307). Además, delegar la lógica de fallback al protocolo HTTP en el lado del cliente rompe la abstracción y el principio de que la resiliencia debe manejarse dentro de la implementación/orquestación (Process/System API), no en el cliente.
+    - **Opción 4** (configurar el HTTP Requester para invocar automáticamente un fallback ante cualquier 4xx/5xx): esto es una mala práctica de diseño porque **mezcla errores de cliente (4xx) con errores de servidor (5xx)** de forma indiscriminada — un 4xx (ej. 404 Not Found, 400 Bad Request) normalmente indica un problema con la solicitud, no una caída del servicio, por lo que activar un fallback automáticamente ante *cualquier* 4xx sería un manejo de errores impreciso e incorrecto (podría enmascarar errores reales del cliente en lugar de solo reaccionar ante indisponibilidad real del backend, que se refleja mejor en códigos 5xx o timeouts/errores de conexión).
+
+    Se recomienda reforzar la sección **9.2** de la guía con este ejemplo específico, ilustrando que el patrón de **Fallback** correcto se implementa como lógica explícita de manejo de errores dentro de la aplicación (reutilizando activos existentes descubiertos en Exchange), no mediante trucos de protocolo HTTP ni duplicando entradas en API Manager.
+50. 

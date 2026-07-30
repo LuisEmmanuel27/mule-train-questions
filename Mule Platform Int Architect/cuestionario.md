@@ -301,3 +301,22 @@
     2. When the API implementation must be accessible within a subnet of a restricted customer-hosted network that does not allow public access.
     3. When the API implementation must be deployed to a production AWS VPC using the Mule Maven plugin.
     4. When the API Implementation must write to a persistent Object Store.
+
+47. An organization uses various cloud-based SaaS systems and multiple on-premises systems. The on-premises\nsystems are an important part of the organization's application network and can only be accessed from within the\norganization's intranet.\nWhat is the best way to configure and use Anypoint Platform to support integrations with both the cloud-based\nSaaS systems and on-premises systems?
+    1. Use CloudHub-deployed Mule runtimes in an Anypoint VPC managed by Anypoint Platform Private Cloud\nEdition control plane.
+    2. Use CloudHub-deployed Mule runtimes in the shared worker cloud managed by the MuleSoft-hosted Anypoint\nPlatform control plane.
+    3. Use an on-premises installation of Mule runtimes that are completely isolated with NO external network\naccess, managed by the Anypoint Platform Private Cloud Edition control plane.
+    4. Use a combination of Cloud Hub-deployed and manually provisioned on-premises Mule runtimes managed by\nthe MuleSoft-hosted Anypoint Platform control plane.
+
+48. How are an API implementation, API client, and API consumer combined to invoke and process an API?
+    1. The API consumer creates an API implementation, which receives API invocations from an API such that they are processed for an API client.
+    2. The API client creates an API consumer, which receives API invocations from an API such that they are processed for an API implementation.
+    3. The ApI consumer creates an API client, which sends API invocations to an API such that they are processed by\nan API implementation.
+    4. The API client creates an API consumer, which sends API invocations to an API such that they are processed by\nan API implementation
+
+49. An API implementation is being designed that must invoke an Order API, which is known to repeatedly experience downtime.\nFor this reason, a fallback API is to be called when the Order API is unavailable.<br/> What approach to designing the invocation of the fallback API provides the best resilience?
+    1. Search Anypoint Exchange for a suitable existing fallback API, and then implement invocations to this fallback API in addition to the Order API.
+    2. Create a separate entry for the Order API in API Manager, and then invoke this API as a fallback API if the primary Order API is unavailable.
+    3. Redirect client requests through an HTTP 307 Temporary Redirect status code to the fallback API whenever the Order API is unavailable.
+    4. Set an option in the HTTP Requester component that invokes the Order API to instead invoke a fallback API whenever an HTTP 4xx or 5xx response status code is returned from the Order API.
+50. 
