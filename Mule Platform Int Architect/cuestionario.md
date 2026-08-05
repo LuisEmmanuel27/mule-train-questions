@@ -426,3 +426,13 @@
     2. The application network must include System APIs that interact with the Identity Provider.
     3. To invoke OAuth 2.0-protected APIs managed by Anypoint Platform, API clients must submit access tokens\nissued by that same Identity Provider.
     4. APIs managed by Anypoint Platform must be protected by SAML 2.0 policies
+71. A Mule application exposes an HTTPS endpoint and is deployed to the CloudHub Shared Worker Cloud. All traffic to that Mule application must stay inside the AWS VPC. To what TCP port do API invocations to that Mule application need to be sent?
+    1. 443
+    2. 8081
+    3. 8091
+    4. 8082
+72. An API implementation is deployed to CloudHub. What conditions can be alerted on using the default Anypoint Platform functionality, where the alert conditions depend on the end-to-end request processing of the API implementation?
+    1. When the API is invoked by an unrecognized API client.
+    2. When a particular API client invokes the API too often within a given time period.
+    3. When the response time of API invocations exceeds a threshold.
+    4. When the API receives a very high number of API invocations.
