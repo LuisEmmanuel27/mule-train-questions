@@ -376,3 +376,53 @@
     2. Each modem API must be treated like a product and designed for a particular target audience (for instance, mobile app developers)
     3. Each modern API must be easy to consume, so should avoid complex authentication mechanisms such as SAML or JWT D
     4. Each modern API must be REST and HTTP based
+61. What CANNOT be effectively enforced using an API policy in Anypoint Platform?
+    1. Guarding against Denial of Service attacks.
+    2. Maintaining tamper-proof credentials between APIs.
+    3. Logging HTTP requests and responses.
+    4. Backend system overloading
+62. What is a best practice when building System APIs?
+    1. Document the API using an easily consumable asset like a RAML definition.
+    2. Model all API resources and methods to closely mimic the operations of the backend system.
+    3. Build an Enterprise Data Model (Canonical Data Model) for each backend system and apply it to System APIs.
+    4. Expose to API clients all technical details of the API implementation's interaction wifch the backend system
+63. Refer to the exhibit. An organization is running a Mule standalone runtime and has configured Active Directory as the Anypoint Platform external Identity Provider. The organization does not have the budget for other system components.<br/> What policy should be applied to all instances of APIs in the organization to most effecuvelyKestrict access to a specific group of internal users?
+    1. Apply a basic authentication - LDAP policy; the internal Active Directory will be configured as the LDAP source for authenticating users.
+    2. Apply a client ID enforcement policy; the specific group of users will configure their client applications to use their specific client credentials.
+    3. Apply an IP whitelist policy; only the specific users' workstations will be in the whitelist.
+    4. Apply an OAuth 2.0 access token enforcement policy; the internal Active Directory will be configured as the OAuth server.
+64. A code-centric API documentation environment should allow API consumers to investigate and execute API client source code that demonstrates invoking one or more APIs as part of representative scenarios. <br/> What is the most effective way to provide this type of code-centric API documentation environment using\nAnypoint Platform?
+    1. Enable mocking services for each of the relevant APIs and expose them via their Anypoint Exchange entry.
+    2. Ensure the APIs are well documented through their Anypoint Exchange entries and API Consoles and share these pages with all API consumers.
+    3. Create API Notebooks and include them in the relevant Anypoint Exchange entries.
+    4. Make relevant APIs discoverable via an Anypoint Exchange entry
+65. An API experiences a high rate of client requests (TPS) vwth small message paytoads. How can usage limits be imposed on the API based on the type of client application?
+    1. Use an SLA-based rate limiting policy and assign a client application to a matching SLA tier based on its type.
+    2. Use a spike control policy that limits the number of requests for each client application type.
+    3. Use a cross-origin resource sharing (CORS) policy to limit resource sharing between client applications, configured by the client application type.
+    4. Use a rate-limiting policy and a client ID enforcement policy, each configured by the client application type.
+66. An organization has several APIs that accept JSON data over HTTP POST. The APIs are all publicly available and are associated with several mobile applications and web applications. <br/> The organization does NOT want to use any authentication or compliance policies for these APIs, but at the same\ntime, is worried that some bad actor could send payloads that could somehow compromise the applications or servers running the API implementations. <br/> What out-of-the-box Anypoint Platform policy can address exposure to this threat?
+    1. Shut out bad actors by using HTTPS mutual authentication for all API invocations.
+    2. Apply an IP blacklist policy to all APIs; the blacklist will Include all bad actors.
+    3. Apply a Header injection and removal policy that detects the malicious data before it is used.
+    4. Apply a JSON threat protection policy to all APIs to detect potential threat vectors.
+67. How can the application of a rate limiting API policy be accurately reflected in the RAML definition of an API?
+    1. By refining the resource definitions by adding a description of the rate limiting policy behavior.
+    2. By refining the request definitions by adding a remaining Requests query parameter with description, type, and example.
+    3. By refining the response definitions by adding the out-of-the-box Anypoint Platform rate-limit-enforcement securityScheme with description, type, and example.
+    4. By refining the response definitions by adding the x-ratelimit-* response headers with description, type, and example.
+68. What is the most performant out-of-the-box solution in Anypoint Platform to track transaction state in an asynchronously executing long-running process implemented as a Mule application deployed to multiple CloudHub workers?
+    1. Redis distributed cache.
+    2. java.util.WeakHashMap
+    3. Persistent Object Store.
+    4. File-based storage.
+69. The responses to some HTTP requests can be cached depending on the HTTP verb used in the request. According to the HTTP specification, for what HTTP verbs is this safe to do?
+    1. PUT, POST, DELETE.
+    2. GET, HEAD, POST.
+    3. GET, PUT, OPTIONS.
+    4. GET, OPTIONS, HEAD.
+70. What is a key requirement when using an external Identity Provider for Client Management in Anypoint Platform?
+    1. Single sign-on is required to sign in to Anypoint Platform.
+    2. The application network must include System APIs that interact with the Identity Provider.
+    3. To invoke OAuth 2.0-protected APIs managed by Anypoint Platform, API clients must submit access tokens\nissued by that same Identity Provider.
+    4. APIs managed by Anypoint Platform must be protected by SAML 2.0 policies
