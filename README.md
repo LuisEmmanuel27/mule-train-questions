@@ -34,6 +34,8 @@ Preguntas de entrenamiento para pasar la certificación
 
 ---
 
-# MuleSoft Platform Integration Architect
+# MuleSoft Platform Integration Architect (MCPA)
 
 ## [Guia de estudio](<./Mule%20Platform%20Int%20Architect/guia_estudio.md>)
+
+## [Cuestionario](<./Mule%20Platform%20Int%20Architect/cuestionario.md>)

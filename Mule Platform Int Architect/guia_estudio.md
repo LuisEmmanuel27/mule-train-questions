@@ -2097,3 +2097,7 @@ Architectural trade-off analysis involves:
 
 > [!NOTE]
 > **Key exam clue:** When a question mentions evaluating options, balancing concerns, or selecting the best approach, the concept being tested is **architectural trade-off analysis**. Remember that every decision involves trade-offs, and the goal is to select the option that best meets requirements while managing risks.
+
+---
+
+# [Cuestionario](cuestionario.md)
