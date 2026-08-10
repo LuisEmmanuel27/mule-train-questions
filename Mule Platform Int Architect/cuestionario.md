@@ -194,10 +194,10 @@
     4. iPaaS provisioned customer-hosted runtime plane and MuleSoft-hosted control plane
 29. Version 3.0.1 of a REST API implementation represents time values in PST time using ISO 8601 hh:mm:ss format. The API implementation needs to be changed to instead represent time values in CEST time using ISO 8601 hh:mm:ss format. When following the semver.org semantic versioning specification, what version should be assigned to the updated API implementation?
 
-    1. 3.0.2
-    2. 4.0.0
-    3. 3.1.0
-    4. 3.0.1
+    1. `3.0.2`
+    2. `4.0.0`
+    3. `3.1.0`
+    4. `3.0.1`
 30. What is the main change to the IT operating model that MuleSoft recommends to organizations to improve innovation and clock speed?
 
     1. Drive consumption as much as production of assets; this enables developers to discover and reuse assets from other projects and encourages standardization
@@ -437,10 +437,10 @@
     3. When the response time of API invocations exceeds a threshold.
     4. When the API receives a very high number of API invocations.
 73. What is true about where an API policy is defined in Anypoint Platform and how it is then applied to API instances?
-   1. The API policy Is defined In Runtime Manager as part of the API deployment to a Mule runtime and then ONLY applied to the specific API Instance.
-   2. The API policy Is defined In API Manager for a specific API Instance and then ONLY applied to the specific API instance.
-   3. The API policy Is defined in API Manager and then automatically applied to ALL API instances.
-   4. The API policy is defined in API Manager and then applied to ALL API instances in the specified environment
+    1. The API policy Is defined In Runtime Manager as part of the API deployment to a Mule runtime and then ONLY applied to the specific API Instance.
+    1. The API policy Is defined In API Manager for a specific API Instance and then ONLY applied to the specific API instance.
+    2. The API policy Is defined in API Manager and then automatically applied to ALL API instances.
+    3. The API policy is defined in API Manager and then applied to ALL API instances in the specified environment
 74. What is the best way to decompose one end-to-end business process into a collaboration of Experience, Process, and System APIs?
     1. Handle customizations for the end-user application at the Process API level rather than the Experience API level.
     2. Allow System APIs to return data that is NOT currently required by the identified Process or Experience APIs.
