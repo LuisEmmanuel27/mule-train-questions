@@ -284,9 +284,27 @@ Organizations with higher clock speed can adapt more rapidly because they spend 
 >
 > "Clock speed" refers to  **organizational agility** , not application performance, CPU speed, latency, or throughput.
 
-### 2.6 Business Groups
+#### Production → Consumption → Feedback Cycle
 
-Business Groups are organizational boundaries within Anypoint Platform that allow enterprises to separate ownership, administration, permissions, and asset management across different business units, departments, regions, or teams. They provide a mechanism for partitioning platform resources while maintaining governance within a single organization.
+A mature application network operates as a continuous **production → consumption → feedback** cycle rather than treating reusable asset creation as a one-way process.
+
+1. **Production:** Teams create and publish reusable APIs, integrations, templates, and other assets.
+2. **Consumption:** Other teams discover and consume those assets through self-service mechanisms such as Anypoint Exchange.
+3. **Feedback:** Consumer behavior, usage metrics, and consumer feedback provide information that can be used to improve existing assets and guide the production of future assets.
+
+This creates a continuous feedback loop in which asset production is informed by actual consumption. The objective is not simply to maximize the number of assets produced, but to create assets that are actually useful, discoverable, reusable, and consumed by other teams.
+
+Anypoint Exchange provides usage and engagement metrics that can help asset owners understand consumption. These metrics include downloads, imports from API Designer and Anypoint Studio, dependents, and contracts.
+
+> **Key exam clue:**
+>
+> If a question describes a cycle in which reusable assets are produced, consumed by other teams, and then improved based on **consumer feedback and usage metrics**, the correct concept is the **production → consumption → feedback cycle**.
+>
+> The important distinction is that **consumption is not the end of the process**. Consumption generates feedback and usage information that should influence future asset production and improvement.
+
+### 2.6 Business Groups and API Policy Applicability / Gateway Type
+
+**Business Groups** are organizational boundaries within Anypoint Platform that allow enterprises to separate ownership, administration, permissions, and asset management across different business units, departments, regions, or teams. They provide a mechanism for partitioning platform resources while maintaining governance within a single organization.
 
 By using Business Groups, organizations can delegate administrative responsibilities and control access to APIs, applications, environments, and other platform resources. Each Business Group can have its own administrators, permissions, teams, and allocated resources, enabling different parts of the enterprise to operate independently while still adhering to enterprise-wide governance standards.
 
@@ -294,24 +312,66 @@ Business Groups are commonly used to align platform ownership with organizationa
 
 This organizational model improves security, accountability, and scalability by ensuring that teams only have access to the resources they are responsible for managing. It also simplifies administration in large enterprises where multiple teams share the same Anypoint Platform instance.
 
+#### API Policy Applicability and Gateway Type
+
+API policies are applied through **API Manager**, but the policies available to an API depend on the **API type and the gateway/runtime where the API instance is deployed**.
+
+For **Mule Gateway**, the Mule application must expose the API through an **HTTP- or HTTPS-based flow** linked to API Manager through **API autodiscovery**. Mule Gateway policies are then applied to the API through API Manager.
+
+API Manager supports API assets and instances beyond traditional REST APIs. Current Anypoint Platform capabilities include API types such as:
+
+* REST
+* HTTP, including the WebSocket subtype
+* AsyncAPI
+* SOAP
+* gRPC
+* GraphQL
+
+However, this does **not** mean that every policy is applicable to every API type. Policy availability depends on the **gateway and API type**.
+
+Therefore, when determining whether a policy can be applied, do not consider only the transport protocol. The relevant factors are:
+
+1. **What API type/protocol is being exposed?**
+2. **Which gateway/runtime is enforcing the policy?**
+3. **Is the specific policy supported for that API type and gateway?**
+
+This distinction is important because API Manager can manage different types of API assets, while the actual policy enforcement capabilities depend on the gateway/runtime associated with the API instance.
+
 > [!NOTE]
-> **Key exam clue:** If the question mentions:
+> **Key exam clues — Business Groups:**
 >
-> - Ownership of assets
-> - Delegating administration
-> - Access control
-> - Separating teams, business units, or departments
-> - Organizing APIs, applications, and environments
+> If the question mentions:
+>
+> * Ownership of assets
+> * Delegating administration
+> * Access control
+> * Separating teams, business units, or departments
+> * Organizing APIs, applications, and environments
 >
 > then the answer is usually **Business Groups**, whose purpose is to partition ownership, permissions, and resource management across the enterprise.
 
+> [!NOTE]
+> **Key exam clues — API Policies / Gateway:**
+>
+> Do not memorize the outdated rule that **"API policies only work with HTTP/1.x and never with WebSocket or gRPC."**
+>
+> Instead, determine:
+>
+> 1. **What API type/protocol is being exposed?**
+> 2. **Which gateway/runtime is enforcing the policy?**
+> 3. **Is the specific policy supported for that API type and gateway?**
+>
+> For the classic Mule Gateway scenario, an API implemented by a Mule application through an **HTTP/HTTPS flow** can have policies applied through API Manager using **autodiscovery**.
+>
+> **Important:** API Manager policy support is not determined solely by the transport protocol; policy availability is also dependent on the **API type and gateway**.
+
 ### 2.7 Control Plane and Runtime Plane
 
-Anypoint Platform separates platform management capabilities from application execution by using two logical planes: the **Control Plane** and the  **Runtime Plane** .
+Anypoint Platform separates platform management capabilities from application execution by using two logical planes: the **Control Plane** and the **Runtime Plane**.
 
 The **Control Plane** provides the management capabilities of Anypoint Platform. It is responsible for designing, publishing, governing, monitoring, and managing APIs and Mule applications. It does not execute application logic or process API requests.
 
-Typical Control Plane components include:
+Typical Control Plane capabilities include:
 
 * API Manager
 * Runtime Manager
@@ -323,16 +383,72 @@ Typical Control Plane components include:
 
 The **Runtime Plane** is responsible for executing Mule applications and processing API requests. It hosts Mule Runtime instances and performs the actual integration logic.
 
-Depending on the deployment model, the Runtime Plane may be hosted by MuleSoft (CloudHub) or managed by the customer (Runtime Fabric or customer-hosted Mule runtimes).
+The Control Plane and Runtime Plane can be hosted independently. This allows organizations to choose a MuleSoft-managed or customer-managed runtime environment while maintaining centralized platform management.
 
-Separating these responsibilities allows organizations to centrally manage APIs while choosing the runtime infrastructure that best meets their security, networking, operational, and regulatory requirements.
+#### Runtime Plane Hosting Options
+
+**CloudHub**
+
+* MuleSoft manages the Runtime Plane.
+* Infrastructure management is handled by MuleSoft.
+* Suitable for organizations seeking a managed integration platform.
+
+**Runtime Fabric**
+
+* Runtime Fabric enables Mule applications and API proxies to run on a Kubernetes cluster that the customer provisions, configures, and manages.
+* MuleSoft provides the Runtime Fabric agent, Mule runtime engine, and other Runtime Fabric components used to deploy and manage Mule applications.
+* Runtime Fabric can run on managed Kubernetes services such as:
+
+  * **Amazon Elastic Kubernetes Service (EKS)**
+  * **Microsoft Azure Kubernetes Service (AKS)**
+  * **Google Kubernetes Engine (GKE)**
+* The MuleSoft Anypoint Platform Control Plane provides centralized management capabilities such as Runtime Manager, Access Management, and Anypoint Monitoring.
+
+> [!NOTE]
+> **Key exam clue:** Runtime Fabric is a **Kubernetes-based Runtime Plane deployment model** in which the customer provides and manages the Kubernetes environment.
+>
+> Remember the common supported cloud Kubernetes options:
+>
+> **AWS → EKS**
+> **Azure → AKS**
+> **Google Cloud → GKE**
+>
+> Do not confuse the Kubernetes infrastructure with the MuleSoft Control Plane: Runtime Fabric uses the Anypoint Platform Control Plane for centralized management while the customer manages the underlying Kubernetes environment.
+
+**Customer-hosted Mule Runtime / Hybrid**
+
+* Mule applications run on customer-managed servers or virtual machines.
+* The organization is responsible for the infrastructure and runtime environment.
+* The applications can still be managed through the MuleSoft-hosted Anypoint Platform Control Plane.
+* This enables a **hybrid deployment**, where CloudHub applications and customer-hosted Mule runtimes can coexist under the same MuleSoft-hosted Control Plane.
+
+#### Anypoint Platform Private Cloud Edition (PCE)
+
+**Anypoint Platform Private Cloud Edition (PCE)** provides a **customer-hosted Control Plane**. It allows the organization to run Anypoint Platform management capabilities within its own infrastructure and maintain control over the storage, processing, and transmission of platform data.
+
+PCE is appropriate when organizational, regulatory, security, or data-sovereignty requirements require the Anypoint Platform Control Plane itself to be hosted within customer-controlled infrastructure.
+
+Unlike the standard MuleSoft-hosted Control Plane, PCE provides a self-hosted Anypoint Platform environment. PCE can also host Mule applications within the organization's infrastructure.
+
+#### Data Residency and Jurisdiction
+
+Control Plane and Runtime Plane hosting decisions must both be considered when an organization has geographic data-residency or jurisdiction requirements.
+
+The Control Plane determines where Control-Plane-managed data and metadata reside, while the Runtime Plane determines where application execution and runtime payload processing occur. Therefore, when a regulation requires data to remain within a particular geographic jurisdiction, the selected **Control Plane and Runtime Plane must both satisfy that jurisdictional requirement**.
+
+The Control Plane and Runtime Plane do not necessarily have to be physically identical deployments or use the same hosting model; they must be evaluated together against the applicable data-residency requirement.
 
 > [!NOTE]
 > **Key exam clues:**
 >
 > * **Control Plane → manages APIs and applications.**
 > * **Runtime Plane → executes Mule applications.**
-> * The Control Plane manages the platform but does **not** execute integrations.
+> * **CloudHub → MuleSoft-managed Runtime Plane.**
+> * **Runtime Fabric → customer-managed Kubernetes infrastructure + MuleSoft Control Plane.**
+> * **Hybrid → MuleSoft-hosted Control Plane managing customer-hosted Mule runtimes.**
+> * **PCE → customer-hosted Control Plane.**
+> * **Runtime Fabric supports Kubernetes environments such as EKS, AKS, and GKE.**
+> * For **data-jurisdiction requirements**, evaluate **both Control Plane and Runtime Plane**; satisfying the requirement for only one plane is insufficient.
 
 #### Runtime Plane Hosting Options
 
@@ -451,6 +567,42 @@ Examples of responsibilities typically assigned to System APIs include connectin
 
 > [!NOTE]
 > **Key exam clue:** If a question mentions direct access to SAP, databases, ERPs, mainframes, Salesforce, or any system of record, the answer will almost always point toward **System APIs**.
+
+#### Business Capability vs. Operation-Based API Design
+
+APIs should generally be designed around **meaningful business capabilities** rather than being split into separate APIs for individual technical operations.
+
+For example, a customer domain may expose a **Customer Management API** that provides the operations required to manage customers:
+
+* Create a customer
+* Retrieve a customer
+* Update a customer
+* Delete a customer
+
+These operations belong to the same business capability and can therefore be exposed through a single, cohesive API.
+
+An anti-pattern is to create a separate API for each technical operation, such as:
+
+* Create Customer API
+* Get Customer API
+* Update Customer API
+* Delete Customer API
+
+This operation-oriented approach can unnecessarily fragment the API portfolio, make discovery more difficult, and reduce the ability to compose reusable business capabilities.
+
+The important distinction is that **CRUD operations themselves are not an anti-pattern**. CRUD operations can be perfectly valid operations within an API. The anti-pattern is using individual CRUD operations as the primary boundary for creating separate APIs instead of defining API boundaries around cohesive business capabilities.
+
+> [!NOTE]
+> **Key exam clue:**
+>
+> When deciding how to define API boundaries, prefer a **cohesive business capability** over an API boundary based solely on individual technical operations.
+>
+> **Good:** `Customer Management API` → create, retrieve, update, and delete customer operations.
+>
+> **Anti-pattern:** separate `Create Customer`, `Get Customer`, `Update Customer`, and `Delete Customer` APIs.
+>
+> The question is about **API boundaries and business capability**, not whether CRUD operations themselves are valid.
+
 
 ### 3.2 Using System APIs to Isolate Backend Changes
 
@@ -1471,6 +1623,39 @@ Best practices for worker sizing and scaling include:
 > [!NOTE]
 > **Key exam clue:** When a question mentions worker size, vCores, horizontal scaling, or vertical scaling, the concept being tested is **worker sizing and scaling**. Remember that horizontal scaling adds more workers, while vertical scaling increases worker size.
 
+#### CloudHub Autoscaling
+
+CloudHub supports **autoscaling policies** that automatically adjust the processing capacity of an application in response to resource utilization.
+
+For **CloudHub**, an autoscaling policy can be based on:
+
+* **CPU utilization**
+* **Memory utilization**
+
+When the configured conditions are met, the policy can scale the application by either:
+
+* Increasing or decreasing the **number of workers** (horizontal scaling), or
+* Increasing or decreasing the **worker size** (vertical scaling).
+
+Autoscaling policies define conditions for both scale-up and scale-down. The policy can specify utilization thresholds, the period for which the threshold must be sustained, cooldown behavior, and minimum/maximum scaling limits.
+
+For **CloudHub 2.0**, horizontal autoscaling is implemented using a **Horizontal Pod Autoscaler (HPA)**. The documented CloudHub 2.0 feature is **CPU-based horizontal autoscaling**, which automatically increases or decreases the number of application replicas according to CPU utilization.
+
+> [!NOTE]
+> **Key exam clue:**
+>
+> **CloudHub:** Autoscaling can react to **CPU or memory** and can change the **number or size of workers**.
+>
+> **CloudHub 2.0:** CPU-based HPA automatically changes the **number of replicas**.
+>
+> Do not confuse:
+>
+> * **Horizontal scaling → more workers/replicas**
+> * **Vertical scaling → larger worker/replica capacity**
+> * **Autoscaling → the platform automatically performs scaling according to configured utilization conditions**
+>
+> Autoscaling is therefore different from manually selecting a larger worker size or manually increasing the worker/replica count.
+
 ### 8.4 CloudHub Networking
 
 CloudHub networking capabilities allow organizations to control how Mule applications communicate with external systems and other services.
@@ -1733,7 +1918,113 @@ Common resilience patterns include:
 > - Fallback = provides alternatives
 > - Bulkhead = isolates failures
 
-### 9.3 Horizontal Scaling
+### 9.3 Transaction Management
+
+Transactions are used when a series of operations must succeed or fail as a single unit. If a transaction fails, Mule can roll back the transactional operations so that the result does not remain partially committed.
+
+Mule supports two transaction types:
+
+#### Single Resource Transaction (Local)
+
+A **Single Resource Transaction**, also called a **local transaction**, coordinates operations that use a single transactional resource.
+
+Supported transactional resources include:
+
+* **JMS**
+* **VM**
+* **Database/JDBC**
+
+Key characteristics:
+
+* Uses a single transactional resource.
+* All operations participating in the transaction must belong to the same connector.
+* Operations must use the same Global Configuration (`config-ref`).
+* Does not support nested transactions.
+* Generally provides better performance than XA transactions.
+
+For example:
+
+`JMS Listener → JMS Publish → JMS Publish`
+
+can execute within one local JMS transaction.
+
+If an error is propagated during the transaction, Mule rolls back the transactional operations.
+
+#### XA Transaction
+
+An **XA transaction** is a global transaction that can coordinate operations involving multiple transactional resources.
+
+For example:
+
+`VM → JMS → Database`
+
+can participate in the same XA transaction.
+
+XA uses a **two-phase commit (2PC)** protocol to coordinate the participating resources. If a participating resource reports an error, the global transaction manager can coordinate the rollback of the other participating resources.
+
+XA transactions provide cross-resource atomicity, but they introduce additional complexity and overhead:
+
+* Higher latency
+* Additional transaction-management resources
+* More complex failure and recovery behavior
+
+Therefore, XA should be used when coordination across multiple transactional resources is actually required rather than as the default transaction type.
+
+#### Transactional Connectors
+
+The Mule connectors relevant to transaction questions include:
+
+* **Database:** Database operations can participate in local and XA transactions when configured to support them.
+* **JMS:** JMS message sources and operations can participate in transactions.
+* **VM:** VM message sources and operations can participate in transactions.
+
+A transactional message source can begin a transaction, while transactional operations can join an existing transaction.
+
+#### Try Scope and Transactions
+
+The **Try Scope** provides localized error handling and can also define a transaction around the operations contained within the scope.
+
+The Try Scope can be configured with:
+
+* **Transaction Type**
+
+  * `LOCAL` — Single Resource transaction
+  * `XA` — XA transaction
+* **Transactional Action**
+
+  * `ALWAYS_BEGIN` — starts a new transaction
+  * `BEGIN_OR_JOIN` — joins an existing transaction when possible; otherwise starts a new transaction
+  * `INDIFFERENT` — does not explicitly initiate a transaction
+
+Transactional operations can use actions such as:
+
+* `ALWAYS_JOIN` — requires an active transaction and joins it.
+* `JOIN_IF_POSSIBLE` — joins an active transaction when one exists; otherwise executes without creating one.
+
+> [!NOTE]
+> **Key exam clues:**
+>
+> **Single Resource / Local**
+> → One transactional resource
+> → Same connector
+> → Same `config-ref`
+> → Better performance than XA
+> → No nested transactions
+>
+> **XA**
+> → Multiple transactional resources
+> → VM + JMS + Database can participate together
+> → Two-phase commit (2PC)
+> → More overhead and latency
+>
+> **Try Scope**
+> → Can start or join a transaction
+> → Can be configured as `LOCAL` or `XA`
+> → Also provides localized error handling
+>
+> **Important distinction:** The fact that an operation is transactional does not mean that the operation itself starts the transaction. A transaction can be started by a transactional message source or by a Try Scope configured with a transactional action.
+
+### 9.4 Horizontal Scaling
 
 Horizontal scaling is the process of adding more workers (instances) to handle increased traffic or workload. In CloudHub, horizontal scaling is achieved by deploying multiple workers across different availability zones.
 
@@ -1754,7 +2045,7 @@ Considerations for horizontal scaling include:
 >
 > **Pro tip:** Horizontal scaling **mejora el throughput** (más requests por segundo) pero **no necesariamente reduce la latencia** de una request individual. Si el problema es que cada request tarda demasiado, el scaling horizontal puede no ser la solución. A veces se necesita vertical scaling (más CPU/memoria) o optimización del código.
 
-### 9.4 Performance Optimization Techniques
+### 9.5 Performance Optimization Techniques
 
 Performance optimization techniques are used to ensure that APIs and integrations meet performance requirements such as response time, throughput, and resource utilization.
 
