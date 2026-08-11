@@ -140,7 +140,7 @@ A breaking change (e.g., modifying response payload structure, changing a data t
 > [!NOTE]
 > **Pro tip:** If a question includes traps like "only a few consumers exist", "it's just an internal API", or "we want to avoid breaking existing consumers", the correct answer is always to **create a new major version**. Skipping versioning is an anti-pattern that undermines the API product mindset.
 
-**[AÑADIDO] Deprecation strategy:** When a new major version is released, the previous version should be **deprecated** (not immediately removed). Organizations should establish a deprecation policy that defines:
+**Deprecation strategy:** When a new major version is released, the previous version should be **deprecated** (not immediately removed). Organizations should establish a deprecation policy that defines:
 
 - A notification period (e.g., 6 months) before the old version is retired
 - Clear communication to consumers about migration timelines
@@ -201,7 +201,7 @@ Measuring the success of a C4E requires well-defined Key Performance Indicators 
 These KPIs help organizations track progress, identify areas for improvement, and demonstrate the value of the application network to stakeholders.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question asks how to measure C4E success, look for answers involving reuse metrics, adoption rates, delivery velocity, and **business impact**—not just technical metrics like server uptime or message throughput.
+> **Key exam clue:** When a question asks how to measure C4E success, look for answers involving reuse metrics, adoption rates, delivery velocity, and **business impact**—not just technical metrics like server uptime or message throughput.
 >
 > **Pro tip:** Los KPIs del C4E deben incluir **métricas de negocio** además de métricas técnicas. Por ejemplo:
 >
@@ -422,6 +422,19 @@ The Control Plane and Runtime Plane can be hosted independently. This allows org
 * The applications can still be managed through the MuleSoft-hosted Anypoint Platform Control Plane.
 * This enables a **hybrid deployment**, where CloudHub applications and customer-hosted Mule runtimes can coexist under the same MuleSoft-hosted Control Plane.
 
+#### Hybrid Deployment Pattern: Mixing CloudHub and Customer-Hosted Runtimes
+
+When an organization must integrate with **both cloud-based SaaS systems and on-premises systems reachable only from the intranet**, the recommended pattern is a **hybrid architecture**:
+
+* Use **CloudHub** for integrations with SaaS/cloud systems that are publicly reachable.
+* Use **customer-hosted (on-premises) Mule runtimes**, provisioned inside the intranet, for systems that are only accessible from within that private network.
+* Both sets of runtimes are managed centrally through the **same MuleSoft-hosted Control Plane** (API Manager, Runtime Manager, Exchange, Access Management).
+
+This is possible because the Runtime Plane hosting decision (CloudHub vs. customer-hosted vs. Runtime Fabric) is independent per application, while a single Control Plane can govern all of them simultaneously (see "Runtime Plane Hosting Options" above). Note that CloudHub-deployed runtimes can **only** be managed by the MuleSoft-hosted Control Plane, never by Private Cloud Edition (PCE) — so PCE is not a valid option when part of the architecture must run on CloudHub.
+
+> [!NOTE]
+> **Key exam clue:** When a scenario requires integrating SaaS systems **and** intranet-only on-premises systems under one platform, the answer is a **hybrid deployment**: CloudHub + manually provisioned on-premises runtimes, both under a single MuleSoft-hosted Control Plane — not an all-CloudHub or all-on-premises/PCE approach, since neither alone satisfies both requirements.
+
 #### Anypoint Platform Private Cloud Edition (PCE)
 
 **Anypoint Platform Private Cloud Edition (PCE)** provides a **customer-hosted Control Plane**. It allows the organization to run Anypoint Platform management capabilities within its own infrastructure and maintain control over the storage, processing, and transmission of platform data.
@@ -448,9 +461,8 @@ The Control Plane and Runtime Plane do not necessarily have to be physically ide
 > * **Hybrid → MuleSoft-hosted Control Plane managing customer-hosted Mule runtimes.**
 > * **PCE → customer-hosted Control Plane.**
 > * **Runtime Fabric supports Kubernetes environments such as EKS, AKS, and GKE.**
-> * For **data-jurisdiction requirements**, evaluate **both Control Plane and Runtime Plane**; satisfying the requirement for only one plane is insufficient.
-
-#### Runtime Plane Hosting Options
+> * Runtime Plane Hosting Options
+> * For **data-jurisdiction requirements**, evaluate **both Control Plane and Runtime Plane**; satisfying the requirement for only one plane is insufficient. A regulation requiring that data remain within a jurisdiction is **not satisfied merely by locating the Runtime Plane there** — the Control Plane region (where specifications, policies, and analytics/metadata are managed) must also be evaluated and aligned with the same jurisdiction. This is why Anypoint Platform allows selecting a Control Plane region (e.g., US or EU) independently of where Runtime Plane workloads are deployed.
 
 The Runtime Plane can be deployed using different hosting models depending on operational, networking, and compliance requirements.
 
@@ -602,7 +614,6 @@ The important distinction is that **CRUD operations themselves are not an anti-p
 > **Anti-pattern:** separate `Create Customer`, `Get Customer`, `Update Customer`, and `Delete Customer` APIs.
 >
 > The question is about **API boundaries and business capability**, not whether CRUD operations themselves are valid.
-
 
 ### 3.2 Using System APIs to Isolate Backend Changes
 
@@ -761,9 +772,16 @@ Semantic versioning is a standardized approach to versioning APIs that communica
 - **Minor version changes** (e.g., 1.1.x → 1.2.0) indicate backward-compatible additions of functionality. Examples include adding new optional fields, new endpoints, or new query parameters. Existing consumers continue to work without modification.
 - **Patch version changes** (e.g., 1.2.3 → 1.2.4) indicate backward-compatible bug fixes or performance improvements. No changes to the API contract are required.
 
+**Breaking changes are not limited to structural changes.** A common exam trap assumes that only changes to field names, data types, or removed fields count as breaking. However, a change to the **semantic meaning** of a field's value—without altering its name, type, or the payload structure—is also a breaking change and requires a new major version.
+
+For example, if a `timestamp` field was documented and always returned in **UTC**, and the API implementation changes to return that same field in the **consumer's local time zone**, the field name, data type, and JSON structure remain identical. Nevertheless, this is a **breaking change**: any consumer that parsed, compared, or stored that value assuming UTC will now silently receive incorrect results. The contract's *meaning*—not just its *shape*—has changed.
+
+> [!NOTE]
+> **Key exam clue:** When a question describes a scenario where the payload structure, field names, and data types remain unchanged, but the **interpretation or semantics of a value changes** (e.g., time zone, unit of measurement such as switching from meters to feet, currency, or precision), the correct answer is still a **breaking change requiring a new major version**. Do not assume that "the schema didn't change" means "it's safe as a minor or patch version"—semantic contract changes are breaking changes even when the structure looks identical.
+
 Semantic versioning helps consumers understand the impact of API changes and plan their migrations accordingly. It also supports governance by establishing clear expectations about when new versions are required.
 
-**[AÑADIDO] Deprecation strategy:** When a new major version is released, the previous version should be **deprecated** (not immediately removed). Organizations should establish a deprecation policy that defines:
+**Deprecation strategy:** When a new major version is released, the previous version should be **deprecated** (not immediately removed). Organizations should establish a deprecation policy that defines:
 
 - A notification period (e.g., 6 months) before the old version is retired
 - Clear communication to consumers about migration timelines
@@ -847,7 +865,7 @@ Key benefits of DataGraph include:
 - **Faster time-to-market:** New data views can be created by configuring DataGraph rather than building new integrations.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions virtual data views, unified data access across systems, or declarative data relationships, the concept being tested is **DataGraph**. It is not a replacement for API-led connectivity but a complementary capability that simplifies data access patterns.
+> **Key exam clue:** When a question mentions virtual data views, unified data access across systems, or declarative data relationships, the concept being tested is **DataGraph**. It is not a replacement for API-led connectivity but a complementary capability that simplifies data access patterns.
 >
 > **Pro tip:** DataGraph es adecuado para **consultas** (reads) sobre datos distribuidos, pero **no es adecuado para operaciones transaccionales o writes**. Para operaciones que requieren actualizaciones en múltiples sistemas, sigue siendo necesario usar Process APIs con orchestrations.
 
@@ -861,6 +879,7 @@ Providing accurate and representative examples is an important aspect of designi
 
 > [!NOTE]
 > **Key exam clue:** When a question mentions **documentation quality**, **developer onboarding**, **consumer adoption**, or **developer experience**, the correct answer usually favors practices such as providing example payloads, clear documentation, and consistent API design rather than adding technical features to the implementation.
+> **API Notebooks:** Anypoint Exchange also supports **API Notebooks**, an interactive, code-centric documentation format where consumers can execute and modify live example calls against an API directly from its Exchange portal (using a generated API client and JavaScript code blocks). API Notebooks complement traditional specification-based documentation by giving consumers a hands-on, executable way to explore an API's resources, methods, and required parameters — improving discoverability and accelerating adoption, especially when combined with Exchange's mocking service for APIs still in design.
 
 ### 4.7 Consistent API Error Handling
 
@@ -954,7 +973,7 @@ Auto-discovery requires:
 When auto-discovery is properly configured, policies applied in API Manager are automatically enforced by the API implementation without requiring code changes. This separation of concerns allows governance policies to be managed centrally while implementations remain focused on business logic.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions linking API implementations to API Manager, automatic policy enforcement, or API instance IDs, the concept being tested is **auto-discovery**. It is the mechanism that connects deployed APIs to their governance configuration.
+> **Key exam clue:** When a question mentions linking API implementations to API Manager, automatic policy enforcement, or API instance IDs, the concept being tested is **auto-discovery**. It is the mechanism that connects deployed APIs to their governance configuration.
 >
 > **Key exam clue:** Auto-discovery requires:
 >
@@ -1063,6 +1082,13 @@ Common types of API policies include:
 - **Spike Control:** Smooths traffic spikes by queueing excess requests.
 - **SLA Alert:** Monitors API response times and triggers alerts when SLAs are violated.
 
+**Threat Protection Policies:**
+
+- **JSON Threat Protection:** Protects APIs that accept JSON payloads from malicious or malformed input designed to exhaust server resources or exploit parsers. It enforces configurable limits such as maximum payload size, maximum object/array depth, maximum number of array elements, and maximum key/string length.
+- **XML Threat Protection:** Protects APIs that accept XML payloads from similar attack vectors, including XML entity expansion attacks (e.g., "billion laughs"), excessive attribute counts, excessive element depth, and DTD-related exploits.
+
+Both policies are applied and enforced the same way as other API Manager policies (via Auto-Discovery, API Proxy, or Service Mesh), and they reject non-conforming requests before they reach the API implementation, protecting backend systems and the Mule Runtime itself from denial-of-service style payloads.
+
 **Observability Policies:**
 
 - **Client ID Required:** Ensures that all API requests include client identification.
@@ -1072,7 +1098,7 @@ Common types of API policies include:
 Organizations can create custom policies to implement organization-specific governance requirements. Custom policies are developed as Mule applications and deployed to API Manager for use across the API portfolio.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions controlling API access, enforcing security, managing traffic, or applying governance rules, the concept being tested is **API policies**. Remember that policies are applied in API Manager and enforced by implementations or gateways.
+> **Key exam clue:** When a question mentions controlling API access, enforcing security, managing traffic, or applying governance rules, the concept being tested is **API policies**. Remember that policies are applied in API Manager and enforced by implementations or gateways.
 >
 > **Key exam clue:** API policies can be enforced through:
 >
@@ -1080,6 +1106,8 @@ Organizations can create custom policies to implement organization-specific gove
 > - **API Gateway/Proxy:** Policies are enforced by a proxy deployed separately from the implementation.
 >
 > When a question mentions "API gateway" or "API proxy", it is testing your understanding of alternative policy enforcement mechanisms. Auto-discovery is the preferred pattern, but gateways are used when the implementation cannot be modified or when additional isolation is required.
+>
+> **Key exam clue:** When a question mentions protecting an API from **malicious or oversized JSON/XML payloads**, **parser exhaustion attacks**, or **entity expansion attacks**, the concept being tested is **Threat Protection policies** (JSON Threat Protection / XML Threat Protection), not a generic security policy like OAuth 2.0 or Client ID Enforcement—those authenticate/identify the consumer, while Threat Protection validates the **shape and safety of the payload itself**.
 
 ### 5.7 API Specification Changes to Reflect Applied Policies
 
@@ -1139,6 +1167,15 @@ Clients can be managed manually through API Manager or automatically through sel
 > [!NOTE]
 > **Key exam clue:** When a question mentions API consumers, client credentials, access control, or API contracts, the concept being tested is **client management**. It is the mechanism for controlling who can access APIs and tracking their usage.
 
+#### SLA Tiers
+
+**SLA Tiers** let an API owner define different levels of API consumption (e.g., Free, Silver, Gold) that can be assigned to different Client Applications via their **contracts**. Each tier specifies throughput limits (e.g., number of requests per time period) and whether requests to that tier are **automatically approved** or require **manual approval** (see 5.10).
+
+SLA Tiers are enforced through **SLA-based Rate Limiting** (or SLA-based Spike Control) policies applied in API Manager: consumers must present valid client credentials associated with an approved tier, and the policy limits their traffic according to the contracted tier's throughput limits. A single API instance can define multiple tiers simultaneously, allowing different classes of consumers (e.g., internal apps vs. partner apps) to receive different quotas on the same API.
+
+> [!NOTE]
+> **Key exam clue:** When a question mentions assigning **different consumption quotas to different types of consuming applications**, the concept is **SLA Tiers**, enforced through the **SLA-based Rate Limiting** policy — not a plain (non-SLA) Rate Limiting policy, which applies a single uniform limit regardless of consumer.
+
 ### 5.10 API Client Applications and Contracts
 
 One of the most frequently misunderstood concepts in API Manager is the distinction between an API implementation, an API instance, and an API client application.
@@ -1152,6 +1189,12 @@ The typical process is:
 3. The consumer creates (or selects) a **Client Application**.
 4. The consumer requests access to the API.
 5. Depending on the API configuration, access may be automatically approved or require manual approval.
+
+   > [!NOTE]
+   > **SLA Tiers and approval type:** When an API owner defines an **SLA tier** in API Manager, they explicitly choose whether requests to that tier are **automatically approved** or require **manual approval**. If a tier is configured for automatic approval, **Anypoint Platform itself completes the approval step with no human action required** — the contract between the Client Application and the API instance is granted instantly. If manual approval is configured, an API owner must explicitly approve or reject the request from API Manager before credentials become usable for that instance.
+   >
+   > **Key exam clue:** When a question asks which step of "getting access to an API" can be performed **entirely by Anypoint Platform without human intervention**, the answer is the **approval of the access request**, and only when the applicable SLA tier is configured for **automatic approval**. Registering a Client Application, requesting access, and modifying client code to call the API are all actions a developer must perform manually — the platform cannot automate those.
+   >
 6. Once the contract is approved, Exchange generates a **Client ID** and **Client Secret** associated with that Client Application.
 7. Those credentials are used to invoke the protected API.
 
@@ -1180,6 +1223,19 @@ This mechanism allows API providers to control who can consume an API, revoke ac
 > * OAuth tokens
 >
 > These are **not** where Client ID/Secret credentials are obtained for Client ID Enforcement.
+
+#### API Instance Visibility
+
+Before an API can be shared through an **Anypoint Exchange public portal**, its API instance must explicitly be configured with **public visibility**. By default, API instances are **not** publicly discoverable/accessible — visibility (private vs. public) is a distinct setting from Access Management roles/permissions, and from whether the API has an implementation or security policies applied.
+
+This means:
+
+* Sharing an API on a public portal does **not** require managing Anypoint Platform roles for external users — public portals are, by definition, outside the organization's internal role model.
+* An API can be shared via a public portal in **design-first** mode, before any real implementation exists (see 4.1) — a functional implementation is not a prerequisite for public sharing.
+* Applying authentication/security policies is **not** a mandatory prerequisite for public sharing either — many public portals expose documentation-only or mocked APIs without requiring credentials.
+
+> [!NOTE]
+> **Key exam clue:** When a question asks what must be configured before sharing an API instance externally via an Exchange public portal, the answer is setting the **instance visibility to public** — not configuring platform roles, not requiring a completed implementation, and not requiring security policies.
 
 ### 5.11 Client ID Enforcement vs OAuth 2.0
 
@@ -1359,7 +1415,7 @@ The primary purpose of environment separation is to isolate lifecycle stages, pe
 Separate environments also support access control and governance by allowing different permissions, credentials, configurations, and operational policies to be applied at each stage. Development teams may have broad access in non-production environments, while production environments typically enforce stricter controls and approval processes.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions:
+> **Key exam clue:** When a question mentions:
 >
 > - Sandbox, Test, UAT, or Production
 > - Promotion between environments
@@ -1409,6 +1465,11 @@ MuleSoft provides tools and integrations to support CI/CD:
 - **Exchange:** Stores reusable assets, templates, and application artifacts that can be consumed by CI/CD pipelines.
 
 > [!NOTE]
+> **Key exam clue:** **Anypoint CLI** and the **Mule Maven Plugin** are external automation/DevOps tools, not components packaged inside the Mule Runtime or a deployed Mule application. Anypoint CLI is a command-line client that invokes the same Anypoint Platform REST APIs a developer could call directly; the Mule Maven Plugin automates packaging and deployment as part of the Maven build lifecycle. Neither is available to, or bundled with, an application once it is running — they operate **before/during** build and deployment, from outside the runtime.
+>
+> Because Anypoint CLI is simply a wrapper around the Anypoint Platform REST APIs, it shares the **same underlying access control** (Access Management roles/permissions) as calling those APIs directly — there is no separate access-control mechanism for CLI usage versus direct API calls. Also, the Anypoint Platform REST APIs (and the Maven plugin) can automate deployment to **CloudHub, Runtime Fabric, and customer-hosted runtimes alike** — they are not limited to any single deployment model.
+
+> [!NOTE]
 > **Key exam clue:** When a question mentions automated builds, automated testing, automated deployment, or environment promotion, the concept being tested is **CI/CD pipelines**. The goal is to reduce manual effort, improve consistency, and accelerate delivery.
 
 ### 7.4 MUnit Testing
@@ -1448,6 +1509,9 @@ Unit tests are generally fast, deterministic, and executed frequently as part of
 Integration tests verify that multiple application components work together correctly. Unlike unit tests, they validate the interaction between modules and may communicate with real external systems or dedicated test environments.
 
 Their objective is to confirm that integrations between components behave correctly under realistic conditions.
+
+> [!NOTE]
+> **Key exam clue — Integration Test vs. Unit Test timing:** Integration tests require the application to be **deployed and running** in an environment with real (or dedicated test) dependencies so it can be invoked, typically via an external HTTP request. This is different from Unit Tests (MUnit), which run **immediately after the application is compiled/packaged**, inside an embedded Mule runtime, without any deployment step. If a question describes a test that is "triggered by an external HTTP request" against dependencies that must already be "configured and accessible," this points to an **Integration Test that requires the app to be deployed**, not a Unit Test.
 
 **Functional Tests**
 
@@ -1680,8 +1744,25 @@ CloudHub networking capabilities allow organizations to control how Mule applica
 
 - Allows Mule applications to use static IP addresses for outbound connections, enabling firewall whitelisting on external systems.
 
+**CloudHub Ports:**
+
+| Property                  | Default Port | Scope                                                                 |
+| ------------------------- | ------------ | --------------------------------------------------------------------- |
+| `${http.port}`          | 8081         | Public — HTTP traffic proxied by the shared/dedicated load balancer  |
+| `${https.port}`         | 8082         | Public — HTTPS traffic proxied by the shared/dedicated load balancer |
+| `${http.private.port}`  | 8091         | Private — accessible only from within the Anypoint VPC               |
+| `${https.private.port}` | 8092         | Private — accessible only from within the Anypoint VPC               |
+
+A Mule application deployed to CloudHub must listen on host `0.0.0.0` and on **8081 or 8082** — these are the only two ports exposed externally by default. The private ports **8091/8092** exist only within an **Anypoint VPC** and are not reachable from the public internet or the shared load balancer; they are used for internal-only services or when a Dedicated Load Balancer proxies traffic to workers inside the VPC. Applications in the **Shared Worker Cloud** (no Anypoint VPC) do not have access to 8091/8092.
+
+> [!NOTE]
+> **Key exam clue:** If a scenario describes a **Shared Worker Cloud** deployment (no VPC) and asks which port an HTTPS endpoint should use, the answer is **8082**, since 8091/8092 only apply inside an Anypoint VPC, and 443 is the public-facing port toward the load balancer, not the port the worker itself listens on.
+
 > [!NOTE]
 > **Key exam clue:** When a question mentions VPC, VPN, load balancers, static IPs, or network isolation, the concept being tested is **CloudHub networking**. Remember that VPC provides isolation, VPN enables hybrid connectivity, and dedicated load balancers improve performance.
+
+> [!NOTE]
+> **Key exam clue — when a VPC is actually required:** An Anypoint VPC is required when CloudHub must reach (or be reached by) resources that are **not publicly exposed** — e.g., a subnet of a restricted customer-hosted network that does not allow public access. If the target service is already **publicly accessible over the internet** (even if it happens to run on customer-managed AWS infrastructure), CloudHub can reach it normally without a VPC. Don't assume a VPC is needed just because "AWS" or "customer infrastructure" is mentioned — check whether the endpoint has public exposure or not.
 
 ### 8.5 Shared Load Balancer vs Dedicated Load Balancer
 
@@ -1832,13 +1913,13 @@ Object Store can be scoped to:
 - **Domain:** Data is shared across multiple applications in the same domain (CloudHub 1.0 only).
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions storing state, preventing duplicates, caching, or watermarking, the concept being tested is **Object Store**. Remember that:
+> **Key exam clue:** Object Store data is scoped to the **application (deployment) that created it**, and is shared only among the **workers of that same application/deployment**. It is **not** natively shared:
 >
-> - Persistent Object Store = survives restarts
-> - In-Memory Object Store = lost on restart
-> - Object Store is scoped to the application (or domain in CloudHub 1.0)
+> - Between **different applications or Business Groups** — MuleSoft's official recommendation for inter-application communication on CloudHub is **Anypoint MQ**, not Object Store.
+> - Between **different regions** — Object Store v2 is regional and remains tied to the region where the application was first deployed.
+> - Between **CloudHub and a customer-hosted/Runtime Fabric deployment** of a different application.
 >
-> **Key exam clue:** En CloudHub 1.0, Object Store puede ser **application-scoped** o **domain-scoped**. En **CloudHub 2.0**, solo existe **application-scoped**. Domain-scoped Object Store no está disponible en CloudHub 2.0.
+> Sharing Object Store data outside a single application's own workers would require the **Object Store REST API** called explicitly from another application, which is a workaround, not native scoped sharing. If a question describes multiple workers of the **same** application needing shared state, Object Store (via the Object Store Connector) is the correct native answer.
 
 ---
 
@@ -1903,6 +1984,12 @@ Common resilience patterns include:
 
 - Provide alternative responses or behaviors when backend systems are unavailable.
 - Examples include returning cached data, default values, or error messages.
+- The correct way to implement a fallback is as **explicit error-handling logic inside the API implementation** (e.g., a Try scope / error handler or Circuit Breaker that invokes an alternative API when the primary call fails), ideally **reusing an existing fallback asset already published in Anypoint Exchange** rather than building an ad hoc solution (see 1.4, Composability and Reuse).
+- Fallback logic should generally react to **server-side failures** (5xx status codes, timeouts, connection errors) — not indiscriminately to any 4xx, since client errors (e.g., 400, 404) usually indicate a problem with the request itself, not backend unavailability, and triggering a fallback on every 4xx can mask real client-side errors.
+- Fallback is an **application-level concern**; it is not something that can be achieved by registering a second API instance in API Manager (a governance layer, not a functional recovery mechanism) or by relying on the failing service itself to return an HTTP redirect (a downed service cannot reliably respond at all).
+
+> [!NOTE]
+> **Key exam clue:** When a question describes a backend failure and asks how to provide a fallback, the correct answer implements the fallback as **explicit logic within the API implementation**, reusing a discoverable Exchange asset when one exists — not as an API Manager configuration trick or a protocol-level redirect.
 
 **Bulkheads:**
 
@@ -2041,7 +2128,7 @@ Considerations for horizontal scaling include:
 - **Session management:** If sessions are required, they should be stored externally (e.g., in a distributed cache or database) rather than in application memory.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions adding more workers, load distribution, or improving availability, the concept being tested is **horizontal scaling**. Remember that horizontal scaling requires stateless design and idempotent operations.
+> **Key exam clue:** When a question mentions adding more workers, load distribution, or improving availability, the concept being tested is **horizontal scaling**. Remember that horizontal scaling requires stateless design and idempotent operations.
 >
 > **Pro tip:** Horizontal scaling **mejora el throughput** (más requests por segundo) pero **no necesariamente reduce la latencia** de una request individual. Si el problema es que cada request tarda demasiado, el scaling horizontal puede no ser la solución. A veces se necesita vertical scaling (más CPU/memoria) o optimización del código.
 
@@ -2079,7 +2166,7 @@ Common performance optimization techniques include:
 - Reduces network latency and processing time.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions improving throughput, reducing latency, or optimizing resource utilization, the concept being tested is **performance optimization**. Remember that:
+> **Key exam clue:** When a question mentions improving throughput, reducing latency, or optimizing resource utilization, the concept being tested is **performance optimization**. Remember that:
 >
 > - Streaming = reduces memory usage
 > - Asynchronous = improves responsiveness
@@ -2188,6 +2275,9 @@ Anypoint Platform components generate data for monitoring and alerting at differ
 * **Runtime Manager:** Generates application-level events such as deployment status, worker restarts, and application logs.
 * **Mule applications (via Logger component / custom logging):** Generate business-level and custom log events that can be forwarded to external systems (see 10.6).
 
+> [!NOTE]
+> **Key exam clue:** Although the **Control Plane** (API Manager, Runtime Manager, Anypoint Monitoring dashboards) is where monitoring data is *visualized* and *aggregated*, the underlying *origin* of that data — response times, throughput, error rates, status codes — is always the **Mule Runtime** executing the request, regardless of the deployment model (CloudHub, Runtime Fabric, or customer-hosted). API Manager and Runtime Manager do not generate this telemetry themselves; they collect and display what the runtime reports. Distractors suggesting the data source varies by deployment model or by which Control Plane tool displays it are incorrect — the runtime is always the source.
+
 **Common metrics collected per API invocation:**
 
 * **Response time (latency):** Time elapsed between receiving a request and sending a response, often broken down further as time spent in the implementation vs. time spent in policy enforcement.
@@ -2281,7 +2371,7 @@ MuleSoft provides several tools for implementing API security:
 - **Secrets Manager:** Securely store and manage secrets used by Mule applications.
 
 > [!NOTE]
-> **[AÑADIDO] Key exam clue:** When a question mentions protecting APIs, preventing unauthorized access, or securing API data, the concept being tested is **API security**. Remember that API security involves authentication, authorization, encryption, rate limiting, input validation, and audit logging.
+> **Key exam clue:** When a question mentions protecting APIs, preventing unauthorized access, or securing API data, the concept being tested is **API security**. Remember that API security involves authentication, authorization, encryption, rate limiting, input validation, and audit logging.
 >
 > **Key exam clue:** **Client ID Enforcement** es una política de seguridad fundamental en MuleSoft que requiere que todos los requests incluyan un Client ID y Client Secret válidos. Es una capa base de seguridad que debe aplicarse a todas las APIs expuestas a consumidores externos o internos.
 
@@ -2366,6 +2456,23 @@ Measuring reusability involves tracking:
 
 > [!NOTE]
 > **Key exam clue:** When a question mentions maximizing asset value, reducing duplication, or accelerating delivery, the concept being tested is **reusability strategies**. Remember that reusability requires business abstractions, separation of concerns, standardization, documentation, governance, and discoverability.
+
+#### Fine-Grained vs. Coarse-Grained API Deployment
+
+Decomposing a business process into APIs can be done at different levels of granularity:
+
+* **Coarse-grained:** Fewer, larger APIs that bundle more functionality together.
+* **Fine-grained:** More, smaller APIs, each with a narrower, more focused scope.
+
+Moving toward a **fine-grained deployment model** (more, smaller APIs) has predictable consequences for an application network:
+
+* **More discoverable assets:** Each fine-grained API is published and cataloged separately in Anypoint Exchange, so the total number of discoverable, potentially reusable assets in the application network **increases**.
+* **More network calls, not fewer:** Completing the same business process now typically requires **more** inter-API invocations (more network hops), so the number of connections generally **increases**, not decreases.
+* **Higher latency, not lower:** Chaining more API calls to accomplish the same outcome tends to **increase** overall response time, not improve it.
+* **More resource overhead, not less:** Each additional API typically means additional deployments, workers/instances, and management overhead, so total resource consumption generally **increases**.
+
+> [!NOTE]
+> **Key exam clue:** If a question asks about the effect of a **fine-grained API deployment model**, the correct answer is usually **"a higher number of discoverable API-related assets in the application network."** Distractors claiming fewer connections, better response time, or lower resource usage are describing the opposite (coarse-grained) trade-off.
 
 ### 12.3 Architectural Trade-Off Analysis
 
