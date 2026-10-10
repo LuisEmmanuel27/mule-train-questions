@@ -1,4 +1,4 @@
-# Cuestionario de prueba
+# Cuestionario de prueba MCPA
 
 ## [Respuestas](respuestas.md)
 
@@ -210,11 +210,11 @@
     2. The credentials provided by the IdP for client management
     3. An OAuth 2.0 token generated using the credentials provided by the IdP for client management
     4. An OAuth 2.0 token generated using the credentials provided by the IdP for identity management
-32. Say, there is a legacy CRM system called CRM-Z which is offering below functions: <br/> 1. Customer creation <br/> 2. Amend details of an existing customer <br/> 3. Retrieve details of a customer <br/> 4. Suspend a customer.
+32. Say, there is a legacy CRM system called CRM-Z which is offering below functions:  1. Customer creation  2. Amend details of an existing customer  3. Retrieve details of a customer  4. Suspend a customer.
+
     1. Implement a system API named customerManagement which has all the functionalities wrapped in it as various operations/resources.
     2. Implement different system APIs named createCustomer, amendCustomer, retrieveCustomer and suspendCustomer as they are modular and has seperation of concerns.
     3. Implement different system APIs named createCustomerInCRMZ, amendCustomerInCRMZ, retrieveCustomerFromCRMZ and suspendCustomerInCRMZ as they are modular and has seperation of concerns
-
 33. An organization wants MuleSoft-hosted runtime plane features (such as HTTP load balancing, zero downtime, and horizontal and vertical scaling) in its Azure environment. What runtime plane minimizes the organization's effort to achieve these features?
 
     1. Anypoint Runtime Fabric
@@ -227,7 +227,7 @@
     2. When various teams responsible for creating APIs are new to integration and hence need extensive training
     3. When development is already organized into several independent initiatives or groups
     4. When the majority of the applications in the application network are cloud based
-35. A retail company is using an Order API to accept new orders. The Order API uses a JMS queue to submit orders to a backend order management service. The normal load for orders is being handled using two (2) CloudHub workers, each configured with 0.2 vCore. The CPU load of each CloudHub worker normally runs well below 70%. <br/> However, several times during the year the Order API gets four times (4x) the average number of orders. This causes the CloudHub worker CPU load to exceed 90% and the order submission time to exceed 30 seconds. The cause, however, is NOT the backend order management service, which still responds fast enough to meet the response SLA for the Order API. What is the MOST resource-efficient way to configure the Mule application's CloudHub deployment to help the company cope with this performance challenge?
+35. A retail company is using an Order API to accept new orders. The Order API uses a JMS queue to submit orders to a backend order management service. The normal load for orders is being handled using two (2) CloudHub workers, each configured with 0.2 vCore. The CPU load of each CloudHub worker normally runs well below 70%.  However, several times during the year the Order API gets four times (4x) the average number of orders. This causes the CloudHub worker CPU load to exceed 90% and the order submission time to exceed 30 seconds. The cause, however, is NOT the backend order management service, which still responds fast enough to meet the response SLA for the Order API. What is the MOST resource-efficient way to configure the Mule application's CloudHub deployment to help the company cope with this performance challenge?
 
     1. Permanently increase the size of each of the two (2) CloudHub workers by at least four times (4x) to one (1) vCore
     2. Use a vertical CloudHub autoscaling policy that triggers on CPU utilization greater than 70%
@@ -258,295 +258,337 @@
     3. When the API implementation is migrated from an older to a newer version of the Mule runtime
     4. When the API implementation is optimized to improve its average response time
 40. What is most likely NOT a characteristic of an integration test for a REST API implementation?
+
     1. The test needs all source and/or target systems configured and accessible
     2. The test runs immediately after the Mule application has been compiled and packaged
     3. The test is triggered by an external HTTP request
     4. The test prepares a known request payload and validates the response payload
-
 41. An organization uses one specific CloudHub (AWS) region for all CloudHub deployments. How are CloudHub workers assigned to availability zones (AZs) when the organization's Mule applications are deployed to CloudHub in that region?
 
     1. Workers belonging to a given environment are assigned to the same AZ within that region
     2. AZs are selected as part of the Mule application's deployment configuration
     3. Workers are randomly distributed across available AZs within that region
     4. An AZ is randomly selected for a Mule application, and all the Mule application's CloudHub workers are assigned to that one AZ
-
 42. When could the API data model of a System API reasonably mimic the data model exposed by the corresponding backend system, with minimal improvements over the backend system's data model?
 
     1. When there is an existing Enterprise Data Model widely used across the organization
     2. When the System API can be assigned to a bounded context with a corresponding data model
     3. When a pragmatic approach with only limited isolation from the backend system is deemed appropriate
     4. When the corresponding backend system is expected to be replaced in the near future
-
 43. Mule applications that implement a number of REST APIs are deployed to their own subnet that is inaccessible from outside the organization. External business partners need to access these APIs, which are only allowed to be invoked from a separate subnet dedicated to partners - called Partner-subnet. This subnet is accessible from the public internet, which allows these external partners to reach it. Anypoint Platform and Mule runtimes are already deployed in Partner-subnet. These Mule runtimes can already access the APIs. What is the most resource-efficient solution to comply with these requirements, while having the least impact on other applications that are currently using the APIs?
 
     1. Implement (or generate) an API proxy Mule application for each of the APIs, then deploy the API proxies to the Mule runtimes
     2. Redeploy the API implementations to the same servers running the Mule runtimes
     3. Add an additional endpoint to each API for partner-enablement consumption
     4. Duplicate the APIs as Mule applications, then deploy them to the Mule runtimes
+44. An API has been updated in Anypoint Exchange by its API producer from version 3.1.1 to 3.2.0 following accepted semantic versioning practices and the changes have been communicated via the API's public portal.  The API endpoint does NOT change in the new version.  How should the developer of an API client respond to this change?
 
-44. An API has been updated in Anypoint Exchange by its API producer from version 3.1.1 to 3.2.0 following accepted semantic versioning practices and the changes have been communicated via the API's public portal. <br/> The API endpoint does NOT change in the new version. <br/> How should the developer of an API client respond to this change?
     1. The update should be identified as a project risk and full regression testing of the functionality that uses this API should be run.
     2. The API producer should be contacted to understand the change to existing functionality.
     3. The API producer should be requested to run the old version in parallel with the new one.
     4. The API client code ONLY needs to be changed if it needs to take advantage of new features.
-
 45. What is true about API implementations when dealing with legal regulations that require all data processing to be performed within a certain jurisdiction (such as in the USA or the EU)?
+
     1. They must avoid using the Object Store as it depends on services deployed ONLY to the US East region.
     2. They must use a Jurisdiction-local external messaging system such as Active MQ rather than Anypoint MQ.
     3. They must te deployed to Anypoint Platform runtime planes that are managed by Anypoint Platform control planes, with both planes in the same Jurisdiction.
     4. They must ensure ALL data is encrypted both in transit and at rest.
-
 46. When must an API implementation be deployed to an Anypoint VPC?
+
     1. When the API Implementation must invoke publicly exposed services that are deployed outside of CloudHub in a customer-managed AWS instance.
     2. When the API implementation must be accessible within a subnet of a restricted customer-hosted network that does not allow public access.
     3. When the API implementation must be deployed to a production AWS VPC using the Mule Maven plugin.
     4. When the API Implementation must write to a persistent Object Store.
-
 47. An organization uses various cloud-based SaaS systems and multiple on-premises systems. The on-premises systems are an important part of the organization's application network and can only be accessed from within the organization's intranet. What is the best way to configure and use Anypoint Platform to support integrations with both the cloud-based SaaS systems and on-premises systems?
+
     1. Use CloudHub-deployed Mule runtimes in an Anypoint VPC managed by Anypoint Platform Private Cloud Edition control plane.
     2. Use CloudHub-deployed Mule runtimes in the shared worker cloud managed by the MuleSoft-hosted Anypoint Platform control plane.
     3. Use an on-premises installation of Mule runtimes that are completely isolated with NO external network access, managed by the Anypoint Platform Private Cloud Edition control plane.
     4. Use a combination of Cloud Hub-deployed and manually provisioned on-premises Mule runtimes managed by the MuleSoft-hosted Anypoint Platform control plane.
-
 48. How are an API implementation, API client, and API consumer combined to invoke and process an API?
+
     1. The API consumer creates an API implementation, which receives API invocations from an API such that they are processed for an API client.
     2. The API client creates an API consumer, which receives API invocations from an API such that they are processed for an API implementation.
     3. The ApI consumer creates an API client, which sends API invocations to an API such that they are processed by an API implementation.
     4. The API client creates an API consumer, which sends API invocations to an API such that they are processed by an API implementation
+49. An API implementation is being designed that must invoke an Order API, which is known to repeatedly experience downtime. For this reason, a fallback API is to be called when the Order API is unavailable. What approach to designing the invocation of the fallback API provides the best resilience?
 
-49. An API implementation is being designed that must invoke an Order API, which is known to repeatedly experience downtime. For this reason, a fallback API is to be called when the Order API is unavailable.<br/> What approach to designing the invocation of the fallback API provides the best resilience?
     1. Search Anypoint Exchange for a suitable existing fallback API, and then implement invocations to this fallback API in addition to the Order API.
     2. Create a separate entry for the Order API in API Manager, and then invoke this API as a fallback API if the primary Order API is unavailable.
     3. Redirect client requests through an HTTP 307 Temporary Redirect status code to the fallback API whenever the Order API is unavailable.
     4. Set an option in the HTTP Requester component that invokes the Order API to instead invoke a fallback API whenever an HTTP 4xx or 5xx response status code is returned from the Order API.
-50. An Order API must be designed that contains significant amounts of integration logic and involves the invocation of the Product API. <br/> The power relationship between Order API and Product API is one of 'Customer/Supplier', because the Product API is used heavily throughout the organization and is developed by a dedicated development team located in the office of the CTO. <br/> What strategy should be used to deal with the API data model of the Product API within the Order API?
+50. An Order API must be designed that contains significant amounts of integration logic and involves the invocation of the Product API.  The power relationship between Order API and Product API is one of 'Customer/Supplier', because the Product API is used heavily throughout the organization and is developed by a dedicated development team located in the office of the CTO.  What strategy should be used to deal with the API data model of the Product API within the Order API?
+
     1. Convince the development team of the Product API to adopt the API data model of the Order API such that the integration logic of the Order API can work with one consistent internal data model.
     2. Work with the API data types of the Product API directly when implementing the integration logic of the Order API such that the Order API uses the same (unchanged) data types as the Product API.
     3. Implement an anti-corruption layer in the Order API that transforms the Product API data model into internal data types of the Order API.
     4. Start an organization-wide data modeling initiative that will result in an Enterprise Data Model that will then be used in both the Product API and the Order API
+51. An organization is deploying its new implementation of the OrderStatus System API to multiple workers in CloudHub. This API fronts the organization's on-premises Order Management System, which is accessed by the API implementation over an IPsec tunnel.  What type of error typically does NOT result in a service outage of the OrderStatus System API?
 
-51. An organization is deploying its new implementation of the OrderStatus System API to multiple workers in CloudHub. This API fronts the organization's on-premises Order Management System, which is accessed by the API implementation over an IPsec tunnel. <br/> What type of error typically does NOT result in a service outage of the OrderStatus System API?
     1. A CloudHub worker fails with an out-of-memory exception.
     2. API Manager has an extended outage during the initial deployment of the API implementation.
     3. The AWS region goes offline with a major network failure to the relevant AWS data centers.
     4. The Order Management System is Inaccessible due to a network outage in the organization's on-premises data center
-
 52. What correctly characterizes unit tests of Mule applications?.
+
     1. They test the validity of input and output of source and target systems.
     2. They must be run in a unit testing environment with dedicated Mule runtimes for the environment.
     3. They must be triggered by an external client tool or event source.
     4. They are typically written using MUnit to run in an embedded Mule runtime that does not require external connectivity
 53. What is a typical result of using a fine-grained rather than a coarse-grained API deployment model to implement a given business process?
+
     1. A decrease in the number of connections within the application network supporting the business process.
     2. A higher number of discoverable API-related assets in the application network.
     3. A better response time for the end user as a result of the APIs being smaller in scope and complexity.
     4. An overall tower usage of resources because each fine-grained API consumes less resources
-54. An organization has implemented a Customer Address API to retrieve customer address information. This API has been deployed to multiple environments and has been configured to enforce client IDs everywhere. A developer is writing a client application to allow a user to update their address. The developer has found the Customer Address API in Anypoint Exchange and wants to use it in their client application. <br/> What step of gaining access to the API can be performed automatically by the Anypoint Platform?
+54. An organization has implemented a Customer Address API to retrieve customer address information. This API has been deployed to multiple environments and has been configured to enforce client IDs everywhere. A developer is writing a client application to allow a user to update their address. The developer has found the Customer Address API in Anypoint Exchange and wants to use it in their client application.  What step of gaining access to the API can be performed automatically by the Anypoint Platform?
+
     1. Approve the client application request for the chosen SLA tier.
     2. Request access to the appropriate API Instances deployed to multiple environments using the client application's credentials.
     3. Modify the client application to call the API using the client application's credentials.
     4. Create a new application in Anypoint Exchange for requesting access to the API
 55. What is typically NOT a function of the APIs created within the framework called API-led connectivity?
+
     1. They provide an additional layer of resilience on top of the underlying backend system, thereby insulating clients from extended failure of these systems.
     2. They allow for innovation at the user Interface level by consuming the underlying assets without being aware of how data Is being extracted from backend systems.
     3. They reduce the dependency on the underlying backend systems by helping unlock data from backend systems In a reusable and consumable way.
     4. They can compose data from various sources and combine them with orchestration logic to create higher level value.
 56. What Mule application deployment scenario requires using Anypoint Platform Private Cloud Edition or Anypoint Platform for Pivotal Cloud Foundry?
+
     1. When it Is required to make ALL applications highly available across multiple data centers.
     2. When it is required that ALL APIs are private and NOT exposed to the public cloud.
     3. When regulatory requirements mandate on-premises processing of EVERY data item, including meta-data.
     4. When ALL backend systems in the application network are deployed in the organization's intranet.
 57. What is true about automating interactions with Anypoint Platform using tools such as Anypoint Platform REST APIs, Anypoint CU, or the Mule Maven plugin?
+
     1. Access to Anypoint Platform APIs and Anypoint CU can be controlled separately through the roles and permissions in Anypoint Platform, so that specific users can get access to Anypoint CLI white others get access to the platform APIs.
     2. Anypoint Platform APIs can ONLY automate interactions with CloudHub, while the Mule Maven plugin is required for deployment to customer-hosted Mule runtimes.
     3. By default, the Anypoint CLI and Mule Maven plugin are NOT included in the Mule runtime, so are NOT available to be used by deployed Mule applications.
     4. API policies can be applied to the Anypoint Platform APIs so that ONLY certain LOBs have access to specific functions.
-58. A new upstream API Is being designed to offer an SLA of 500 ms median and 800 ms maximum (99th percentile) response time. The corresponding API implementation needs to sequentially invoke 3 downstream APIs of very similar complexity. <br/> The first of these downstream APIs offers the following SLA for its response time: median: 100 ms, 80th percentile: 500 ms, 95th percentile: 1000 ms. If possible, how can a timeout be set in the upstream API for the invocation of the first downstream API to meet the new upstream API's desired SLA?
+58. A new upstream API Is being designed to offer an SLA of 500 ms median and 800 ms maximum (99th percentile) response time. The corresponding API implementation needs to sequentially invoke 3 downstream APIs of very similar complexity.  The first of these downstream APIs offers the following SLA for its response time: median: 100 ms, 80th percentile: 500 ms, 95th percentile: 1000 ms. If possible, how can a timeout be set in the upstream API for the invocation of the first downstream API to meet the new upstream API's desired SLA?
+
     1. Set a timeout of 50 ms; this times out more invocations of that API but gives additional room for retries.
     2. Set a timeout of 100 ms; that leaves 400 ms for the other two downstream APIs to complete.
     3. No timeout is possible to meet the upstream API's desired SLA; a different SLA must be negotiated with the first downstream API or invoke an alternative API.
     4. Do not set a timeout; the Invocation of this API Is mandatory and so we must wait until it responds.
 59. What API policy would be LEAST LIKELY used when designing an Experience API that is intended to work with a consumer mobile phone or tablet application?
+
     1. OAuth 2.0 access token enforcement.
     2. Client ID enforcement.
     3. JSON threat protection.
     4. IPwhitellst.
-60. An organization makes a strategic decision to move towards an IT operating model that emphasizes the consumption of reusable IT assets using modern APIs (as defined by MuleSoft). <br/> What best describes each modern API in relation to this new IT operating model?
+60. An organization makes a strategic decision to move towards an IT operating model that emphasizes the consumption of reusable IT assets using modern APIs (as defined by MuleSoft).  What best describes each modern API in relation to this new IT operating model?
+
     1. Each modern API has its own software development lifecycle, which reduces the need for documentation and automation.
     2. Each modem API must be treated like a product and designed for a particular target audience (for instance, mobile app developers)
     3. Each modern API must be easy to consume, so should avoid complex authentication mechanisms such as SAML or JWT D
     4. Each modern API must be REST and HTTP based
 61. What CANNOT be effectively enforced using an API policy in Anypoint Platform?
+
     1. Guarding against Denial of Service attacks.
     2. Maintaining tamper-proof credentials between APIs.
     3. Logging HTTP requests and responses.
     4. Backend system overloading
 62. What is a best practice when building System APIs?
+
     1. Document the API using an easily consumable asset like a RAML definition.
     2. Model all API resources and methods to closely mimic the operations of the backend system.
     3. Build an Enterprise Data Model (Canonical Data Model) for each backend system and apply it to System APIs.
     4. Expose to API clients all technical details of the API implementation's interaction wifch the backend system
-63. Refer to the exhibit. An organization is running a Mule standalone runtime and has configured Active Directory as the Anypoint Platform external Identity Provider. The organization does not have the budget for other system components.<br/> What policy should be applied to all instances of APIs in the organization to most effecuvelyKestrict access to a specific group of internal users?
+63. Refer to the exhibit. An organization is running a Mule standalone runtime and has configured Active Directory as the Anypoint Platform external Identity Provider. The organization does not have the budget for other system components. What policy should be applied to all instances of APIs in the organization to most effecuvelyKestrict access to a specific group of internal users?
+
     1. Apply a basic authentication - LDAP policy; the internal Active Directory will be configured as the LDAP source for authenticating users.
     2. Apply a client ID enforcement policy; the specific group of users will configure their client applications to use their specific client credentials.
     3. Apply an IP whitelist policy; only the specific users' workstations will be in the whitelist.
     4. Apply an OAuth 2.0 access token enforcement policy; the internal Active Directory will be configured as the OAuth server.
-64. A code-centric API documentation environment should allow API consumers to investigate and execute API client source code that demonstrates invoking one or more APIs as part of representative scenarios. <br/> What is the most effective way to provide this type of code-centric API documentation environment using Anypoint Platform?
+64. A code-centric API documentation environment should allow API consumers to investigate and execute API client source code that demonstrates invoking one or more APIs as part of representative scenarios.  What is the most effective way to provide this type of code-centric API documentation environment using Anypoint Platform?
+
     1. Enable mocking services for each of the relevant APIs and expose them via their Anypoint Exchange entry.
     2. Ensure the APIs are well documented through their Anypoint Exchange entries and API Consoles and share these pages with all API consumers.
     3. Create API Notebooks and include them in the relevant Anypoint Exchange entries.
     4. Make relevant APIs discoverable via an Anypoint Exchange entry
 65. An API experiences a high rate of client requests (TPS) vwth small message paytoads. How can usage limits be imposed on the API based on the type of client application?
+
     1. Use an SLA-based rate limiting policy and assign a client application to a matching SLA tier based on its type.
     2. Use a spike control policy that limits the number of requests for each client application type.
     3. Use a cross-origin resource sharing (CORS) policy to limit resource sharing between client applications, configured by the client application type.
     4. Use a rate-limiting policy and a client ID enforcement policy, each configured by the client application type.
-66. An organization has several APIs that accept JSON data over HTTP POST. The APIs are all publicly available and are associated with several mobile applications and web applications. <br/> The organization does NOT want to use any authentication or compliance policies for these APIs, but at the same time, is worried that some bad actor could send payloads that could somehow compromise the applications or servers running the API implementations. <br/> What out-of-the-box Anypoint Platform policy can address exposure to this threat?
+66. An organization has several APIs that accept JSON data over HTTP POST. The APIs are all publicly available and are associated with several mobile applications and web applications.  The organization does NOT want to use any authentication or compliance policies for these APIs, but at the same time, is worried that some bad actor could send payloads that could somehow compromise the applications or servers running the API implementations.  What out-of-the-box Anypoint Platform policy can address exposure to this threat?
+
     1. Shut out bad actors by using HTTPS mutual authentication for all API invocations.
     2. Apply an IP blacklist policy to all APIs; the blacklist will Include all bad actors.
     3. Apply a Header injection and removal policy that detects the malicious data before it is used.
     4. Apply a JSON threat protection policy to all APIs to detect potential threat vectors.
 67. How can the application of a rate limiting API policy be accurately reflected in the RAML definition of an API?
+
     1. By refining the resource definitions by adding a description of the rate limiting policy behavior.
     2. By refining the request definitions by adding a remaining Requests query parameter with description, type, and example.
     3. By refining the response definitions by adding the out-of-the-box Anypoint Platform rate-limit-enforcement securityScheme with description, type, and example.
     4. By refining the response definitions by adding the x-ratelimit-* response headers with description, type, and example.
 68. What is the most performant out-of-the-box solution in Anypoint Platform to track transaction state in an asynchronously executing long-running process implemented as a Mule application deployed to multiple CloudHub workers?
+
     1. Redis distributed cache.
     2. java.util.WeakHashMap
     3. Persistent Object Store.
     4. File-based storage.
 69. The responses to some HTTP requests can be cached depending on the HTTP verb used in the request. According to the HTTP specification, for what HTTP verbs is this safe to do?
+
     1. PUT, POST, DELETE.
     2. GET, HEAD, POST.
     3. GET, PUT, OPTIONS.
     4. GET, OPTIONS, HEAD.
 70. What is a key requirement when using an external Identity Provider for Client Management in Anypoint Platform?
+
     1. Single sign-on is required to sign in to Anypoint Platform.
     2. The application network must include System APIs that interact with the Identity Provider.
     3. To invoke OAuth 2.0-protected APIs managed by Anypoint Platform, API clients must submit access tokens issued by that same Identity Provider.
     4. APIs managed by Anypoint Platform must be protected by SAML 2.0 policies
 71. A Mule application exposes an HTTPS endpoint and is deployed to the CloudHub Shared Worker Cloud. All traffic to that Mule application must stay inside the AWS VPC. To what TCP port do API invocations to that Mule application need to be sent?
+
     1. 443
     2. 8081
     3. 8091
     4. 8082
 72. An API implementation is deployed to CloudHub. What conditions can be alerted on using the default Anypoint Platform functionality, where the alert conditions depend on the end-to-end request processing of the API implementation?
+
     1. When the API is invoked by an unrecognized API client.
     2. When a particular API client invokes the API too often within a given time period.
     3. When the response time of API invocations exceeds a threshold.
     4. When the API receives a very high number of API invocations.
 73. What is true about where an API policy is defined in Anypoint Platform and how it is then applied to API instances?
+
     1. The API policy Is defined In Runtime Manager as part of the API deployment to a Mule runtime and then ONLY applied to the specific API Instance.
-    1. The API policy Is defined In API Manager for a specific API Instance and then ONLY applied to the specific API instance.
-    2. The API policy Is defined in API Manager and then automatically applied to ALL API instances.
-    3. The API policy is defined in API Manager and then applied to ALL API instances in the specified environment
+    2. The API policy Is defined In API Manager for a specific API Instance and then ONLY applied to the specific API instance.
+    3. The API policy Is defined in API Manager and then automatically applied to ALL API instances.
+    4. The API policy is defined in API Manager and then applied to ALL API instances in the specified environment
 74. What is the best way to decompose one end-to-end business process into a collaboration of Experience, Process, and System APIs?
+
     1. Handle customizations for the end-user application at the Process API level rather than the Experience API level.
     2. Allow System APIs to return data that is NOT currently required by the identified Process or Experience APIs.
     3. Always use a tiered approach by creating exactly one API for each of the 3 layers (Experience, Process and System APIs).
     4. Use a Process API to orchestrate calls to multiple System APIs, but NOT to other Process APIs.
 75. When using CloudHub with the Shared Load Balancer, what is managed EXCLUSIVELY by the API implementation (the Mule application) and NOT by the Anypoint Platform?
+
     1. The assignment of each HTTP request to a particular CloudHub worker.
     2. The logging configuration that enables log entries to be visible in Runtime Manager.
     3. The SSL certificates used by the API implementation to expose HTTPS endpoints.
     4. The number of DNS entries allocated to the API implementation.
 76. What best describes the Fully Qualified Domain Names (FQDNs), also known as DNS entries, created when a Mule application is deployed to the CloudHub Shared Worker Cloud?
+
     1. A fixed number of FQDNs are created, IRRESPECTIVE of the environment and VPC design.
     2. The FQDNs are determined by the application name chosen, IRRESPECTIVE of the region.
     3. The FQDNs are determined by the application name, but can be modified by an administrator after deployment.
     4. The FQDNs are determined by both the application name and the Anypoint Platform organization.
 77. Three business processes need to be implemented, and the implementations need to communicate with several different SaaS applications. These processes are owned by separate (siloed) LOBs and are mainly independent of each other, but do share a few business entities. Each LOB has one development team and their own budget In this organizational context, what is the most effective approach to choose the API data models for the APIs that will implement these business processes with minimal redundancy of the data models?
+
     1. Build several Bounded Context Data Models that align with coherent parts of the business processes and the definitions of associated business entities.
     2. Build distinct data models for each API to follow established micro-services and Agile API-centric practices.
     3. Build all API data models using XML schema to drive consistency and reuse across the organization.
     4. Build one centralized Canonical Data Model (Enterprise Data Model) that unifies all the data types from all three business processes, ensuring the data model is consistent and non-redundant.
 78. What is a valid API in the sense of API-led connectivity and application networks?
+
     1. Java RMI over TCP.
     2. CORBA over III.
     3. XML over UDP.
     4. XML over HTTP.
 79. A System API is designed to retrieve data from a backend system that has scalability challenges. What API policy can best safeguard the backend system?
+
     1. IPwhitelist.
     2. SLA-based rate limiting.
     3. Auth 2 token enforcement.
     4. Client ID enforcement.
 80. What is true when using customer-hosted Mule runtimes with the MuleSoft-hosted Anypoint Platform control plane (hybrid deployment)?
+
     1. Anypoint Runtime Manager initiates a network connection to a Mule runtime in order to deploy Mule applications.
     2. The MuleSoft-hosted Shared Load Balancer can be used to load balance API invocations to the Mule runtimes.
     3. API implementations can run successfully in customer-hosted Mule runtimes, even when they are unable to communicate with the control plane.
     4. Anypoint Runtime Manager automatically ensures HA in the control plane by creating a new Mule runtime instance in case of a node failure.
-81. A RAML definition has been proposed for a new Promotions Process API, and has been published to Anypoint Exchange. The Marketing Department, who will be an important consumer of the Promotions API, has important requirements and expectations that must be met. <br/> What is the most effective way to use Anypoint Platform features to involve the Marketing Department in this early API design phase?
+81. A RAML definition has been proposed for a new Promotions Process API, and has been published to Anypoint Exchange. The Marketing Department, who will be an important consumer of the Promotions API, has important requirements and expectations that must be met.  What is the most effective way to use Anypoint Platform features to involve the Marketing Department in this early API design phase?
+
     1. Ask the Marketing Department to interact with a mocking implementation of the API using the automatically generated API Console.
     2. Organize a design workshop with the DBAs of the Marketing Department in which the database schema of the Marketing IT systems is translated into RAML.
     3. Use Anypoint Studio to Implement the API as a Mule application, then deploy that API implementation to CloudHub and ask the Marketing Department to interact with it.
     4. Export an integration test suite from API designer and have the Marketing Department execute the tests In that suite to ensure they pass.
 82. What should be ensured before sharing an API through a public Anypoint Exchange portal?
+
     1. The visibility level of the API instances of that API that need to be publicly accessible should be set to public visibility.
     2. The users needing access to the API should be added to the appropriate role in Anypoint Platform.
     3. The API should be functional with at least an initial implementation deployed and accessible for users to interact with.
     4. The API should be secured using one of the supported authentication/authorization mechanisms to ensure that data is not compromised.
 83. What best explains the use of auto-discovery in API implementations?
+
     1. It makes API Manager aware of API implementations and hence enables it to enforce policies.
     2. It enables Anypoint Studio to discover API definitions configured in Anypoint Platform.
     3. It enables Anypoint Exchange to discover assets and makes them available for reuse.
     4. It enables Anypoint Analytics to gain insight into the usage of APIs.
-84. When designing an upstream API and its implementation, the development team has been advised to NOT set timeouts when invoking a downstream API, because that downstream API has no SLA that can be relied upon. <br/> This is the only downstream API dependency of that upstream API. Assume the downstream API runs uninterrupted without crashing. What is the impact of this advice?
+84. When designing an upstream API and its implementation, the development team has been advised to NOT set timeouts when invoking a downstream API, because that downstream API has no SLA that can be relied upon.  This is the only downstream API dependency of that upstream API. Assume the downstream API runs uninterrupted without crashing. What is the impact of this advice?
+
     1. An SLA for the upstream API CANNOT be provided.
     2. The invocation of the downstream API will run to completion without timing out.
     3. A default timeout of 500 ms will automatically be applied by the Mule runtime in which the upstream API implementation executes.
     4. A toad-dependent timeout of less than 1000 ms will be applied by the Mule runtime in which the downstream API implementation executes.
-85. In an organization, the InfoSec team is investigating Anypoint Platform-related data traffic. <br/> From where do most of the data available to Anypoint Platform for monitoring and alerting originate?
+85. In an organization, the InfoSec team is investigating Anypoint Platform-related data traffic.  From where do most of the data available to Anypoint Platform for monitoring and alerting originate?
+
     1. From the Mule runtime or the API implementation, depending on the deployment model.
     2. From various components of the Anypoint Platform, such as the Shared Load Balancer, VPC, and Mule runtimes.
     3. From the Mule runtime or the API Manager, depending on the type of data.
     4. From the Mule runtime irrespective of the deployment model.
-86. A developer is building a client application to invoke an API deployed to the STAGING environment that is governed by a client ID enforcement policy. <br/> What is required to successfully invoke the API?
+86. A developer is building a client application to invoke an API deployed to the STAGING environment that is governed by a client ID enforcement policy.  What is required to successfully invoke the API?
+
     1. The client ID and secret for the Anypoint Platform account owning the API in the STAGING environment.
     2. The client ID and secret for the Anypoint Platform account's STAGING environment.
     3. The client ID and secret obtained from Anypoint Exchange for the API instance in the STAGING environment.
     4. A valid OAuth token obtained from Anypoint Platform and its associated client ID and secret.
 87. Refer to the exhibit. An organization needs to enable access to their customer data from both a mobile app and a web application, which each need access to common fields as well as certain unique fields. The data is available partially in a database and partially in a 3rd-party CRM system. What APIs should be created to best fit these design requirements?
+
     1. A Process API that contains the data required by both the web and mobile apps, allowing these applications to invoke it directly and access the data they need thereby providing the flexibility to add more fields in the future without needing API changes.
     2. One set of APIs (Experience API, Process API, and System API) for the web app, and another set for the mobile app.
     3. Separate Experience APIs for the mobile and web app, but a common Process API that invokes separate System APIs created for the database and CRM system.
     4. A common Experience API used by both the web and mobile apps, but separate Process APIs for the web and mobile apps that interact with the database and the CRM System.
 88. The implementation of a Process API must change. What is a valid approach that minimizes the impact of this change on API clients?
+
     1. Update the RAML definition of the current Process API and notify API client developers by sending them links to the updated RAML definition.
     2. Postpone changes until API consumers acknowledge they are ready to migrate to a new Process API or API version.
     3. Implement required changes to the Process API implementation so that whenever possible, the Process API's RAML definition remains unchanged.
     4. Implement the Process API changes in a new API implementation, and have the old API implementation return an HTTP status code 301 - Moved Permanently to inform API clients they should be calling the new API implementation
 89. An API implementation is deployed on a single worker on CloudHub and invoked by external API clients (outside of CloudHub). How can an alert be set up that is guaranteed to trigger AS SOON AS that API implementation stops responding to API invocations?
+
     1. Implement a heartbeat/health check within the API and invoke it from outside the Anypoint Platform and alert when the heartbeat does not respond.
     2. Configure a 'worker not responding' alert in Anypoint Runtime Manager.
     3. Handle API invocation exceptions within the calling API client and raise an alert from that API client when the API Is Unavailable.
     4. Create an alert for when the API receives no requests within a specified time period.
 90. What is true about the technology architecture of Anypoint VPCs?
+
     1. The private IP address range of an Anypoint VPC is automatically chosen by CloudHub.
     2. Traffic between Mule applications deployed to an Anypoint VPC and on-premises systems can stay within a private network.
     3. Each CloudHub environment requires a separate Anypoint VPC.
     4. VPC peering can be used to link the underlying AWS VPC to an on-premises (non AWS) private network.
 91. What do the API invocation metrics provided by Anypoint Platform provide?
+
     1. ROI metrics from APIs that can be directly shared with business users.
     2. Measurements of the effectiveness of the application network based on the level of reuse.
     3. Data on past API invocations to help identify anomalies and usage patterns across various APIs.
     4. Proactive identification of likely future policy violations that exceed a given threat threshold.
 92. What condition requires using a CloudHub Dedicated Load Balancer?
+
     1. When cross-region load balancing is required between separate deployments of the same Mule application.
     2. When custom DNS names are required for API implementations deployed to customer-hosted Mule runtimes.
     3. When API invocations across multiple CloudHub workers must be load balanced.
     4. When server-side load-balanced TLS mutual authentication is required between API implementations and API clients.
-93. An organization is implementing a Quote of the Day API that caches today's quote. <br/> What scenario can use the GoudHub Object Store via the Object Store connector to persist the cache's state?
+93. An organization is implementing a Quote of the Day API that caches today's quote.  What scenario can use the GoudHub Object Store via the Object Store connector to persist the cache's state?
+
     1. When there are three CloudHub deployments of the API implementation to three separate CloudHub regions that must share the cache state.
     2. When there are two CloudHub deployments of the API implementation by two Anypoint Platform business groups to the same CloudHub region that must share the cache state.
     3. When there is one deployment of the API implementation to CloudHub and anottV deployment to a customerhosted Mule runtime that must share the cache state.
     4. When there is one CloudHub deployment of the API implementation to three CloudHub workers that must share the cache state.
 94. What is a key performance indicator (KPI) that measures the success of a typical C4E that is immediately apparent in responses from the Anypoint Platform APIs?
+
     1. The number of production outage incidents reported in the last 24 hours.
     2. The number of API implementations that have a publicly accessible HTTP endpoint and are being managed by Anypoint Platform.
     3. The fraction of API implementations deployed manually relative to those deployed using a CI/CD tool.
     4. The number of API specifications in RAML or OAS format published to Anypoint Exchange.
 95. What API policy would LEAST likely be applied to a Process API?
+
     1. Custom circuit breaker.
     2. Client ID enforcement.
     3. Rate limiting.
