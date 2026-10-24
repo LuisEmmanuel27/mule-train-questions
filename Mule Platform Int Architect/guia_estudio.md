@@ -6,7 +6,7 @@ This study guide is designed to support the preparation for the **MuleSoft Certi
 
 Rather than presenting isolated exam questions and answers, this guide organizes knowledge into structured topics and subtopics that reflect the responsibilities of a Platform Architect. Each section explains the reasoning behind architectural decisions, the trade-offs involved, and the recommended patterns used in real-world integration projects.
 
-The content is aligned with the major domains covered in the MCPA exam blueprint, including **Application Network Basics**, **Organizational & Platform Foundations**, **Designing & Sharing APIs**, **System, Process, and Experience API Layers**, **Governing Web APIs**, **Architecting & Deploying API Implementations**, **Deploying to CloudHub**, **Meeting API Quality Goals**, and **Monitoring & Analyzing Application Networks**.
+The content is aligned with the major domains covered in the MCPA exam blueprint, including **Application Network Basics**, **Organizational & Platform Foundations**, **Designing & Sharing APIs**, **System, Process, and Experience API Layers**, **Governing Web APIs**, **Architecting & Deploying API Implementations**, **Deploying to CloudHub**, **Meeting API Quality Goals**, and **Monitoring & Analyzing Application Networks**. It also covers the newer capabilities added to the current **Salesforce Certified MuleSoft Platform Architect (Mule-Arch-201)** exam (Part VI).
 
 The objective is not only to pass the certification exam but also to develop the architectural mindset required to design scalable, maintainable, secure, and reusable integration solutions that meet both functional and non-functional business requirements.
 
@@ -40,9 +40,13 @@ The objective is not only to pass the certification exam but also to develop the
 10. Monitoring & Analyzing Application Networks
 11. Security Architecture
 
-### Cross-Cuttins Architecture Topics
+### Cross-Cutting Architecture Topics
 
-12. Architectual Patterns and Decision Making
+12. Architectural Patterns and Decision Making
+
+### Part VI - Modern Anypoint Platform (Mule-Arch-201 Additions)
+
+13. Modern Platform Capabilities (CloudHub 2.0, Flex/Omni Gateway, Universal API Management, API Governance, Automated Policies, Anypoint MQ, External Client Providers, API Portals, Advanced Monitoring, Anypoint Security, Resilience Calculations)
 
 ---
 
@@ -1628,6 +1632,9 @@ CloudHub is suitable for organizations that want to focus on building integratio
 > [!NOTE]
 > **Key exam clue:** When a question mentions managed infrastructure, cloud deployment, or MuleSoft-hosted runtime, the concept being tested is **CloudHub**. It is the default deployment model for organizations that do not require full control over infrastructure.
 
+> [!TIP]
+> Sections 8.1–8.9 describe mainly **CloudHub 1.0** (workers, SLB/DLB, Anypoint VPC). For **CloudHub 2.0** (replicas, private spaces, ingress, Transit Gateway, `${http.port}` only), see **13.1–13.3**.
+
 ### 8.2 CloudHub Deployment Models
 
 CloudHub supports several deployment models to meet different security, compliance, and performance requirements:
@@ -2495,6 +2502,236 @@ Architectural trade-off analysis involves:
 
 > [!NOTE]
 > **Key exam clue:** When a question mentions evaluating options, balancing concerns, or selecting the best approach, the concept being tested is **architectural trade-off analysis**. Remember that every decision involves trade-offs, and the goal is to select the option that best meets requirements while managing risks.
+
+---
+
+# Part VI - Modern Anypoint Platform (Mule-Arch-201 Additions)
+
+> [!IMPORTANT]
+> The MCPA exam was rebranded as **Salesforce Certified MuleSoft Platform Architect (Mule-Arch-201)**. The classic MCPA concepts (Parts I–V) are still tested, but the current exam also includes newer platform capabilities: **CloudHub 2.0, Flex Gateway (now called Omni Gateway), API Governance, Anypoint MQ, advanced monitoring, external client providers, API Experience Hub, and Anypoint Security**. This part covers those additions, based on the official MuleSoft documentation (October 2026).
+
+## 13. Modern Platform Capabilities
+
+### 13.1 CloudHub 2.0 Fundamentals
+
+CloudHub 2.0 is the container-based (Kubernetes) evolution of CloudHub. The architectural concepts are the same as CloudHub 1.0 (MuleSoft-hosted runtime plane on AWS), but the vocabulary and networking model change.
+
+**Core concepts:**
+
+- **Replicas instead of workers:** Each replica is a dedicated, isolated Mule runtime instance running in a container. Sizes range from **0.1 to 4 vCores** (fractional vCores are more granular than in CloudHub 1.0), with a minimum of 8 GB storage. Replicas below 1 vCore can burst CPU, but bursting is **not guaranteed**.
+- **Scaling:** Vertical = larger vCore size; horizontal = more replicas. CPU-based **horizontal autoscaling** uses a Horizontal Pod Autoscaler (see 8.3).
+- **Clustering:** Deployments with more than one replica get **seamless Mule clustering** (no manual cluster setup).
+- **High availability:** The platform always runs in at least two data centers, and clustered replicas are spread across them. Rolling updates keep the old version running until the new one starts (zero-downtime deployments).
+- **Requirements and limits:** Mule **4.3.0 or later**; TLS 1.2/1.3 only; no persistent VM queues (**use Anypoint MQ instead**); no CloudHub Connector; no JVM parameter overrides; no "Get from Sandbox"; no Insights (use Anypoint Monitoring).
+
+**Shared spaces vs. private spaces:**
+
+| Aspect | Shared space | Private space |
+|---|---|---|
+| Tenancy | Multi-tenant global region; each app in its own container | Single-tenant, isolated logical network |
+| Connectivity to on-prem | None | **Anypoint VPN** (2 tunnels per connection, configure both for HA) or **Transit Gateway** attachment (HA by design) |
+| Internal DNS | Not available | `<app>.internal-<space-id>.<region>.cloudhub.io` |
+| Port 80 (HTTP) | Not accepted | Optional (443 always) |
+| Firewall rules | Not configurable | Inbound/outbound configurable |
+| TLS contexts / custom domains | No | Yes, including optional **mutual TLS** |
+| Static IPs | No | Outbound and DNS target IPs stay constant for the life of the private space |
+
+- A private space defines its private network (CIDR), external connections, TLS contexts, firewall rules, and **which environments and business groups can deploy to it**.
+- You can have **multiple private spaces per region**. The typical pattern is one for production and one for non-production (the CloudHub 2.0 equivalent of separate Anypoint VPCs, see 8.4).
+- **VPC peering and Direct Connect from CloudHub 1.0 are deprecated** in CloudHub 2.0; **Transit Gateway** replaces them. A CloudHub 1.0 VPC cannot be connected to a CloudHub 2.0 private space by VPN.
+- Private spaces have **no built-in WAF or Layer 7 DDoS protection**.
+
+> [!NOTE]
+> **Key exam clue:** "Isolated network + connect to on-premises/AWS network + custom domain/certificate + static IPs + firewall rules" on CloudHub 2.0 → **private space** (with VPN or Transit Gateway). In CloudHub 1.0 the equivalent is Anypoint VPC + DLB.
+
+### 13.2 CloudHub 2.0 Networking: Ingress, Ports and Endpoints
+
+CloudHub 2.0 has **no Shared Load Balancer and no Dedicated Load Balancer** in the CloudHub 1.0 sense. Each private space includes a **managed ingress load balancer** that auto-scales, distributes requests round-robin across replicas, and handles TLS.
+
+- **Listener configuration:** The HTTP Listener must listen on host `0.0.0.0` and on the reserved property **`${http.port}`** (8081). **There is no 8082 / 8091 / 8092 distinction** like in CloudHub 1.0: HTTP and HTTPS traffic both arrive on 8081.
+- **Ingress behavior:** Clients call the app on **443** (HTTPS) or optionally **80** (HTTP, private spaces only). The ingress terminates TLS and, by default, forwards traffic to the app over **HTTP**.
+- **Last-Mile Security:** If traffic between the ingress and the replica must also be encrypted, enable **Last-Mile Security** in the deployment's ingress settings and configure the app's listener for HTTPS with a certificate (TLS context of the private space).
+- **Endpoints:**
+  - Public: `<app>.<space-id>.<region>.cloudhub.io`
+  - Internal (private spaces only): `<app>.internal-<space-id>.<region>.cloudhub.io`. Using it keeps traffic inside the private space, and an app can have **no public endpoint at all**.
+  - Apps in the same private space can call each other through the internal load balancer on ports 80/443.
+- **Timeouts:** Idle connections time out after 15 seconds by default; requests running longer than **300 seconds** should be processed asynchronously. The Read Response Timeout can be customized.
+- **Non-HTTP TCP ingress** is closed by default and can only be opened in the **30500–32500** port range.
+
+**CloudHub 1.0 vs. CloudHub 2.0 port cheat sheet:**
+
+| Scenario | CloudHub 1.0 | CloudHub 2.0 |
+|---|---|---|
+| App listener for public HTTP traffic | `${http.port}` = 8081 (SLB maps 80 → 8081) | `${http.port}` = 8081 |
+| App listener for public HTTPS traffic | `${https.port}` = 8082 (SLB maps 443 → 8082) | `${http.port}` = 8081 (ingress terminates TLS; Last-Mile Security optional) |
+| Internal traffic inside the private network | 8091 (HTTP) / 8092 (HTTPS) via `mule-worker-internal-<app>` (Anypoint VPC only) | Internal endpoint on 80/443 |
+| Custom certificates / mTLS | Dedicated Load Balancer | TLS context in the private space |
+
+> [!NOTE]
+> **Key exam clue:** Always check whether the question says **CloudHub 1.0** or **CloudHub 2.0**. For CloudHub 1.0 behind the Shared Load Balancer, the listener uses **8082** for HTTPS. **8092** applies only to `mule-worker-internal` traffic inside an Anypoint VPC. For CloudHub 2.0, the answer is the reserved `${http.port}` (8081) plus the ingress.
+
+### 13.3 Deployment Model Comparison (Exam Favorite)
+
+| Model | Runtime plane managed by | Control plane | Infrastructure | Typical exam trigger |
+|---|---|---|---|---|
+| **CloudHub 1.0** | MuleSoft (workers on AWS) | MuleSoft-hosted | Shared worker cloud / Anypoint VPC + SLB/DLB | "Fastest to production, no infrastructure to manage" (legacy scenarios) |
+| **CloudHub 2.0** | MuleSoft (replicas on Kubernetes, AWS) | MuleSoft-hosted | Shared / private spaces + managed ingress | "Managed, containerized, private network, Transit Gateway, last-mile security" |
+| **Runtime Fabric (RTF)** | Customer (Kubernetes: EKS, AKS, GKE, OpenShift, or self-managed) | MuleSoft-hosted | Customer's cloud or data center | "CloudHub-like features (HA, zero downtime, scaling) in Azure/GCP/on-prem", "Anypoint Security Edge / Tokenization" |
+| **Hybrid (standalone runtimes)** | Customer (manually provisioned Mule runtimes, servers/clusters) | MuleSoft-hosted | Customer servers | "Backend only reachable from intranet", "existing on-prem servers" |
+| **Private Cloud Edition (PCE)** | Customer | **Customer-hosted** | Fully on-premises | "ALL data AND metadata must stay on-prem" |
+
+> [!NOTE]
+> **Key exam clue:** Decide by asking two questions: (1) Who must manage the infrastructure? (2) Where must the control plane live? Only **PCE** puts the control plane on-premises. **RTF** is the answer whenever you need CloudHub-like features on infrastructure that is not MuleSoft's AWS.
+
+### 13.4 Anypoint Flex Gateway (Omni Gateway)
+
+**Flex Gateway** (renamed **Omni Gateway** in 2026; both names may appear) is MuleSoft's lightweight, Envoy-based API gateway. It protects and manages **any HTTP-based API, Mule or non-Mule**, deployed anywhere. It is the core runtime of **Universal API Management**.
+
+- **Supported traffic:** HTTP, WebSocket, SOAP, gRPC, GraphQL, REST (OAS3), and newer AI protocols (MCP, A2A). One gateway can front up to 1,000 backend APIs.
+- **Deployment options:**
+  - **Linux** standalone runtime.
+  - **Docker** standalone container or **sidecar** protecting a single application.
+  - **Kubernetes** deployment or **Ingress controller** (recommended for HA/high performance).
+  - **Managed Flex/Omni Gateway** hosted by MuleSoft on **CloudHub 2.0 or RTF** (HA, autoscaling, automatic patches).
+- **Modes:**
+  - **Connected Mode:** Registered with and managed from the control plane. Policies are applied in **API Manager**, and the gateway is configured in **Runtime Manager** (UI-driven).
+  - **Local Mode:** Configuration and policies live in **local declarative YAML files**. It connects to the control plane only for registration and usage metrics. Ideal for **GitOps/CI/CD** pipelines or air-gapped scenarios.
+- **Mule Gateway vs. Flex Gateway:**
+  - **Mule Gateway** = the gateway embedded in the Mule runtime (autodiscovery or API proxy, see 5.2–5.4). Only for APIs running in or proxied by Mule.
+  - **Flex Gateway** = standalone gateway that protects non-Mule services (Node.js, Java Spring, .NET, Kubernetes microservices) **without needing a Mule proxy application**, with very low latency.
+- **Policies:** Flex has its own included policies (rate limiting, spike control, client ID, JWT, OAuth 2.0 introspection, IP filters, header injection, and so on), plus **outbound policies** such as the **Circuit Breaker** policy (Quality of Service). The Circuit Breaker returns **503 Service Unavailable** when the upstream limits (connections, pending requests, retries) are reached. Custom policies can be written in **Rust/WebAssembly** (Policy Development Kit).
+
+> [!NOTE]
+> **Key exam clue:** "Protect **non-Mule** APIs / microservices in Kubernetes with **minimal latency and footprint**, without building a Mule proxy" → **Flex Gateway**. "Declarative config in Git / CI/CD, no UI" → **Local Mode**. "Manage from API Manager with a UI" → **Connected Mode**.
+
+### 13.5 Universal API Management
+
+Universal API Management (UAPIM) extends Anypoint Platform governance to **every API in the enterprise, regardless of where it runs or which gateway fronts it**.
+
+Building blocks:
+
+1. **Discover:** **API Catalog CLI** / automated discovery publishes existing APIs (including APIs on third-party gateways such as AWS API Gateway or Azure API Management) into **Exchange**, from CI/CD pipelines.
+2. **Manage/secure:** **Flex Gateway** for any HTTP API, plus **Mule Gateway** for Mule apps. API Manager can also manage some third-party gateways (for example, AWS API Gateway) through agents/connectors.
+3. **Govern:** **Anypoint API Governance** (13.6) validates specifications and instances against rulesets.
+4. **Engage:** Exchange, Exchange public portal, and **API Experience Hub** (13.10) for consumers.
+
+> [!NOTE]
+> **Key exam clue:** "The organization has APIs on multiple gateways and clouds and wants **one place** to discover, govern, and secure them" → **Universal API Management** (API Catalog CLI + Flex Gateway + API Governance + Exchange).
+
+### 13.6 Anypoint API Governance
+
+Anypoint API Governance automates **design-time and runtime governance** by checking APIs against **rulesets** and reporting **conformance**.
+
+- **Rulesets:** Collections of rules (published as Exchange assets) that check API metadata and specifications, for example naming conventions, mandatory HTTPS, required documentation, OWASP API Security Top 10, or MuleSoft API best practices. MuleSoft provides several rulesets, and organizations can publish **custom rulesets**.
+- **Governance profiles (classic) / Governance strategies (enhanced experience):** A profile applies selected rulesets to a **filtered set of APIs** (by type, tags, lifecycle state, business group). Enhanced strategies come in two types:
+  - **Controls:** validate services and can **block non-compliant actions**.
+  - **Automated policies:** enforce consistent policy requirements (see 13.7).
+- **Conformance status:** APIs are reported as **conformant** or **not conformant**, with severity. The governance dashboard shows coverage and nonconformance trends, and **active** profiles **notify API owners** of issues. Draft profiles let you test before notifying.
+- **Design-time governance:** Developers apply rulesets as **dependencies in Design Center or Anypoint Code Builder**, so violations appear while editing the specification.
+- **Runtime governance:** API Manager governance reports for API instances; controls can enforce standards at the gateway level.
+- **Automation:** Governance validation can run in **CI/CD** through the CLI.
+
+> [!NOTE]
+> **Key exam clue:** "The C4E wants to **automatically ensure all published API specifications follow company standards** (naming, security schemes, OWASP) and notify owners of violations" → **Anypoint API Governance with rulesets/profiles**. This is a governance tool, not an API policy.
+
+### 13.7 Automated Policies
+
+**Automated policies** are applied in API Manager to **all API instances of a given runtime/gateway type in an environment**, including instances created later. They are the standard way to enforce **organization-wide baseline policies** (for example, mandatory Client ID Enforcement, JSON Threat Protection, or message logging) without configuring every instance manually.
+
+- Defined per **environment**, and can be scoped by runtime version or gateway type (Mule 4, Flex Gateway).
+- An API owner **cannot remove** an automated policy from an individual instance (they can add more policies).
+- In the enhanced governance experience, automated policies are managed as a **governance strategy**.
+
+> [!NOTE]
+> **Key exam clue:** Compare with 5.8: a regular policy applies **only to the specific API instance** where it is configured. If the question says "**every API** in the Production environment must have policy X, including future APIs" → **automated policy**.
+
+### 13.8 Anypoint MQ
+
+Anypoint MQ is MuleSoft's **multi-tenant, cloud messaging service** (hosted by MuleSoft, region-specific). It is the recommended solution for **asynchronous, reliable messaging between Mule applications** on CloudHub (and the replacement for persistent VM queues in CloudHub 2.0).
+
+| Feature | Standard queue | FIFO queue |
+|---|---|---|
+| Ordering | Not guaranteed | **Guaranteed** (per message group) |
+| Delivery | **At least once** (duplicates possible → idempotent consumers) | **Exactly once** (deduplication within 5 minutes) |
+| Throughput | High (up to 120,000 in-flight messages) | Limited (**300 TPS**, ~3,000 msg/s with batching of 10) |
+| Message exchange binding | **Yes** (pub/sub fan-out) | **No** |
+| Cross-region failover | Yes | No |
+
+- **Message exchanges:** Publish once, deliver to **multiple bound standard queues** (pub/sub; one consumer per queue).
+- **Dead-letter queues (DLQ):** Receive messages that could not be delivered after N attempts (default 10, range 1–1,000). The DLQ must be the **same type, region, environment, and account** as its source queue.
+- **Limits:** Message TTL up to 2 weeks; acknowledgment timeout up to 12 hours; delivery delay 0–15 minutes.
+- **Security:** Optional encryption of all messages in a queue; access through client app credentials (client ID/secret per environment).
+- **Data residency:** Messages are stored by the MuleSoft-hosted service in the chosen region (see 2.8).
+
+> [!NOTE]
+> **Key exam clue:** "Strict ordering" → **FIFO queue**. "One event must reach several consumers/applications" → **message exchange + standard queues**. "High throughput, order not important" → **standard queue**. "Poison messages / failed deliveries" → **DLQ**. "Reliable async communication between apps in CloudHub (2.0)" → **Anypoint MQ** (not Object Store, not VM queues).
+
+### 13.9 External Client Providers (Client Management)
+
+By default, Anypoint Platform acts as the **client provider** (it issues client IDs/secrets for Client ID Enforcement). For OAuth 2.0-protected APIs, an organization can configure **external client providers** (up to 25):
+
+- **OpenID Connect Dynamic Client Registration (DCR)-compliant IdPs** (for example, Okta), **PingFederate**, **OpenAM**, and Microsoft Entra ID (with its own setup).
+- Client providers are configured in the **root organization** and **associated with environments**, so different environments can use different providers.
+- **Access flow:** The API consumer still **requests access in Anypoint Exchange**. When the API instance's environment uses an external client provider, Anypoint Platform **registers the client application in that IdP** (through DCR), and the client then obtains tokens from the IdP. The OAuth 2.0 policy validates tokens issued by **that same IdP** (see 6.6 and 5.9).
+- **Identity management** (SSO for platform users) is a different configuration (see 6.6).
+
+> [!NOTE]
+> **Key exam clue:** Even with an external client provider (Okta, PingFederate), consumers **request access through Exchange**, not directly in the IdP. The IdP issues the tokens, and API Manager validates them.
+
+### 13.10 API Portals: Exchange, API Experience Hub and API Community Manager
+
+| Portal | What it is | When to use |
+|---|---|---|
+| **Anypoint Exchange** (private) | Internal catalog of reusable assets (APIs, fragments, templates, connectors, rulesets) | Internal discovery and reuse |
+| **Exchange public portal** | Public-facing, lightly customizable view of selected Exchange assets | Simple external developer portal |
+| **API Experience Hub (AEH)** | Next-generation portal **powered by Salesforce Experience Cloud**, built from templates, with branding, user management, and onboarding. Imports APIs (and AI agents/MCP servers) from Exchange | Branded, customizable partner/external developer communities |
+| **API Community Manager (ACM)** | Previous generation of the Experience Cloud-based portal | Legacy; AEH is its evolution |
+
+> [!NOTE]
+> **Key exam clue:** "Fully branded developer portal with community features, onboarding, and Salesforce Experience Cloud customization" → **API Experience Hub** (or ACM in older questions). "Simple public listing of APIs" → **Exchange public portal**.
+
+### 13.11 Advanced Monitoring and Observability
+
+Extends 10.3–10.6:
+
+- **Built-in dashboards:** Predefined per application or API (one app/API at a time).
+- **Custom dashboards:** Combine metrics from **multiple apps/APIs in a single view** (for example, all APIs involved in a checkout flow).
+- **Custom metrics:** Business-level metrics emitted from flows with the **Custom Metrics connector** (for example, orders per minute). Requires an advanced subscription (Titanium).
+- **Log points:** Add logging to running apps **without redeploying** them (advanced subscription).
+- **Log search / log management:** Centralized search and retention of application logs.
+- **Distributed tracing:** Follow a transaction across multiple apps.
+- **Anypoint Visualizer:** Real-time **graphical topology of the application network**. Shows apps/APIs and their dependencies, organized by layer (Experience / Process / System). Views include **Architecture, Troubleshooting (with metrics), and Policies** (which policies apply where). Ideal for impact analysis and finding unexpected dependencies.
+- **Functional Monitoring:** Synthetic tests (written in a BAT-based DSL) that **periodically call public or private endpoints** to verify they respond correctly. This is the official way to monitor an API "from the outside" (compare with 10.4 heartbeat scenarios).
+- **Telemetry Exporter:** Sends **traces and audit logs** (and logs for supported targets) to **third-party observability tools** (Splunk HEC, Azure Monitor, OpenTelemetry-compatible platforms such as New Relic, or Datadog through an OTel collector) for apps on **CloudHub 2.0 and Runtime Fabric**.
+
+> [!NOTE]
+> **Key exam clue:** "See how all APIs connect / dependency map / which layer each API belongs to" → **Anypoint Visualizer**. "Several APIs' metrics in one view" → **custom dashboards**. "Business KPIs from inside the flow" → **custom metrics**. "Periodically test an endpoint from outside" → **Functional Monitoring**. "Send telemetry to Splunk/Datadog/New Relic" → **Telemetry Exporter** (or external log forwarding, see 10.6).
+
+### 13.12 Anypoint Security: Edge and Tokenization
+
+Both require **Anypoint Runtime Fabric** and a separate **Anypoint Security** license.
+
+- **Anypoint Security Edge:** A security layer at the **perimeter of RTF** (ingress/egress) that provides **WAF capabilities, DoS protection**, rate/size limits, IP allow/deny lists, and TLS termination **before traffic reaches the Mule runtime**. This is why API policies alone are not the right defense against DoS (see 5.6 and 11.2): the defense must be at the edge.
+- **Tokenization service:** Replaces sensitive data (credit card numbers, PII, PHI) with **format-preserving tokens** that can be detokenized later. It is applied with the Tokenization/Detokenization policies. Used to reduce **PCI/PII compliance scope**. *(The documentation currently shows an End-of-Life notice for this feature, but it can still appear on the exam.)*
+- **Secrets Manager:** A secure vault for TLS certificates, keystores, and truststores used by RTF ingress, Edge, and gateways.
+
+> [!NOTE]
+> **Key exam clue:** "Protect PCI/PII data by replacing it with tokens that keep the original format" → **Tokenization (RTF)**. "Block DoS/WAF attacks before they reach the APIs" → **Anypoint Security Edge (RTF)** or an external WAF/CDN, **not** an API Manager policy.
+
+### 13.13 Resilience and Performance Calculations
+
+The current exam includes small calculation and reasoning scenarios:
+
+- **Throughput of a single-threaded or serialized process:** `max throughput = concurrency / latency`. Example: 1 request at a time × 200 ms → 5 requests/second. **Adding workers/replicas does not help** if the process must run one at a time to keep consistency.
+- **Timeout budgets in a chain:** The timeout that matters is the one set by the **caller that cannot wait longer** (for example, the Experience API calling the Process API). The sum of downstream timeouts **plus retries** must fit inside the upstream SLA: `total ≈ (timeout × (1 + retries)) + backoff`.
+- **Percentile SLAs:** If a downstream's 95th percentile already exceeds the upstream's 99th percentile target, **no timeout can meet the SLA** (see the "no timeout possible" scenario).
+- **Retries vs. circuit breaker:** Retries help with **intermittent** failures. A circuit breaker stops calling a **failing** dependency (opens), tests it periodically (half-open), and resumes (closed), which reduces response time and load. Use the **built-in Circuit Breaker policy** (Flex/Omni Gateway, outbound) rather than custom code when available.
+- **Parallel invocations:** To minimize latency when calling equivalent endpoints (primary + DR), invoke them in parallel and use the **first** response. To protect a limited DR environment, call it only after the primary fails (timeout + retry first).
+- **Caching for rarely changing data:** Use an **Object Store** (persistent, shared across workers/replicas) for data that changes rarely. The Cache scope is per worker and not shared.
+- **Idempotency:** At-least-once messaging (Anypoint MQ standard queues, retries) requires **idempotent consumers**. Store processed message IDs in a **persistent Object Store** (Idempotent Message Validator) for exactly-once-like processing across workers.
+
+> [!NOTE]
+> **Key exam clue:** In calculation questions, first find the **bottleneck** (serialized process, downstream latency, rate limit). Scaling out only helps when work can be done in parallel.
 
 ---
 

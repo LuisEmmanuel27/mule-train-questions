@@ -171,10 +171,10 @@
        other, and let data simply travel between APIs to avoid the complexity and overhead of building canonical models
 25. Which of the following sequence is correct?
 
-    1. API Client implementes logic to call an API -> API Consumer requests access to API -> API Implementation routes the request to -> API
-    2. API Consumer requests access to API -> API Client implementes logic to call an API -> API routes the request to -> API Implementation
-    3. API Consumer implementes logic to call an API -> API Client requests access to API -> API Implementation routes the request to -> API
-    4. API Client implementes logic to call an API -> API Consumer requests access to API -> API routes the request to -> API Implementation
+    1. API Client implementes logic to call an API -> API Consumer requests access to API -> API Implementation routes the request to -> API to»_space; API
+    2. API Consumer requests access to API»_space; API Client implementes logic to call an API»_space; API routes the request to»_space; API Implementation
+    3. API Consumer implementes logic to call an API»_space; API Client requests access to API»_space; API Implementation routes the request to»_space; API
+    4. API Client implementes logic to call an API»_space; API Consumer requests access to API»_space; API routes the request to»_space; API Implementation
 26. Which of the below, when used together, makes the IT Operational Model effective?
 
     1. Create reusable assets, Do marketing on the created assets across the organization, and Arrange time to time LOB reviews to ensure assets are being consumed or not
