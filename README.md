@@ -40,7 +40,7 @@ Preguntas de entrenamiento para estudiar y presentar cetificaciones de MuleSoft
 
 ## [Primer Cuestionario](<./Mule%20Platform%20Int%20Architect/cuestionario.md>)
 
-## [Second Questionnaire](./Mule%20Platform%20Architect/preguntas_nuevas.md)
+## [Segundo Cuestionario](./Mule%20Platform%20Architect/preguntas_nuevas.md)
 
 ---
 
